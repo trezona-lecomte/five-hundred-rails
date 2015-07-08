@@ -1,11 +1,12 @@
 # TODO List
 
 ### The standard deck
-Feature                         | Status |
---------------------------------|--------|
-contains 43 playing cards       |  TODO  |
-a Joker is included             |  TODO  |
-2s, 3s and black 4s are removed |  TODO  |
+Feature                          | Status |
+---------------------------------|--------|
+contains 43 playing cards        |  DONE  |
+a single black Joker is included |  DONE  |
+2s, 3s and black 4s are removed  |  DONE  |
+includes all other cards (4 - A) |  TODO  |
 
 ### For each game
 Feature                                                                   | Status |
