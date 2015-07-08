@@ -6,7 +6,7 @@ Feature                          | Status |
 contains 43 playing cards        |  DONE  |
 a single black Joker is included |  DONE  |
 2s, 3s and black 4s are removed  |  DONE  |
-includes all other cards (4 - A) |  TODO  |
+includes all other cards (4 - A) |  DONE  |
 
 ### For each game
 Feature                                                                   | Status |

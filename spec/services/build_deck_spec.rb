@@ -24,6 +24,19 @@ RSpec.describe BuildDeck, type: :service do
       it "doesn't have black 4s" do
         expect(cards.select(&is_black_four)).to be_empty
       end
+
+      it "has one of each card from red 4s to Aces" do
+        (5..14).each do |number|
+          %w(hearts diamonds clubs spades).each do |suit|
+            expect(cards.select { |card| card.number == number && card.suit == suit }).to be_one
+          end
+        end
+      end
+
+      it "has the two red 4s" do
+        expect(cards.select { |card| card.number == 4 && card.suit == "hearts" }).to be_one
+        expect(cards.select { |card| card.number == 4 && card.suit == "diamonds" }).to be_one
+      end
     end
   end
 end
