@@ -18,48 +18,48 @@ a team loses if they reach a score of -500 or less across all rounds      |  TOD
 ### For each 'round'
 Dealing Features:                                                               | Status |
 --------------------------------------------------------------------------------|--------|
-    * 10 cards are dealt to each of the four players                            |  TODO  |
-    * 3 cards are dealt into the 'kitty'                                        |  TODO  |
-    * (first round) a random player deals                                       |  TODO  |
-    * (subsequent rounds) the dealing responsibilty moves 'clockwise'           |  TODO  |
+10 cards are dealt to each of the four players                                  |  TODO  |
+3 cards are dealt into the 'kitty'                                              |  TODO  |
+(first round) a random player deals                                             |  TODO  |
+(subsequent rounds) the dealing responsibilty moves 'clockwise'                 |  TODO  |
 
 Bidding Features:                                                               | Status |
 --------------------------------------------------------------------------------|--------|
-    * the player 'to the left' of the dealer bids first                         |  TODO  |
-    * bidding continues 'clockwise' until all but one player has passed         |  TODO  |
-    * players can only bid higher than the current bid, based on:               |  TODO  |
-      + bids consist of a number of tricks and a suit                           |  TODO  |
-      + the order of suits is no-trumps > hearts > diamonds > clubs > spades    |  TODO  |
-    * the number of tricks can be between 6 and 10                              |  TODO  |
-    * players can elect to pass (make no bid)                                   |  TODO  |
-    * players can't bid again after passing                                     |  TODO  |
-    * players can only bid again if another player has made an intervening bid  |  TODO  |
-    * if no player bids, the deck is reshuffled and redealt                     |  TODO  |
+the player 'to the left' of the dealer bids first                         |  TODO  |
+bidding continues 'clockwise' until all but one player has passed         |  TODO  |
+players can only bid higher than the current bid, based on:               |  TODO  |
+bids consist of a number of tricks and a suit                             |  TODO  |
+the order of suits is no-trumps > hearts > diamonds > clubs > spades      |  TODO  |
+the number of tricks can be between 6 and 10                              |  TODO  |
+players can elect to pass (make no bid)                                   |  TODO  |
+players can't bid again after passing                                     |  TODO  |
+players can only bid again if another player has made an intervening bid  |  TODO  |
+if no player bids, the deck is reshuffled and redealt                     |  TODO  |
 
 Playing Features:                                                               | Status |
 --------------------------------------------------------------------------------|--------|
-    * (on the first trick) the player who won the bidding leads                 |  TODO  |
-    * (on subsequent tricks) the winner of the last trick leads                 |  TODO  |
-    * playing proceeds 'clockwise'                                              |  TODO  |
-    * players each must place a card on their turn                              |  TODO  |
-    * players must follow suit if they can (including LB)                       |  TODO  |
-    * once all players have played a card, the highest card wins                |  TODO  |
-    * the trick is added to the teams total number of tricks                    |  TODO  |
-    * once all 10 tricks are played, the round is over                          |  TODO  |
+(on the first trick) the player who won the bidding leads                       |  TODO  |
+(on subsequent tricks) the winner of the last trick leads                       |  TODO  |
+playing proceeds 'clockwise'                                                    |  TODO  |
+players each must place a card on their turn                                    |  TODO  |
+players must follow suit if they can (including LB)                             |  TODO  |
+once all players have played a card, the highest card wins                      |  TODO  |
+the trick is added to the teams total number of tricks                          |  TODO  |
+once all 10 tricks are played, the round is over                                |  TODO  |
 
 Scoring Features:                                                               | Status |
 --------------------------------------------------------------------------------|--------|
-    * rounds are scored according to the score table (below)                    |  TODO  |
-    * if a team mets the bid tricks, add the bid score to their total           |  TODO  |
-    * if a team fails to meet the bid tricks, subtract the bid score from total |  TODO  |
+rounds are scored according to the score table (below)                          |  TODO  |
+if a team mets the bid tricks, add the bid score to their total                 |  TODO  |
+if a team fails to meet the bid tricks, subtract the bid score from total       |  TODO  |
 
 ### For determining card equality
 Features:                                                             | Status |
 ----------------------------------------------------------------------|--------|
- - in non-trump suits the order of cards is A -> 4                    |  TODO  |
- - in trump suits the order is JK -> RB -> LB -> A -> 4               |  TODO  |
- - a trump card always beats a non-trump card                         |  TODO  |
- - if no trumps are played then the highest card of the led suit wins |  TODO  |
+in non-trump suits the order of cards is A -> 4                       |  TODO  |
+in trump suits the order is JK -> RB -> LB -> A -> 4                  |  TODO  |
+a trump card always beats a non-trump card                            |  TODO  |
+if no trumps are played then the highest card of the led suit wins    |  TODO  |
 
 ### Scoring Table
 
