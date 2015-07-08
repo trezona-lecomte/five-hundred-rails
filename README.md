@@ -1,4 +1,5 @@
-# README - Five Hundred [card game](https://en.wikipedia.org/wiki/500_(card_game))
+# README
+## Five Hundred [card game](https://en.wikipedia.org/wiki/500_(card_game))
 
 ## Features:
 
