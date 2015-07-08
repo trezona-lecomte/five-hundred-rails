@@ -1,6 +1,6 @@
-# README
+# README - Five Hundred [card game](https://en.wikipedia.org/wiki/500_(card_game))
 
-## Five-hundred features:
+## Features:
 
 ### The standard deck
   - contains 43 playing cards
@@ -19,7 +19,6 @@
     * 3 cards are dealt into the 'kitty'
     * (first round) a random player deals
     * (subsequent rounds) the dealing responsibilty moves 'clockwise'
-
   - Bidding:
     * the player 'to the left' of the dealer bids first
     * bidding continues 'clockwise' until all but one player has passed
@@ -31,7 +30,6 @@
     * players can't bid again after passing
     * players can only bid again if another player has made an intervening bid
     * if no player bids, the deck is reshuffled and redealt
-
   - Playing Tricks:
     * (on the first trick) the player who won the bidding leads
     * (on subsequent tricks) the winner of the last trick leads
@@ -41,7 +39,6 @@
     * once all players have played a card, the highest card wins
     * the trick is added to the teams total number of tricks
     * once all 10 tricks are played, the round is over
-
   - Scoring a round:
     * rounds are scored according to the score table (below)
     * if a team mets the bid tricks, add the bid score to their total
