@@ -8,12 +8,12 @@ class BuildDeck
 
     exclusions = [4].product([:clubs, :spades])
 
-    (cards - exclusions).map { |number, suit| Card.new(number, suit) }
+    (cards - exclusions).map { |n, s| Card.new(number: n, suit: s) }
   end
 
   private
 
   def joker
-    [NUMBERS.max + 1, :none]
+    [NUMBERS.max + 1, :black_joker]
   end
 end
