@@ -2,17 +2,18 @@
 
 ## Five-hundred features:
 
-The standard deck contains 43 playing cards:
+### The standard deck
+  - contains 43 playing cards
   - a Joker is included
   - 2s, 3s and black 4s are removed
 
-For each game:
+### For each game
  - players are on 'teams' of two
  - players on a team 'sit opposite' so won't play directly after one another
  - a team wins if they reach a score of 500 or more across all rounds
  - a team loses if they reach a score of -500 or less across all rounds
 
-For each 'round':
+### For each 'round'
   - Dealing:
     * 10 cards are dealt to each of the four players
     * 3 cards are dealt into the 'kitty'
@@ -46,20 +47,20 @@ For each 'round':
     * if a team mets the bid tricks, add the bid score to their total
     * if a team fails to meet the bid tricks, subtract the bid score from total
 
-For determining card equality:
+### For determining card equality
  - in non-trump suits the order of cards is A -> 4
  - in trump suits the order is JK -> RB -> LB -> A -> 4
  - a trump card always beats a non-trump card
  - if no trumps are played then the highest card of the led suit wins
 
-Scoring Table:
+### Scoring Table
 
-| Tricks    | Spades | Clubs | Diamonds | Hearts | No Trump |
-|-----------|--------|-------|----------|--------|----------|
-| 6 tricks  | 40     | 60    | 80       | 100    | 120      |
-| 7 tricks  | 140    | 160   | 180      | 200    | 220      |
-| 8 tricks  | 240    | 260   | 280      | 300    | 320      |
-| 9 tricks  | 340    | 360   | 380      | 400    | 420      |
-| 10 tricks | 440    | 460   | 480      | 500    | 520      |
+Tricks    | Spades | Clubs | Diamonds | Hearts | No Trump |
+----------|--------|-------|----------|--------|----------|
+6 tricks  | 40     | 60    | 80       | 100    | 120      |
+7 tricks  | 140    | 160   | 180      | 200    | 220      |
+8 tricks  | 240    | 260   | 280      | 300    | 320      |
+9 tricks  | 340    | 360   | 380      | 400    | 420      |
+10 tricks | 440    | 460   | 480      | 500    | 520      |
 
 
