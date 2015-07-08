@@ -10,10 +10,10 @@ gem 'jbuilder',     '~> 2.0'
 gem 'sdoc',         '~> 0.4.0', group: :doc
 
 group :development, :test do
-  # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
   gem 'spring'
   gem 'pry-byebug'
+  gem 'pry-rails'
   gem 'rspec-rails'
   gem 'guard-rspec'
 end
