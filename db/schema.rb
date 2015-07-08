@@ -11,7 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150707222844) do
+ActiveRecord::Schema.define(version: 20150708015327) do
+
+  create_table "cards", force: :cascade do |t|
+    t.string   "suit",       limit: 255
+    t.integer  "number",     limit: 4
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "games", force: :cascade do |t|
     t.datetime "created_at", null: false
