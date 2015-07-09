@@ -11,8 +11,8 @@ team1 = game.teams.create
 team2 = game.teams.create
 
 # Add players to the teams
-team1.players << p1 << p2
-team2.players << p3 << p4
+team1.players = [p1, p2]   # assign_players
+team2.players = [p3, p4]   # assign_players
 
 # Start a new round- controller action
 round = game.rounds.create
@@ -21,19 +21,19 @@ load './app/services/build_deck.rb'
 
 # Start a new round
 round.kitty = CardCollection.new                        # start_round
-game.players.each { |p| round.hands.create(player: p) } # start_round
+game.teams.each do |team|
+  team.players.each do |player|
+    round.hands.create(player: player)
+  end
+end
 
 # Build a new deck
 deck = BuildDeck.new.call                               # build_deck
 
-# Deal the hands - service?
+# Deal the hands
 deck.shuffle!                                           # deal_cards
 round.kitty.cards = deck.pop(3)                         # deal_cards
 round.hands.each { |hand| hand.cards = deck.pop(10) }   # deal_cards
-
-round.save! # ?
-round.hands.each { |h| h.save! } # ?
-round.kitty.save! # ?
 
 h1, h2, h3, h4 = round.hands # not needed
 
@@ -41,10 +41,10 @@ h1, h2, h3, h4 = round.hands # not needed
 t1 = round.tricks.create # not needed
 
 # Each player: Play a card from hand to trick - service
-# t1.cards << h1.cards.smaple.play
-# t1.cards << h2.cards.sample.play
-# t1.cards << h3.cards.sample.play
-# t1.cards << h4.cards.sample.play
+t1.cards << h1.cards.smaple
+t1.cards << h2.cards.sample
+t1.cards << h3.cards.sample
+t1.cards << h4.cards.sample
 
 # # Once won, see who won the trick - service?
 # winning_player = trick.winning_player

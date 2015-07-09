@@ -11,8 +11,10 @@ includes all other cards (4 - A) |  DONE  |
 ### For each game
 Feature                                                                   | Status |
 --------------------------------------------------------------------------|--------|
-a maximum of 4 players can join a game                                    |  DONE  |
-players are on 'teams' of two                                             |  TODO  |
+there are two teams                                                       |  DONE  |
+each team has two players                                                 |  DONE  |
+players can only be on a single teams                                     |  DONE  |
+teams must contain two different (unique) players                         |  DONE  |
 players on a team 'sit opposite' so won't play directly after one another |  TODO  |
 a team wins if they reach a score of 500 or more across all rounds        |  TODO  |
 a team loses if they reach a score of -500 or less across all rounds      |  TODO  |
@@ -43,7 +45,7 @@ Playing Features:                                                               
 (on the first trick) the player who won the bidding leads                       |  TODO  |
 (on subsequent tricks) the winner of the last trick leads                       |  TODO  |
 playing proceeds 'clockwise'                                                    |  TODO  |
-players each must place a card on their turn                                    |  TODO  |
+players each must place one & only one card on their turn                       |  DONE  |
 players must follow suit if they can (including LB)                             |  TODO  |
 once all players have played a card, the highest card wins                      |  TODO  |
 the trick is added to the teams total number of tricks                          |  TODO  |

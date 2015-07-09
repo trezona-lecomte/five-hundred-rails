@@ -11,19 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150709005316) do
+ActiveRecord::Schema.define(version: 20150709042220) do
 
   create_table "card_collections", force: :cascade do |t|
-    t.integer  "player_id",      limit: 4
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
-    t.integer  "round_id",       limit: 4
-    t.integer  "round_kitty_id", limit: 4
+    t.integer  "player_id",  limit: 4
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.integer  "round_id",   limit: 4
   end
 
   add_index "card_collections", ["player_id"], name: "index_card_collections_on_player_id", using: :btree
   add_index "card_collections", ["round_id"], name: "index_card_collections_on_round_id", using: :btree
-  add_index "card_collections", ["round_kitty_id"], name: "index_card_collections_on_round_kitty_id", using: :btree
 
   create_table "cards", force: :cascade do |t|
     t.string   "suit",               limit: 255
@@ -42,27 +40,11 @@ ActiveRecord::Schema.define(version: 20150709005316) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "games_players", id: false, force: :cascade do |t|
-    t.integer "game_id",   limit: 4
-    t.integer "player_id", limit: 4
-  end
-
-  add_index "games_players", ["game_id"], name: "index_games_players_on_game_id", using: :btree
-  add_index "games_players", ["player_id"], name: "index_games_players_on_player_id", using: :btree
-
   create_table "players", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
-
-  create_table "players_teams", id: false, force: :cascade do |t|
-    t.integer "player_id", limit: 4
-    t.integer "team_id",   limit: 4
-  end
-
-  add_index "players_teams", ["player_id"], name: "index_players_teams_on_player_id", using: :btree
-  add_index "players_teams", ["team_id"], name: "index_players_teams_on_team_id", using: :btree
 
   create_table "rounds", force: :cascade do |t|
     t.datetime "created_at",           null: false
@@ -71,6 +53,15 @@ ActiveRecord::Schema.define(version: 20150709005316) do
   end
 
   add_index "rounds", ["game_id"], name: "index_rounds_on_game_id", using: :btree
+
+  create_table "team_memberships", id: false, force: :cascade do |t|
+    t.integer "player_id", limit: 4, null: false
+    t.integer "team_id",   limit: 4, null: false
+    t.integer "game_id",   limit: 4
+  end
+
+  add_index "team_memberships", ["game_id"], name: "index_team_memberships_on_game_id", using: :btree
+  add_index "team_memberships", ["player_id", "team_id"], name: "index_team_memberships_on_player_id_and_team_id", unique: true, using: :btree
 
   create_table "teams", force: :cascade do |t|
     t.integer  "game_id",    limit: 4
@@ -93,6 +84,7 @@ ActiveRecord::Schema.define(version: 20150709005316) do
   add_foreign_key "cards", "card_collections"
   add_foreign_key "cards", "tricks"
   add_foreign_key "rounds", "games"
+  add_foreign_key "team_memberships", "games"
   add_foreign_key "teams", "games"
   add_foreign_key "tricks", "rounds"
 end
