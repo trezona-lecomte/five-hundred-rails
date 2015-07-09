@@ -8,7 +8,7 @@ class BuildDeck
 
     exclusions = [4].product([:clubs, :spades])
 
-    (cards - exclusions).map { |number, suit| Card.new(number: number, suit: suit) }
+    (cards - exclusions).map { |number, suit| Card.new(number: number, suit: suit) }.shuffle!
   end
 
   private

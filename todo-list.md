@@ -11,6 +11,7 @@ includes all other cards (4 - A) |  DONE  |
 ### For each game
 Feature                                                                   | Status |
 --------------------------------------------------------------------------|--------|
+a maximum of 4 players can join a game                                    |  DONE  |
 players are on 'teams' of two                                             |  TODO  |
 players on a team 'sit opposite' so won't play directly after one another |  TODO  |
 a team wins if they reach a score of 500 or more across all rounds        |  TODO  |
@@ -26,16 +27,16 @@ Dealing Features:                                                               
 
 Bidding Features:                                                               | Status |
 --------------------------------------------------------------------------------|--------|
-the player 'to the left' of the dealer bids first                         |  TODO  |
-bidding continues 'clockwise' until all but one player has passed         |  TODO  |
-players can only bid higher than the current bid, based on:               |  TODO  |
-bids consist of a number of tricks and a suit                             |  TODO  |
-the order of suits is no-trumps > hearts > diamonds > clubs > spades      |  TODO  |
-the number of tricks can be between 6 and 10                              |  TODO  |
-players can elect to pass (make no bid)                                   |  TODO  |
-players can't bid again after passing                                     |  TODO  |
-players can only bid again if another player has made an intervening bid  |  TODO  |
-if no player bids, the deck is reshuffled and redealt                     |  TODO  |
+the player 'to the left' of the dealer bids first                               |  TODO  |
+bidding continues 'clockwise' until all but one player has passed               |  TODO  |
+players can only bid higher than the current bid, based on:                     |  TODO  |
+bids consist of a number of tricks and a suit                                   |  TODO  |
+the order of suits is no-trumps > hearts > diamonds > clubs > spades            |  TODO  |
+the number of tricks can be between 6 and 10                                    |  TODO  |
+players can elect to pass (make no bid)                                         |  TODO  |
+players can't bid again after passing                                           |  TODO  |
+players can only bid again if another player has made an intervening bid        |  TODO  |
+if no player bids, the deck is reshuffled and redealt                           |  TODO  |
 
 Playing Features:                                                               | Status |
 --------------------------------------------------------------------------------|--------|

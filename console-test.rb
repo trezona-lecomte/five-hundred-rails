@@ -6,34 +6,39 @@ p4 = Player.create(name: "mikee")
 # Start a new game - controller action
 game = Game.create
 
-# Add players to the game - controller action?
-game.players << p1 << p2 << p3 << p4
+# Create the 2 teams
+team1 = game.teams.create
+team2 = game.teams.create
+
+# Add players to the teams
+team1.players << p1 << p2
+team2.players << p3 << p4
 
 # Start a new round- controller action
 round = game.rounds.create
 
 load './app/services/build_deck.rb'
 
-# Shuffle the deck - service?
-deck = BuildDeck.new.call
-deck.shuffle!
+# Start a new round
+round.kitty = CardCollection.new                        # start_round
+game.players.each { |p| round.hands.create(player: p) } # start_round
 
-# Deal the kitty - service?
-round.kitty = CardCollection.new
-round.kitty.cards = deck.pop(3)
+# Build a new deck
+deck = BuildDeck.new.call                               # build_deck
 
 # Deal the hands - service?
-game.players.each { |p| round.hands.create(player: p) }
-round.hands.each { |hand| hand.cards = deck.pop(10) }
+deck.shuffle!                                           # deal_cards
+round.kitty.cards = deck.pop(3)                         # deal_cards
+round.hands.each { |hand| hand.cards = deck.pop(10) }   # deal_cards
 
 round.save! # ?
 round.hands.each { |h| h.save! } # ?
-round.kitty.save!
+round.kitty.save! # ?
 
-h1, h2, h3, h4 = round.hands
+h1, h2, h3, h4 = round.hands # not needed
 
 # Start a new trick - controller action
-t1 = round.tricks.create
+t1 = round.tricks.create # not needed
 
 # Each player: Play a card from hand to trick - service
 # t1.cards << h1.cards.smaple.play
