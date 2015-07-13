@@ -1,50 +1,51 @@
-p1 = Player.create(name: "kieran")
-p2 = Player.create(name: "pragya")
-p3 = Player.create(name: "mitch")
-p4 = Player.create(name: "mikee")
+user1 = User.create!(username: "kieran")
+user2 = User.create!(username: "pragya")
+user3 = User.create!(username: "mitch")
+user4 = User.create!(username: "mikee")
+user5 = User.create!(username: "invalid_guy")
 
-# Start a new game - controller action
-game = Game.create
+game = CreateGame.new.call
 
-# Create the 2 teams
-team1 = game.teams.create
-team2 = game.teams.create
+JoinTeam.new.call(user1, game.teams.first)
+JoinTeam.new.call(user2, game.teams.first)
+JoinTeam.new.call(user3, game.teams.last)
+JoinTeam.new.call(user4, game.teams.last)
 
-# Add players to the teams
-team1.players = [p1, p2]   # assign_players
-team2.players = [p3, p4]   # assign_players
+deck = BuildDeck.new.call
 
-# Start a new round- controller action
-round = game.rounds.create
+DealRound.new.call(game, deck, [11, 21, 12, 22])
 
-load './app/services/build_deck.rb'
+p1 = game.teams.first.players.first
+p2 = game.teams.last.players.first
+p3 = game.teams.first.players.last
+p4 = game.teams.last.players.last
+round = game.rounds.last
 
-# Start a new round
-round.kitty = CardCollection.new                        # start_round
-game.teams.each do |team|
-  team.players.each do |player|
-    round.hands.create(player: player)
-  end
-end
+SubmitBid.call(round, p1, 6, Suits::DIAMONDS)
+SubmitBid.call(round, p2, 6, Suits::HEARTS)
+SubmitBid.call(round, p3, 7, Suits::SPADES)
+SubmitBid.call(round, p4, 7, Suits::CLUBS)
+SubmitBid.call(round, p1, 7, Suits::NO_TRUMPS)
+SubmitBid.call(round, p2, 7, Suits::HEARTS) # should fail
 
-# Build a new deck
-deck = BuildDeck.new.call                               # build_deck
 
-# Deal the hands
-deck.shuffle!                                           # deal_cards
-round.kitty.cards = deck.pop(3)                         # deal_cards
-round.hands.each { |hand| hand.cards = deck.pop(10) }   # deal_cards
 
-h1, h2, h3, h4 = round.hands # not needed
+PlayCard.call(round, p2, 4, "diamonds")
 
-# Start a new trick - controller action
-t1 = round.tricks.create # not needed
+# Start a new trick - controller action / service?
+t1 = round.tricks.create!
 
 # Each player: Play a card from hand to trick - service
-t1.cards << h1.cards.smaple
-t1.cards << h2.cards.sample
-t1.cards << h3.cards.sample
-t1.cards << h4.cards.sample
+t1.update(cards: t1.cards << round.hands[0].cards.first)
+t1.update(cards: t1.cards << round.hands[1].cards.first)
+t1.update(cards: t1.cards << round.hands[2].cards.first)
+t1.update(cards: t1.cards << round.hands[3].cards.first)
+
+t1.save!
+
+# who won?
+
+# can a hand start the next trick?
 
 # # Once won, see who won the trick - service?
 # winning_player = trick.winning_player

@@ -14,7 +14,7 @@ RSpec.describe BuildDeck, type: :service do
       end
 
       it "has a single joker" do
-        expect(cards.select { |card| card.suit == "black_joker" }).to be_one
+        expect(cards.select { |card| card.suit == Suits::NO_TRUMPS }).to be_one
       end
 
       it "doesn't have excluded numbers" do

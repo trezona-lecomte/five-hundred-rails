@@ -1,19 +1,19 @@
 class BuildDeck
-  SUITS = %i(hearts diamonds clubs spades)
+  include Suits
   NUMBERS = (4..14).to_a
 
   def call
-    cards = NUMBERS.product(SUITS)
+    cards = NUMBERS.product(ALL_SUITS.select { |suit| suit != NO_TRUMPS })
     cards << joker
 
-    exclusions = [4].product([:clubs, :spades])
+    exclusions = [4].product([CLUBS, SPADES])
 
-    (cards - exclusions).map { |number, suit| Card.new(number: number, suit: suit) }.shuffle!
+    (cards - exclusions).map { |number, suit| Card.new(number: number, suit: suit) }
   end
 
   private
 
   def joker
-    [NUMBERS.max + 1, :black_joker]
+    [NUMBERS.max + 1, NO_TRUMPS]
   end
 end

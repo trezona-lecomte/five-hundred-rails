@@ -1,0 +1,13 @@
+fresh_round:
+  game: fresh_game
+
+in_progress_round:
+  game: in_progress_game
+
+# <% 5.times do |n| %>
+# round_<%= n %>:
+#   game: in_progress_game
+
+# <% 10.times do |n| %>
+# round_<%= n %>:
+#   game: finished_game

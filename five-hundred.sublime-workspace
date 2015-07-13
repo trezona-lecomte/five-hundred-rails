@@ -1,0 +1,1713 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"pla",
+				"players_turn〔variable〕"
+			],
+			[
+				"all_",
+				"all_permutations_of_numbers_and_letters〔function〕"
+			],
+			[
+				"do",
+				"dob	Insert do |variable| … end"
+			],
+			[
+				"play",
+				"play_card"
+			],
+			[
+				"C",
+				"CardCollection"
+			],
+			[
+				"is",
+				"is_black_four"
+			],
+			[
+				"is_",
+				"is_excluded_number"
+			],
+			[
+				"game_p",
+				"game_params[:username"
+			],
+			[
+				"remaining",
+				"remaining_lives"
+			],
+			[
+				"cahng",
+				"change_column_null"
+			],
+			[
+				"U",
+				"upper_bound"
+			],
+			[
+				"report_game",
+				"report_game_result"
+			],
+			[
+				"dis",
+				"display_welcome_message"
+			],
+			[
+				"upp",
+				"upper_bound"
+			],
+			[
+				"valid",
+				"valid_range"
+			],
+			[
+				"user",
+				"user_guess"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "app/models/action.rb",
+			"settings":
+			{
+				"buffer_size": 325,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/services/submit_bid.rb",
+			"settings":
+			{
+				"buffer_size": 810,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/models/round.rb",
+			"settings":
+			{
+				"buffer_size": 360,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/services/deal_round.rb",
+			"settings":
+			{
+				"buffer_size": 348,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/services/play_card.rb",
+			"settings":
+			{
+				"buffer_size": 1135,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "require \"rails_helper\"\n\nRSpec.describe SubmitBid, type: :service do\n  let(:users)  { [User.create!(username: \"kieran\"),\n                  User.create!(username: \"pragya\"),\n                  User.create!(username: \"mitchy\"),\n                  User.create!(username: \"mickee\")] }\n  let(:game)   { CreateGame.new.call }\n  let(:round)  { game.rounds.first }\n\n  describe \"#call\" do\n    before do\n      JoinTeam.new.call(users[0], game.teams.first)\n      JoinTeam.new.call(users[1], game.teams.first)\n      JoinTeam.new.call(users[2], game.teams.last)\n      JoinTeam.new.call(users[3], game.teams.last)\n\n      deck = BuildDeck.new.call\n      DealRound.new.call(game, deck, [11, 21, 12, 22])\n    end\n\n    context \"when the bid is successful\" do\n      let(:number)  { 6 }\n      let(:suit)    { \"hearts\" }\n      let(:player1) { game.teams.first.players.first }\n      let(:player2) { game.teams.last.players.first }\n      let(:player3) { game.teams.first.players.last }\n\n      context \"when the player is the first to bid\" do\n        it \"adds an action to the round\" do\n          expect{SubmitBid.call(round, player1, number, suit)}.to change{round.actions.count}.by(1)\n        end\n      end\n\n      context \"when it is the second players turn to bid\" do\n        before { round.actions.create!(action_type: Action::BID, action_value: \"6H\", player: player1) }\n\n        it \"adds an action to the round\" do\n          expect{SubmitBid.call(round, player2, number, suit)}.to change{round.actions.count}.by(1)\n        end\n      end\n\n      context \"when it is the third players turn to bid\" do\n        before { round.actions.create!(action_type: Action::BID, action_value: \"6H\", player: player2) }\n\n        it \"adds an action to the round\" do\n          expect{SubmitBid.call(round, player3, number, suit)}.to change{round.actions.count}.by(1)\n        end\n      end\n    end\n\n    context \"when the bid is unsuccessful\" do\n\n    end\n\n    \n  end\nend",
+			"file": "spec/services/submit_bid_spec.rb",
+			"file_size": 1864,
+			"file_write_time": 130812953240000000,
+			"settings":
+			{
+				"buffer_size": 1926,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "console-test.rb",
+			"settings":
+			{
+				"buffer_size": 1402,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 400.0,
+		"last_filter": "ins",
+		"selected_items":
+		[
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"ssru",
+				"Set Syntax: Ruby"
+			],
+			[
+				"ssbas",
+				"Set Syntax: Shell Script (Bash)"
+			],
+			[
+				"ssrsp",
+				"Set Syntax: RSpec"
+			],
+			[
+				"in",
+				"Package Control: Install Package"
+			],
+			[
+				"sublimecodein",
+				"SublimeCodeIntel: Enable Live Autocompletion for Current Language"
+			],
+			[
+				"ssrub",
+				"Set Syntax: Ruby"
+			],
+			[
+				"ssbash",
+				"Set Syntax: Shell Script (Bash)"
+			],
+			[
+				"ssbab",
+				"Set Syntax: JavaScript (Babel)"
+			],
+			[
+				"ss",
+				"Set Syntax: HTML"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"ssb",
+				"Set Syntax: Shell Script (Bash)"
+			],
+			[
+				"sublime",
+				"SublimeLinter: Show All Errors"
+			],
+			[
+				"rubocop",
+				"RuboCop: Check current file"
+			],
+			[
+				"ssr",
+				"Set Syntax: Ruby"
+			],
+			[
+				"gstat",
+				"Git: Status"
+			],
+			[
+				"git stat",
+				"Git: Status"
+			],
+			[
+				":w",
+				":w - Save"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"packre",
+				"Package Control: Remove Package"
+			],
+			[
+				"packrem",
+				"Package Control: Remove Package"
+			],
+			[
+				"togm",
+				"View: Toggle Minimap"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"insts",
+				"Indentation: Convert to Spaces"
+			],
+			[
+				"lint",
+				"SublimeLinter: Lint This View"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 601.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = 'eb2297e1a458f27d836c04bb0cbaf282' + 'd0e7a3098092775ccb37ca9d6b2e4b7d'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/kieran/devtrain/five-hundred",
+		"/Users/kieran/devtrain/five-hundred/app",
+		"/Users/kieran/devtrain/five-hundred/app/models",
+		"/Users/kieran/devtrain/five-hundred/app/services",
+		"/Users/kieran/devtrain/five-hundred/db"
+	],
+	"file_history":
+	[
+		"/Users/kieran/devtrain/five-hundred/spec/services/join_team_spec.rb",
+		"/Users/kieran/devtrain/five-hundred/spec/services/play_card_spec.rb",
+		"/Users/kieran/devtrain/five-hundred/console-test.rb",
+		"/Users/kieran/devtrain/five-hundred/app/services/join_team.rb",
+		"/Users/kieran/devtrain/five-hundred/app/models/player.rb",
+		"/Users/kieran/devtrain/five-hundred/app/models/round.rb",
+		"/Users/kieran/devtrain/five-hundred/app/services/deal_round.rb",
+		"/Users/kieran/devtrain/five-hundred/app/models/team.rb",
+		"/Users/kieran/devtrain/five-hundred/db/schema.rb",
+		"/Users/kieran/.emacs.d/custom.el",
+		"/Users/kieran/.emacs.d/init.el",
+		"/Users/kieran/devtrain/fleece/lib/succ_miner.rb",
+		"/Users/kieran/devtrain/fleece/lib/runner.rb",
+		"/Users/kieran/devtrain/fleece/lib/submit_coin.rb",
+		"/Users/kieran/devtrain/fleece/lib/hash_string.rb",
+		"/Users/kieran/devtrain/fleece/.rspec",
+		"/Users/kieran/devtrain/fleece/Gemfile",
+		"/Users/kieran/devtrain/fleece/lib/poll_coins.rb",
+		"/Users/kieran/devtrain/fleece/lib/controller.rb",
+		"/Users/kieran/devtrain/fleece/lib/valid_coin.txt",
+		"/Users/kieran/devtrain/fleece/coins.txt",
+		"/Users/kieran/devtrain/fleece/lib/current_coin.rb",
+		"/Users/kieran/devtrain/fleece/lib/perm_miner.rb",
+		"/Users/kieran/devtrain/fleece/hashes.txt",
+		"/Users/kieran/devtrain/five-hundred/todo-list.md",
+		"/Users/kieran/devtrain/five-hundred/spec/services/deal_round_spec.rb",
+		"/Users/kieran/devtrain/five-hundred/app/services/get_next_player.rb",
+		"/Users/kieran/devtrain/five-hundred/app/models/game.rb",
+		"/Users/kieran/devtrain/five-hundred/app/models/action.rb",
+		"/Users/kieran/devtrain/five-hundred/app/services/create_game.rb",
+		"/Users/kieran/devtrain/five-hundred/app/services/submit_bid.rb",
+		"/Users/kieran/devtrain/five-hundred/db/migrate/20150712202811_create_actions.rb",
+		"/Users/kieran/devtrain/five-hundred/db/migrate/20150712212336_add_round_ref_to_actions.rb",
+		"/Users/kieran/devtrain/five-hundred/app/services/take_action.rb",
+		"/Users/kieran/devtrain/five-hundred/app/models/user.rb",
+		"/Users/kieran/devtrain/five-hundred/app/services/playing_order.rb",
+		"/Users/kieran/devtrain/five-hundred/app/models/playing_order_serializer.rb",
+		"/Users/kieran/devtrain/five-hundred/app/models/playing_order.rb",
+		"/Users/kieran/devtrain/five-hundred/app/serializers/playing_order_serializer.rb",
+		"/Users/kieran/devtrain/five-hundred/app/services/create_hands.rb",
+		"/Users/kieran/devtrain/five-hundred/spec/models/game_spec.rb",
+		"/Users/kieran/devtrain/five-hundred/spec/services/build_deck_spec.rb",
+		"/Users/kieran/devtrain/five-hundred/db/migrate/20150710035909_add_team_to_players.rb",
+		"/Users/kieran/devtrain/five-hundred/app/services/set_player_order.rb",
+		"/Users/kieran/devtrain/five-hundred/app/services/player_order.rb",
+		"/Users/kieran/devtrain/five-hundred/db/migrate/20150712023052_create_teams.rb",
+		"/Users/kieran/devtrain/five-hundred/Gemfile",
+		"/Users/kieran/devtrain/five-hundred/spec/services/join_game_spec.rb",
+		"/Users/kieran/devtrain/five-hundred/app/services/join_game.rb",
+		"/Users/kieran/devtrain/five-hundred/db/migrate/20150710033803_create_players.rb",
+		"/Users/kieran/devtrain/five-hundred/db/migrate/20150710034910_constrain_user_uniqueness_in_games.rb",
+		"/Users/kieran/devtrain/five-hundred/db/migrate/20150710034029_add_round_ref_to_card_collection.rb",
+		"/Users/kieran/devtrain/five-hundred/db/migrate/20150710034142_create_tricks.rb",
+		"/Users/kieran/devtrain/five-hundred/db/migrate/20150710033839_constrain_uniqueness_for_user_in_games.rb",
+		"/Users/kieran/devtrain/five-hundred/app/models/trick.rb",
+		"/Users/kieran/devtrain/five-hundred/app/services/play_card.rb",
+		"/Users/kieran/devtrain/five-hundred/app/models/bid.rb",
+		"/Users/kieran/devtrain/five-hundred/app/validators/play_card_validator.rb",
+		"/Users/kieran/devtrain/five-hundred/spec/services/deal_cards_spec.rb",
+		"/Users/kieran/devtrain/five-hundred/app/services/deal_cards.rb",
+		"/Users/kieran/devtrain/five-hundred/db/migrate/20150707105856_create_games.rb",
+		"/Users/kieran/devtrain/five-hundred/db/migrate/20150707105857_constrain_uniqueness_for_users_in_games.rb",
+		"/Users/kieran/devtrain/five-hundred/db/migrate/20150707093999_create_players.rb",
+		"/Users/kieran/devtrain/five-hundred/db/migrate/20150707105857_add_game_ref_to_players.rb",
+		"/Users/kieran/devtrain/five-hundred/db/migrate/20150710020147_create_bids.rb",
+		"/Users/kieran/devtrain/five-hundred/db/migrate/20150707093821_create_users.rb",
+		"/Users/kieran/devtrain/five-hundred/db/migrate/20150710022845_create_players_rounds.rb",
+		"/Users/kieran/devtrain/five-hundred/app/services/build_deck.rb",
+		"/Users/kieran/devtrain/five-hundred/db/migrate/20150710010839_add_bid_winner_to_game.rb",
+		"/Users/kieran/devtrain/five-hundred/db/migrate/20150709201651_add_active_player_ref_to_games.rb",
+		"/Users/kieran/devtrain/five-hundred/app/models/card.rb",
+		"/Users/kieran/devtrain/five-hundred/app/models/card_collection.rb",
+		"/Users/kieran/devtrain/five-hundred/spec/fixtures/tricks.yml",
+		"/Users/kieran/devtrain/five-hundred/app/models/team_membership.rb",
+		"/Users/kieran/devtrain/five-hundred/spec/fixtures/rounds.yml",
+		"/Users/kieran/devtrain/five-hundred/spec/fixtures/players.yml",
+		"/Users/kieran/devtrain/five-hundred/spec/fixtures/teams.yml",
+		"/Users/kieran/devtrain/five-hundred/spec/fixtures/team_memberships.yml",
+		"/Users/kieran/devtrain/five-hundred/spec/fixtures/games.yml",
+		"/Users/kieran/devtrain/five-hundred/spec/fixtures/card_collections.yml",
+		"/Users/kieran/devtrain/five-hundred/spec/fixtures/cards.yml",
+		"/Users/kieran/devtrain/five-hundred/app/modules/order_of_play.rb",
+		"/Users/kieran/devtrain/five-hundred/app/services/start_trick.rb",
+		"/Users/kieran/devtrain/five-hundred/spec/models/trick_spec.rb",
+		"/Users/kieran/devtrain/five-hundred/spec/models/team_spec.rb",
+		"/Users/kieran/devtrain/five-hundred/db/migrate/20150709042220_add_game_ref_to_team_memberships.rb",
+		"/Users/kieran/devtrain/five-hundred/db/migrate/20150709025828_create_team_memberships.rb",
+		"/Users/kieran/devtrain/five-hundred/db/migrate/20150709030518_add_uniqueness_and_index_to_team_memberships.rb",
+		"/Users/kieran/devtrain/five-hundred/app/models/players_teams.rb",
+		"/Users/kieran/devtrain/five-hundred/app/validators/game_validator.rb",
+		"/Users/kieran/devtrain/five-hundred/db/migrate/20150709005121_create_teams.rb",
+		"/Users/kieran/devtrain/five-hundred/db/migrate/20150709005316_create_players_teams.rb",
+		"/Users/kieran/devtrain/five-hundred/db/migrate/20150709005229_create_players_teams.rb",
+		"/Users/kieran/devtrain/five-hundred/db/migrate/20150709000850_create_teams.rb",
+		"/Users/kieran/devtrain/five-hundred/Guardfile",
+		"/Users/kieran/devtrain/five-hundred/app/models/ruleset.rb",
+		"/Users/kieran/devtrain/five-hundred/app/services/start_round.rb",
+		"/Users/kieran/devtrain/hangman-rails/app/models/game.rb",
+		"/Users/kieran/devtrain/five-hundred/spec/spec_helper.rb",
+		"/Users/kieran/devtrain/five-hundred/README.md",
+		"/Users/kieran/devtrain/five-hundred/README.gfm",
+		"/Users/kieran/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/Users/kieran/devtrain/five-hundred/spec/models/card_collection_spec.rb",
+		"/Users/kieran/devtrain/five-hundred/spec/controllers/card_collection_controller.rb",
+		"/Users/kieran/devtrain/five-hundred/db/migrate/20150708044450_add_round_kitty_foreign_key_to_card_collections.rb",
+		"/Users/kieran/devtrain/five-hundred/db/migrate/20150707102145_add_round_ref_to_card_collections.rb",
+		"/Users/kieran/devtrain/five-hundred/db/migrate/20150708034930_add_card_collection_ref_to_cards.rb",
+		"/Users/kieran/devtrain/five-hundred/db/migrate/20150707094655_create_card_collections.rb",
+		"/Users/kieran/devtrain/five-hundred/db/migrate/20150708024525_add_card_collection_ref_to_cards.rb",
+		"/Users/kieran/devtrain/five-hundred/app/models/hand.rb",
+		"/Users/kieran/devtrain/five-hundred/db/migrate/20150708024700_add_played_to_cards.rb",
+		"/Users/kieran/devtrain/five-hundred/db/migrate/20150708025156_change_played_default_for_cards.rb",
+		"/Users/kieran/devtrain/five-hundred/db/migrate/20150708025018_change_played_default_for_cards.rb",
+		"/Users/kieran/devtrain/five-hundred/db/migrate/20150708024550_add_trick_ref_to_cards.rb",
+		"/Users/kieran/devtrain/five-hundred/app/models/deck.rb",
+		"/Users/kieran/devtrain/five-hundred/db/migrate/20150707114537_add_round_ref_to_tricks.rb",
+		"/Users/kieran/devtrain/five-hundred/db/migrate/20150707111117_create_games_players.rb",
+		"/Users/kieran/devtrain/five-hundred/db/migrate/20150707111117_create_player_games.rb",
+		"/Users/kieran/devtrain/five-hundred/db/migrate/20150707105043_add_trick_ref_to_cards.rb",
+		"/Users/kieran/devtrain/five-hundred/db/migrate/20150707104855_create_tricks.rb",
+		"/Users/kieran/devtrain/five-hundred/db/migrate/20150707103535_add_hand_ref_to_cards.rb",
+		"/Users/kieran/devtrain/five-hundred/db/migrate/20150707093821_create_players.rb",
+		"/Users/kieran/devtrain/five-hundred/db/migrate/20150707094655_create_hands.rb",
+		"/Users/kieran/devtrain/five-hundred/db/migrate/20150707101352_create_rounds.rb",
+		"/Users/kieran/devtrain/five-hundred/db/migrate/20150707092701_create_cards.rb",
+		"/Users/kieran/devtrain/five-hundred/db/migrate/20150707101519_create_decks.rb",
+		"/Users/kieran/devtrain/five-hundred/db/migrate/20150707101952_add_deck_ref_to_rounds.rb",
+		"/Users/kieran/devtrain/five-hundred/db/migrate/20150707092054_create_cards.rb"
+	],
+	"find":
+	{
+		"height": 23.0
+	},
+	"find_in_files":
+	{
+		"height": 106.0,
+		"where_history":
+		[
+			"/Users/kieran/devtrain/hangman-rails"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"players_turn",
+			"mac-",
+			"          \n",
+			"SlaveDriver",
+			"@master_writer",
+			"master_writer",
+			"poll_writer",
+			"master_writer",
+			"current_coin",
+			"{n}",
+			"uri",
+			"previous_hash",
+			"team_number",
+			"first",
+			"round",
+			"join_game",
+			"JoinGame",
+			"team",
+			"Player",
+			"loaded_tricks",
+			"trick",
+			"tricks.last",
+			"updated_at:",
+			"teams",
+			"10_of",
+			"14_of",
+			"14",
+			"tricks.last",
+			"added",
+			"present",
+			"team",
+			"game",
+			"teams",
+			"players",
+			"Faker::Name.name",
+			"A -> 4",
+			"doc",
+			" - ",
+			"      + ",
+			"    * ",
+			"|--------|",
+			"Features:",
+			"- ",
+			"imageable",
+			"employee",
+			"picture",
+			"compressed_new_chunk_length",
+			"uncompressed_new_chunk_length",
+			"old_sum",
+			"new_sum",
+			"out_file",
+			"output",
+			"input",
+			"output",
+			"$stderr",
+			"create(",
+			"create",
+			"lives",
+			"obfuscated",
+			"@game",
+			"created_game",
+			"letter",
+			"}\n",
+			"} ",
+			"game",
+			"CreateGame",
+			"make_guess",
+			"letter",
+			"guess",
+			"letter",
+			"guesses",
+			"self.",
+			"guesses",
+			"@game.",
+			"@game",
+			"game_status",
+			" \n",
+			"h3",
+			"5",
+			"letter",
+			"game: game, letter: ",
+			"game: game, ",
+			"game",
+			"\")}",
+			"game",
+			":)\n",
+			"}\n",
+			"ack",
+			" \n",
+			"overflow",
+			"hits",
+			"search_term",
+			"source",
+			"remaining",
+			"accidental",
+			"hidden_word",
+			"username",
+			"guess1",
+			"remaining_lives",
+			"\n    ",
+			"lives_remaining",
+			"do",
+			"game_id",
+			"guess",
+			"game",
+			"Game",
+			"game",
+			"stub_model",
+			"'",
+			"'\n",
+			"}\n",
+			"value",
+			"other_value",
+			"'",
+			"result_str",
+			"user_input",
+			"'",
+			"get_guess_str",
+			"user_guess",
+			"get_guess_str",
+			"set_result_of_comparison",
+			"guess_str",
+			"\"value#{i}\"",
+			"\"key#{i}\"",
+			"'\n",
+			"pair",
+			"values",
+			"}\n"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "app/models/action.rb",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 325,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								259,
+								259
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"auto_complete": false,
+							"bh_regions":
+							[
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
+							],
+							"syntax": "Packages/Ruby/Ruby.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "app/services/submit_bid.rb",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 810,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								357,
+								357
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"auto_complete": false,
+							"bh_regions":
+							[
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
+							],
+							"history_list_is_closing": true,
+							"syntax": "Packages/Ruby/Ruby.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "app/models/round.rb",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 360,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								355,
+								355
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"auto_complete": false,
+							"bh_regions":
+							[
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
+							],
+							"syntax": "Packages/Ruby/Ruby.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "app/services/deal_round.rb",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 348,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								348,
+								348
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
+							],
+							"syntax": "Packages/Ruby/Ruby.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "app/services/play_card.rb",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 1135,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								477,
+								427
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
+							],
+							"syntax": "Packages/Ruby/Ruby.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 5,
+					"file": "spec/services/submit_bid_spec.rb",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1926,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1587,
+								1587
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"auto_complete": false,
+							"bh_regions":
+							[
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
+							],
+							"syntax": "Packages/RSpec/RSpec.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 333.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "console-test.rb",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1402,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								706,
+								667
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"auto_complete": false,
+							"bh_regions":
+							[
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
+							],
+							"history_list_is_closing": true,
+							"syntax": "Packages/Ruby/Ruby.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 33.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			],
+			[
+				0,
+				1,
+				1,
+				2
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			0.5,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 98.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "five-hundred.sublime-project",
+	"replace":
+	{
+		"height": 42.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"cons",
+				"console-test.rb"
+			],
+			[
+				"dealr",
+				"app/services/deal_round.rb"
+			],
+			[
+				"round",
+				"app/models/round.rb"
+			],
+			[
+				"jts",
+				"spec/services/join_team_spec.rb"
+			],
+			[
+				"playcards",
+				"spec/services/play_card_spec.rb"
+			],
+			[
+				"subms",
+				"spec/services/submit_bid_spec.rb"
+			],
+			[
+				"team",
+				"app/models/team.rb"
+			],
+			[
+				"pla",
+				"app/models/player.rb"
+			],
+			[
+				"roun",
+				"app/models/round.rb"
+			],
+			[
+				"con",
+				"console-test.rb"
+			],
+			[
+				"act",
+				"app/models/action.rb"
+			],
+			[
+				"",
+				".rspec"
+			],
+			[
+				"action",
+				"app/models/action.rb"
+			],
+			[
+				"gem",
+				"Gemfile"
+			],
+			[
+				"migcrbi",
+				"db/migrate/20150710020147_create_bids.rb"
+			],
+			[
+				"db",
+				"db/migrate/20150710010839_add_bid_winner_to_game.rb"
+			],
+			[
+				"dbmgbid",
+				"db/migrate/20150710010839_add_bid_winner_to_game.rb"
+			],
+			[
+				"pl",
+				"app/models/player.rb"
+			],
+			[
+				"trick",
+				"app/models/trick.rb"
+			],
+			[
+				"db/migaddac",
+				"db/migrate/20150709201651_add_active_player_ref_to_games.rb"
+			],
+			[
+				"card",
+				"app/models/card.rb"
+			],
+			[
+				"cc",
+				"app/models/card_collection.rb"
+			],
+			[
+				"teamme",
+				"app/models/team_membership.rb"
+			],
+			[
+				"trickym",
+				"spec/fixtures/tricks.yml"
+			],
+			[
+				"bui",
+				"app/services/build_deck.rb"
+			],
+			[
+				"teammem.ym",
+				"spec/fixtures/team_memberships.yml"
+			],
+			[
+				"team.ym",
+				"spec/fixtures/teams.yml"
+			],
+			[
+				"player.yml",
+				"spec/fixtures/players.yml"
+			],
+			[
+				"dealcs",
+				"spec/services/deal_cards_spec.rb"
+			],
+			[
+				"guard",
+				"Guardfile"
+			],
+			[
+				"conso",
+				"console-test.rb"
+			],
+			[
+				"todo",
+				"todo-list.md"
+			],
+			[
+				"build",
+				"spec/services/build_deck_spec.rb"
+			],
+			[
+				"to",
+				"todo-list.md"
+			],
+			[
+				"re",
+				"README.md"
+			],
+			[
+				"gam",
+				"app/models/game.rb"
+			],
+			[
+				"tr",
+				"app/models/trick.rb"
+			],
+			[
+				"deck",
+				"app/models/deck.rb"
+			],
+			[
+				"dec",
+				"app/models/deck.rb"
+			],
+			[
+				"pal",
+				"lib/player.rb"
+			],
+			[
+				"gamesconsp",
+				"spec/controllers/games_controller_spec.rb"
+			],
+			[
+				"gamescon",
+				"app/controllers/games_controller.rb"
+			],
+			[
+				"gue",
+				"spec/models/guess_spec.rb"
+			],
+			[
+				"contgam",
+				"app/controllers/games_controller.rb"
+			],
+			[
+				"contrgu",
+				"app/controllers/guesses_controller.rb"
+			],
+			[
+				"gusp",
+				"spec/models/guess_spec.rb"
+			],
+			[
+				"gues",
+				"app/models/guess.rb"
+			],
+			[
+				"game.rb",
+				"app/models/game.rb"
+			],
+			[
+				"show",
+				"app/views/games/show.html.erb"
+			],
+			[
+				"submi",
+				"app/services/submit_guess.rb"
+			],
+			[
+				"guess",
+				"app/models/guess.rb"
+			],
+			[
+				"game",
+				"app/models/game.rb"
+			],
+			[
+				"gamsp",
+				"spec/models/game_spec.rb"
+			],
+			[
+				"subm",
+				"app/services/submit_guess.rb"
+			],
+			[
+				"gem.l",
+				"Gemfile.lock"
+			],
+			[
+				"gamcon",
+				"app/controllers/games_controller.rb"
+			],
+			[
+				"rail",
+				"spec/rails_helper.rb"
+			],
+			[
+				"sho",
+				"app/views/games/show.html.erb"
+			],
+			[
+				"in_p",
+				"app/views/games/_in_progress.html.erb"
+			],
+			[
+				"vigs",
+				"app/views/games/show.html.erb"
+			],
+			[
+				"gamrb",
+				"app/models/game.rb"
+			],
+			[
+				"gamecon",
+				"app/controllers/games_controller.rb"
+			],
+			[
+				"gcs",
+				"spec/controllers/games_controller_spec.rb"
+			],
+			[
+				"guscon",
+				"app/controllers/guesses_controller.rb"
+			],
+			[
+				"guscs",
+				"spec/controllers/guesses_controller_spec.rb"
+			],
+			[
+				"ma",
+				"spec/features/make_guesses_spec.rb"
+			],
+			[
+				"spec/mod/",
+				"spec/models/game_spec.rb"
+			],
+			[
+				"guessrb",
+				"app/models/guess.rb"
+			],
+			[
+				"makgus",
+				"spec/services/make_guess_spec.rb"
+			],
+			[
+				"ind",
+				"~/devtrain/index.html"
+			],
+			[
+				"mak",
+				"app/services/make_guess.rb"
+			],
+			[
+				"guessescon",
+				"app/controllers/guesses_controller.rb"
+			],
+			[
+				"gamcs",
+				"spec/controllers/games_controller_spec.rb"
+			],
+			[
+				"rout",
+				"config/routes.rb"
+			],
+			[
+				"a/v/ga/sh",
+				"app/views/games/show.html.erb"
+			],
+			[
+				"game_sp",
+				"spec/models/game_spec.rb"
+			],
+			[
+				".rs",
+				".rspec"
+			],
+			[
+				"games_cn",
+				"spec/controllers/games_controller_spec.rb"
+			],
+			[
+				"gu",
+				"app/models/guess.rb"
+			],
+			[
+				"appl",
+				"app/helpers/application_helper.rb"
+			],
+			[
+				"guess.rb",
+				"app/models/guess.rb"
+			],
+			[
+				"cr",
+				"crep"
+			],
+			[
+				"wo",
+				"words.txt"
+			],
+			[
+				"cre",
+				"spec/crepper_spec.rb"
+			],
+			[
+				"spec",
+				"spec/spec_helper.rb"
+			],
+			[
+				"rails",
+				"spec/rails_helper.rb"
+			],
+			[
+				"guec",
+				"app/controllers/guesses_controller.rb"
+			],
+			[
+				"route",
+				"config/routes.rb"
+			],
+			[
+				"see",
+				"db/seeds.rb"
+			],
+			[
+				"db/",
+				"db/migrate/20150624020344_add_game_ref_to_guesses.rb"
+			],
+			[
+				"db/mig",
+				"db/migrate/20150624012542_create_games.rb"
+			],
+			[
+				"buigs",
+				"spec/build_guess_spec.rb"
+			],
+			[
+				"hi",
+				"lib/high-low.rb"
+			],
+			[
+				"guesinga",
+				"lib/guessing_game.rb"
+			],
+			[
+				"gues.rb",
+				"lib/guess.rb"
+			],
+			[
+				"bil",
+				"lib/build_guess.rb"
+			],
+			[
+				"run",
+				"lib/runner.rb"
+			],
+			[
+				"guess.r",
+				"lib/guess.rb"
+			],
+			[
+				"console",
+				"lib/console_ui.rb"
+			],
+			[
+				"buil",
+				"lib/build_guess.rb"
+			],
+			[
+				"guessp",
+				"spec/guess_spec.rb"
+			],
+			[
+				"sp/c",
+				"spec/console_ui_spec.rb"
+			],
+			[
+				"runn",
+				"lib/runner.rb"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 400.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 400.0
+	},
+	"selected_group": 1,
+	"settings":
+	{
+	},
+	"show_minimap": false,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": false,
+	"side_bar_width": 156.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

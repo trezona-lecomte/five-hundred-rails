@@ -16,6 +16,7 @@ group :development, :test do
   gem 'pry-rails'
   gem 'rspec-rails'
   gem 'guard-rspec'
+  gem 'rspec-collection_matchers'
   gem 'faker'
 end
 

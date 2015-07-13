@@ -1,0 +1,5 @@
+fresh_trick:
+  round: fresh_round
+
+in_progress_trick:
+  round: in_progress_round

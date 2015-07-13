@@ -1,10 +1,8 @@
 class CreateCards < ActiveRecord::Migration
   def change
     create_table :cards do |t|
-      t.string :suit
       t.integer :number
-
-      t.timestamps null: false
+      t.string :suit
     end
   end
 end

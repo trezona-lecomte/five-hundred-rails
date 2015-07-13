@@ -13,7 +13,7 @@ Feature                                                                   | Stat
 --------------------------------------------------------------------------|--------|
 there are two teams                                                       |  DONE  |
 each team has two players                                                 |  DONE  |
-players can only be on a single teams                                     |  DONE  |
+players can only be on a single team                                      |  DONE  |
 teams must contain two different (unique) players                         |  DONE  |
 players on a team 'sit opposite' so won't play directly after one another |  TODO  |
 a team wins if they reach a score of 500 or more across all rounds        |  TODO  |
@@ -22,8 +22,8 @@ a team loses if they reach a score of -500 or less across all rounds      |  TOD
 ### For each 'round'
 Dealing Features:                                                               | Status |
 --------------------------------------------------------------------------------|--------|
-10 cards are dealt to each of the four players                                  |  TODO  |
-3 cards are dealt into the 'kitty'                                              |  TODO  |
+10 cards are dealt to each of the four players                                  |  DONE  |
+3 cards are dealt into the 'kitty'                                              |  DONE  |
 (first round) a random player deals                                             |  TODO  |
 (subsequent rounds) the dealing responsibilty moves 'clockwise'                 |  TODO  |
 

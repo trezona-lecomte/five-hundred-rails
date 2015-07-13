@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Trick, type: :model do
-  let(:card)  { Card.create! }
+  let(:card)  { Card.create!(suit: Suits::HEARTS) }
 
   describe "adding cards" do
     subject(:trick) { Trick.create! }
