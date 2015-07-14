@@ -118,11 +118,12 @@ RSpec.describe SubmitBid, type: :service do
         end
 
         context "when the player has already passed" do
+          let(:tricks) { 6 }
           before do
-            round.bids.create!(tricks:      0, suit: suit, player: player1)
-            round.bids.create!(tricks: tricks, suit: suit, player: player2)
-            round.bids.create!(tricks: tricks, suit: suit, player: player3)
-            round.bids.create!(tricks: tricks, suit: suit, player: player4)
+            round.bids.create!(tricks:        0, suit: suit, player: player1)
+            round.bids.create!(tricks:   tricks, suit: suit, player: player2)
+            round.bids.create!(tricks: tricks+1, suit: suit, player: player3)
+            round.bids.create!(tricks: tricks+2, suit: suit, player: player4)
           end
 
           it "doesn't create a bid" do

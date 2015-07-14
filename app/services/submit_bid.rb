@@ -26,19 +26,18 @@ class SubmitBid
 
   def valid_bid?(tricks, suit)
     if last_bid = round.bids.most_recent.first
+      # binding.pry
       if player.number == round.next_player_number
-        if bid_is_too_low?(tricks, suit, last_bid)
+        if player_already_passed?
+          add_error("You've already passed during this round.")
+        elsif bid_is_too_low?(tricks, suit, last_bid)
           add_error("Your last bid was too low.") unless bid_is_a_pass?(tricks)
         end
       else
         add_error("It's not your turn to bid.")
       end
     else
-      if player_already_passed?
-        add_error("You've already passed during this round.")
-      else
-        validate_first_player
-      end
+      validate_first_player
     end
 
     error.blank?

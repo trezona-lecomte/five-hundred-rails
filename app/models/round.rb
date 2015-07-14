@@ -19,19 +19,25 @@ class Round < ActiveRecord::Base
   def next_player_number
     index_of_last_player = playing_order.index(Bid.most_recent.first.player.number)
 
-
-    if (index_of_last_player + 1) == playing_order.length
-      index_of_next_player = 0
-
-      next_player = game.players.where(number: playing_order[index_of_next_player]).first
-
-      until next_player.bids.passes.empty?
-        index_of_next_player += 1
-        next_player = game.players.where(number: playing_order[index_of_next_player]).first
-      end
-        playing_order[index_of_next_player]
+    if index_of_last_player >= (playing_order.length - 1)
+      playing_order[0]
     else
       playing_order[index_of_last_player + 1]
     end
   end
+
+  #   if (index_of_last_player + 1) == playing_order.length
+  #     index_of_next_player = 0
+
+  #     next_player = game.players.where(number: playing_order[index_of_next_player]).first
+
+  #     until next_player.bids.passes.empty?
+  #       index_of_next_player += 1
+  #       next_player = game.players.where(number: playing_order[index_of_next_player]).first
+  #     end
+  #       playing_order[index_of_next_player]
+  #   else
+  #     playing_order[index_of_last_player + 1]
+  #   end
+  # end
 end
