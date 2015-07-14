@@ -6,8 +6,6 @@ class CreateGame
       game.teams.create!(number: n)
     end
 
-    # game.playing_order = PlayingOrder.new
-
     game
   end
 end

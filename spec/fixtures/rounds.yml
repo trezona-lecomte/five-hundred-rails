@@ -1,8 +1,10 @@
-fresh_round:
+bidding_round:
   game: fresh_game
+  playing_order: [11, 21, 12, 22]
 
-in_progress_round:
+playing_round:
   game: in_progress_game
+  playing_order: [11, 21, 12, 22]
 
 # <% 5.times do |n| %>
 # round_<%= n %>:

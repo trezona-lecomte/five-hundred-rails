@@ -36,7 +36,7 @@ players can only bid higher than the current bid, based on:                     
   the order of suits is no-trumps > hearts > diamonds > clubs > spades          |  DONE  |
   the number of tricks can be between 6 and 10                                  |  TODO  |
   players can elect to pass (make no bid)                                       |  DONE  |
-  players can't bid again after passing                                         |  TODO  |
+  players can't bid again after passing                                         |  DONE  |
   players can only bid again if another player has made an intervening bid      |  DONE  |
 if no player bids, the deck is reshuffled and redealt                           |  TODO  |
 
@@ -45,7 +45,7 @@ Playing Features:                                                               
 (on the first trick) the player who won the bidding leads                       |  TODO  |
 (on subsequent tricks) the winner of the last trick leads                       |  TODO  |
 playing proceeds 'clockwise'                                                    |  TODO  |
-players each must place one & only one card on their turn                       |  DONE  |
+players each must place one & only one card on their turn                       |  TODO  |
 players must follow suit if they can (including LB)                             |  TODO  |
 once all players have played a card, the highest card wins                      |  TODO  |
 the trick is added to the teams total number of tricks                          |  TODO  |

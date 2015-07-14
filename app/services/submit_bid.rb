@@ -3,11 +3,13 @@ require_dependency 'suits'
 class SubmitBid
   attr_reader :round, :player, :error, :bid, :tricks, :suit
 
+  # TODO: Change to named arguments
   def initialize(round, player)
     @round = round
     @player = player
   end
 
+  # TODO: Change to named arguments
   def call(tricks, suit)
     round.with_lock do
       add_error("Bidding for this round has finished.") and return unless round.bidding?

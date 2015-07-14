@@ -17,7 +17,11 @@ class Round < ActiveRecord::Base
 
   # TODO: this doesn't belong here!
   def next_player?(player)
-    bids.passes.where(player: player).empty? && player.number == next_player_number
+    if bidding?
+      bids.passes.where(player: player).empty? && player.number == next_player_number
+    elsif playing?
+
+    end
   end
 
   def next_player_number
@@ -29,19 +33,4 @@ class Round < ActiveRecord::Base
       playing_order[index_of_last_player + 1]
     end
   end
-
-  #   if (index_of_last_player + 1) == playing_order.length
-  #     index_of_next_player = 0
-
-  #     next_player = game.players.where(number: playing_order[index_of_next_player]).first
-
-  #     until next_player.bids.passes.empty?
-  #       index_of_next_player += 1
-  #       next_player = game.players.where(number: playing_order[index_of_next_player]).first
-  #     end
-  #       playing_order[index_of_next_player]
-  #   else
-  #     playing_order[index_of_last_player + 1]
-  #   end
-  # end
 end
