@@ -1,7 +1,7 @@
 require_dependency 'suits'
 
 class SubmitBid
-  attr_reader :round, :player, :error, :bid
+  attr_reader :round, :player, :error, :bid, :tricks, :suit
 
   def initialize(round, player)
     @round = round
@@ -12,7 +12,10 @@ class SubmitBid
     round.with_lock do
       add_error("Bidding for this round has finished.") and return unless round.bidding?
 
-      if valid_bid?(tricks, suit)
+      @tricks = tricks
+      @suit = suit
+
+      if valid_bid?
         @bid = round.bids.create!(tricks: tricks, suit: suit, player: player)
       end
     end
@@ -24,14 +27,11 @@ class SubmitBid
     @error = str
   end
 
-  def valid_bid?(tricks, suit)
+  def valid_bid?
     if last_bid = round.bids.most_recent.first
-      # binding.pry
-      if player.number == round.next_player_number
-        if player_already_passed?
-          add_error("You've already passed during this round.")
-        elsif bid_is_too_low?(tricks, suit, last_bid)
-          add_error("Your last bid was too low.") unless bid_is_a_pass?(tricks)
+      if round.next_player?(player)
+        if bid_is_too_low?(last_bid)
+          add_error("Your last bid was too low.") unless bid_is_a_pass?
         end
       else
         add_error("It's not your turn to bid.")
@@ -43,20 +43,16 @@ class SubmitBid
     error.blank?
   end
 
-  def bid_is_too_low?(tricks, suit, last_bid)
-    (tricks < last_bid.tricks) || same_number_of_tricks_and_lower_suit?(tricks, suit, last_bid)
+  def bid_is_too_low?(last_bid)
+    (tricks < last_bid.tricks) || same_tricks_lower_suit?(last_bid)
   end
 
-  def bid_is_a_pass?(tricks)
+  def bid_is_a_pass?
     tricks == 0
   end
 
-  def same_number_of_tricks_and_lower_suit?(tricks, suit, last_bid)
+  def same_tricks_lower_suit?(last_bid)
     (tricks == last_bid.tricks) && !(suit == Suits.higher_suit(suit, last_bid.suit))
-  end
-
-  def player_already_passed?
-    round.bids.passes.where(player: player).present?
   end
 
   def validate_first_player

@@ -16,6 +16,10 @@ class Round < ActiveRecord::Base
   end
 
   # TODO: this doesn't belong here!
+  def next_player?(player)
+    bids.passes.where(player: player).empty? && player.number == next_player_number
+  end
+
   def next_player_number
     index_of_last_player = playing_order.index(Bid.most_recent.first.player.number)
 
