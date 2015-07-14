@@ -21,15 +21,15 @@ p3 = game.teams.first.players.last
 p4 = game.teams.last.players.last
 round = game.rounds.last
 
-SubmitBid.call(round, p1, 6, Suits::DIAMONDS)
-SubmitBid.call(round, p2, 6, Suits::HEARTS)
-SubmitBid.call(round, p3, 7, Suits::SPADES)
-SubmitBid.call(round, p4, 7, Suits::CLUBS)
-SubmitBid.call(round, p1, 7, Suits::NO_TRUMPS)
-SubmitBid.call(round, p2, 7, Suits::HEARTS) # should fail
-SubmitBid.call(round, p2, 0, Suits::NO_TRUMPS)
-SubmitBid.call(round, p3, 0, Suits::NO_TRUMPS)
-SubmitBid.call(round, p4, 0, Suits::NO_TRUMPS)
+SubmitBid.new.call(round, p1, 6, Suits::DIAMONDS)
+SubmitBid.new.call(round, p2, 6, Suits::HEARTS)
+SubmitBid.new.call(round, p3, 7, Suits::SPADES)
+SubmitBid.new.call(round, p4, 7, Suits::CLUBS)
+SubmitBid.new.call(round, p1, 7, Suits::NO_TRUMPS)
+SubmitBid.new.call(round, p2, 7, Suits::HEARTS) # should fail
+SubmitBid.new.call(round, p2, 0, Suits::NO_TRUMPS)
+SubmitBid.new.call(round, p3, 0, Suits::NO_TRUMPS)
+SubmitBid.new.call(round, p4, 0, Suits::NO_TRUMPS)
 
 
 
