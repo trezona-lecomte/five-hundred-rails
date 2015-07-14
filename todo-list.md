@@ -30,14 +30,14 @@ Dealing Features:                                                               
 Bidding Features:                                                               | Status |
 --------------------------------------------------------------------------------|--------|
 the player 'to the left' of the dealer bids first                               |  TODO  |
-bidding continues 'clockwise' until all but one player has passed               |  TODO  |
+bidding continues 'clockwise' until all but one player has passed               |  DONE  |
 players can only bid higher than the current bid, based on:                     |  TODO  |
   bids consist of a number of tricks and a suit                                 |  DONE  |
   the order of suits is no-trumps > hearts > diamonds > clubs > spades          |  DONE  |
   the number of tricks can be between 6 and 10                                  |  TODO  |
   players can elect to pass (make no bid)                                       |  DONE  |
   players can't bid again after passing                                         |  TODO  |
-  players can only bid again if another player has made an intervening bid      |  TODO  |
+  players can only bid again if another player has made an intervening bid      |  DONE  |
 if no player bids, the deck is reshuffled and redealt                           |  TODO  |
 
 Playing Features:                                                               | Status |
