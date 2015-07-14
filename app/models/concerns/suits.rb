@@ -11,7 +11,9 @@ module Suits
   end
 
   class_methods do
-    def highest_suit(a, b)
+    def higher_suit(a, b)
+      return false if a == b
+
       ALL_SUITS.find { |suit| suit == a || suit == b }
     end
   end

@@ -27,6 +27,9 @@ SubmitBid.call(round, p3, 7, Suits::SPADES)
 SubmitBid.call(round, p4, 7, Suits::CLUBS)
 SubmitBid.call(round, p1, 7, Suits::NO_TRUMPS)
 SubmitBid.call(round, p2, 7, Suits::HEARTS) # should fail
+SubmitBid.call(round, p2, 0, Suits::NO_TRUMPS)
+SubmitBid.call(round, p3, 0, Suits::NO_TRUMPS)
+SubmitBid.call(round, p4, 0, Suits::NO_TRUMPS)
 
 
 

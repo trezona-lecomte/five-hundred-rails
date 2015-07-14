@@ -4,7 +4,7 @@ class Player < ActiveRecord::Base
   belongs_to :game
   has_many   :hands,  class_name: "CardCollection"
   has_many   :rounds, through: :hands
-  has_many   :actions
+  has_many   :bids
 
   validates :user, presence: true
   validates_uniqueness_of :user, scope: :game
