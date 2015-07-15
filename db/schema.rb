@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150715030158) do
+ActiveRecord::Schema.define(version: 20150715041704) do
 
   create_table "bids", force: :cascade do |t|
     t.integer  "tricks",     limit: 4
@@ -39,7 +39,8 @@ ActiveRecord::Schema.define(version: 20150715030158) do
   end
 
   create_table "games", force: :cascade do |t|
-    t.text "playing_order", limit: 65535
+    t.text   "playing_order", limit: 65535
+    t.string "deck_type",     limit: 255
   end
 
   create_table "players", force: :cascade do |t|
@@ -57,7 +58,11 @@ ActiveRecord::Schema.define(version: 20150715030158) do
   create_table "playing_cards", id: false, force: :cascade do |t|
     t.integer "card_id",            limit: 4
     t.integer "card_collection_id", limit: 4
+    t.integer "trick_id",           limit: 4
   end
+
+  add_index "playing_cards", ["card_collection_id", "card_id"], name: "index_playing_cards_on_card_collection_id_and_card_id", unique: true, using: :btree
+  add_index "playing_cards", ["trick_id"], name: "index_playing_cards_on_trick_id", using: :btree
 
   create_table "rounds", force: :cascade do |t|
     t.integer "game_id",       limit: 4
@@ -93,6 +98,7 @@ ActiveRecord::Schema.define(version: 20150715030158) do
   add_foreign_key "players", "games"
   add_foreign_key "players", "teams"
   add_foreign_key "players", "users"
+  add_foreign_key "playing_cards", "tricks"
   add_foreign_key "rounds", "games"
   add_foreign_key "teams", "games"
   add_foreign_key "tricks", "rounds"

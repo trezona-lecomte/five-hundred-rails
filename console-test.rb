@@ -4,14 +4,14 @@ user3 = User.create!(username: "mitch")
 user4 = User.create!(username: "mikee")
 user5 = User.create!(username: "invalid_guy")
 
-game = CreateGame.new.call
+game = CreateGame.new(deck_type: "standard").call
 
-JoinTeam.new.call(user1, game.teams.first)
-JoinTeam.new.call(user2, game.teams.first)
-JoinTeam.new.call(user3, game.teams.last)
-JoinTeam.new.call(user4, game.teams.last)
+JoinTeam.new(user1).call(game.teams.first)
+JoinTeam.new(user2).call(game.teams.first)
+JoinTeam.new(user3).call(game.teams.last)
+JoinTeam.new(user4).call(game.teams.last)
 
-deck = BuildDeck.new.call
+deck_builder = BuildDeck.new(game.deck_type)
 
 DealRound.new.call(game, deck, [11, 21, 12, 22])
 

@@ -10,6 +10,8 @@ class Round < ActiveRecord::Base
 
   serialize :playing_order, Array
 
+  validates_presence_of :playing_order
+
   def progress_to_playing_stage(bid)
     playing! if bids.passes.count >= (hands.count - 1)
   end

@@ -1,6 +1,14 @@
 require_dependency 'suits'
 
 module Decks
+  def self.standard_kitty_size
+    3
+  end
+
+  def self.standard_hand_size
+    10
+  end
+
   def self.standard_deck
     cards = [
         { number: 4, suit: Suits::HEARTS },

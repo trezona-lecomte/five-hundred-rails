@@ -2,11 +2,10 @@ require 'rails_helper'
 
 RSpec.describe DealRound, type: :service do
   let(:game)  { CreateGame.new.call }
-  let(:deck)  { BuildDeck.new.call }
 
   describe "#call" do
     before do
-      DealRound.new.call(game, deck, [11, 21, 12, 22])
+      DealRound.new(game: game).call
     end
 
     context "when the dealing is successful" do
@@ -14,12 +13,12 @@ RSpec.describe DealRound, type: :service do
 
       it "deals 10 cards to each player" do
         round.hands.each do |hand|
-          expect(hand.cards.count).to eq(10)
+          expect(hand.playing_cards.count).to eq(10)
         end
       end
 
       it "deals the remaining cards to the kitty" do
-        expect(round.kitty.cards.count).to eq(3)
+        expect(round.kitty.playing_cards.count).to eq(3)
       end
     end
 
