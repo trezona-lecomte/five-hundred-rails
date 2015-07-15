@@ -1,8 +1,6 @@
 require_dependency 'suits'
 
 module Decks
-  attr_reader :numbers_suits
-
   def self.standard_deck
     cards = [
         { number: 4, suit: Suits::HEARTS },

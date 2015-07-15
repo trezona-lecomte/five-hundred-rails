@@ -1,19 +1,15 @@
+require_dependency 'decks'
+
 class BuildDeck
-  include Suits
-  NUMBERS = (4..14).to_a
+  attr_reader :deck_type, :cards
 
-  def call
-    cards = NUMBERS.product(ALL_SUITS.select { |suit| suit != NO_TRUMPS })
-    cards << joker
-
-    exclusions = [4].product([CLUBS, SPADES])
-
-    (cards - exclusions).map { |number, suit| Card.new(number: number, suit: suit) }
+  def initialize(deck_type)
+    @deck_type = "#{deck_type.downcase}_deck"
   end
 
-  private
-
-  def joker
-    [NUMBERS.max + 1, NO_TRUMPS]
+  def call
+    @cards = Decks.send(deck_type).collect do |card|
+      Card.where(number: card[:number], suit: card[:suit]).first
+    end
   end
 end
