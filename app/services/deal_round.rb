@@ -39,15 +39,15 @@ class DealRound
     end
   end
 
+  def deal_card(collection)
+    collection.playing_cards.create!(card: deck.pop)
+  end
+
   def kitty_size
     Decks.send("#{game.deck_type.downcase}_kitty_size")
   end
 
   def hand_size
     Decks.send("#{game.deck_type.downcase}_hand_size")
-  end
-
-  def deal_card(collection)
-    collection.playing_cards.create!(card: deck.pop)
   end
 end

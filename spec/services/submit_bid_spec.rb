@@ -1,12 +1,7 @@
 require "rails_helper"
 
 RSpec.describe SubmitBid, type: :service do
-  # fixtures :all
-  # fixtures :teams
-  # fixtures :users
-  fixtures :players
-  fixtures :rounds
-
+  fixtures :all
   let(:round)   { rounds(:bidding_round) }
   let(:player1) { players(:bidding_player_1) }
   let(:player2) { players(:bidding_player_2) }
@@ -78,13 +73,9 @@ RSpec.describe SubmitBid, type: :service do
     context "when the bid is unsuccessful" do
       let(:not_turn_error)     { "It's not your turn to bid." }
       let(:bid_too_low_error)  { "Your last bid was too low." }
-      let(:bidding_over_error) { "Bidding for this round has finished." }
 
       context "when the bid is a pass" do
         let(:tricks) { 0 }
-        # let(:player) { player }
-
-        # before { submit_bid }
 
         context "when it is not the players turn" do
           let(:bid_submitter) { SubmitBid.new(round, player2) }

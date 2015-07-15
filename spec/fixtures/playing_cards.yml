@@ -1,0 +1,172 @@
+mikees_4_of_hearts:
+  card: 4_of_hearts
+  card_collection: mikees_hand
+
+mikees_4_of_diamonds:
+  card: 4_of_diamonds
+  card_collection: mikees_hand
+
+mikees_5_of_hearts:
+  card: 5_of_hearts
+  card_collection: mikees_hand
+
+mikees_5_of_diamonds:
+  card: 5_of_diamonds
+  card_collection: mikees_hand
+
+mikees_5_of_clubs:
+  card: 5_of_clubs
+  card_collection: mikees_hand
+
+mikees_5_of_spades:
+  card: 5_of_spades
+  card_collection: mikees_hand
+
+mikees_6_of_hearts:
+  card: 6_of_hearts
+  card_collection: mikees_hand
+
+mikees_6_of_diamonds:
+  card: 6_of_diamonds
+  card_collection: mikees_hand
+
+mikees_6_of_clubs:
+  card: 6_of_clubs
+  card_collection: mikees_hand
+
+mikees_6_of_spades:
+  card: 6_of_spades
+  card_collection: mikees_hand
+
+mitches_7_of_hearts:
+  card: 7_of_hearts
+  card_collection: mitches_hand
+
+mitches_7_of_diamonds:
+  card: 7_of_diamonds
+  card_collection: mitches_hand
+
+mitches_7_of_clubs:
+  card: 7_of_clubs
+  card_collection: mitches_hand
+
+mitches_7_of_spades:
+  card: 7_of_spades
+  card_collection: mitches_hand
+
+mitches_8_of_hearts:
+  card: 8_of_hearts
+  card_collection: mitches_hand
+
+mitches_8_of_diamonds:
+  card: 8_of_diamonds
+  card_collection: mitches_hand
+
+mitches_8_of_clubs:
+  card: 8_of_clubs
+  card_collection: mitches_hand
+
+mitches_8_of_spades:
+  card: 8_of_spades
+  card_collection: mitches_hand
+
+mitches_9_of_hearts:
+  card: 9_of_hearts
+  card_collection: mitches_hand
+
+mitches_9_of_diamonds:
+  card: 9_of_diamonds
+  card_collection: mitches_hand
+
+pragyas_9_of_clubs:
+  card: 9_of_clubs
+  card_collection: pragyas_hand
+
+pragyas_9_of_spades:
+  card: 9_of_spades
+  card_collection: pragyas_hand
+
+pragyas_10_of_hearts:
+  card: 10_of_hearts
+  card_collection: pragyas_hand
+
+pragyas_10_of_diamonds:
+  card: 10_of_diamonds
+  card_collection: pragyas_hand
+
+pragyas_10_of_clubs:
+  card: 10_of_clubs
+  card_collection: pragyas_hand
+
+pragyas_10_of_spades:
+  card: 10_of_spades
+  card_collection: pragyas_hand
+
+pragyas_jack_of_hearts:
+  card: jack_of_hearts
+  card_collection: pragyas_hand
+
+pragyas_jack_of_diamonds:
+  card: jack_of_diamonds
+  card_collection: pragyas_hand
+
+pragyas_jack_of_clubs:
+  card: jack_of_clubs
+  card_collection: pragyas_hand
+
+pragyas_jack_of_spades:
+  card: jack_of_spades
+  card_collection: pragyas_hand
+
+playing_kittys_queen_of_hearts:
+  card: queen_of_hearts
+  card_collection: playing_kitty
+
+playing_kittys_queen_of_diamonds:
+  card: queen_of_diamonds
+  card_collection: playing_kitty
+
+playing_kittys_queen_of_clubs:
+  card: queen_of_clubs
+  card_collection: playing_kitty
+
+kierans_queen_of_spades:
+  card: queen_of_spades
+  card_collection: kierans_hand
+
+kierans_king_of_hearts:
+  card: king_of_hearts
+  card_collection: kierans_hand
+
+kierans_king_of_diamonds:
+  card: king_of_diamonds
+  card_collection: kierans_hand
+
+kierans_king_of_clubs:
+  card: king_of_clubs
+  card_collection: kierans_hand
+
+kierans_king_of_spades:
+  card: king_of_spades
+  card_collection: kierans_hand
+
+kierans_ace_of_hearts:
+  card: ace_of_hearts
+  card_collection: kierans_hand
+
+kierans_ace_of_diamonds:
+  card: ace_of_diamonds
+  card_collection: kierans_hand
+
+kierans_ace_of_clubs:
+  card: ace_of_clubs
+  card_collection: kierans_hand
+
+kierans_ace_of_spades:
+  card: ace_of_spades
+  card_collection: kierans_hand
+
+kierans_joker:
+  card: joker
+  card_collection: kierans_hand
+

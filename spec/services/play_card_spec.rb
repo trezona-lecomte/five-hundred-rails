@@ -1,41 +1,25 @@
 require 'rails_helper'
 
 RSpec.describe PlayCard, type: :service do
-  fixtures :cards
-  fixtures :games
-  # let(:game)    { CreateGame.new.call }
-  fixtures :tricks
-  fixtures :rounds
-  let(:round)   { game.rounds.first }
-  let(:player1) { game.teams.first.players.first }
-  let(:player2) { game.teams.last.players.first }
-  let(:player3) { game.teams.first.players.last }
-  let(:player4) { game.teams.last.players.last }
-  let(:players) { [player1, player2, player3, player4] }
-  let(:not_turn_error)     { "It's not your turn to bid." }
-  let(:bid_too_low_error)  { "Your last bid was too low." }
-  let(:bidding_over_error) { "Bidding for this round has finished." }
+  fixtures :all
 
-  before do
-    JoinTeam.new.call(User.create!(username: Faker::Internet.user_name), game.teams.first)
-    JoinTeam.new.call(User.create!(username: Faker::Internet.user_name), game.teams.first)
-    JoinTeam.new.call(User.create!(username: Faker::Internet.user_name), game.teams.last)
-    JoinTeam.new.call(User.create!(username: Faker::Internet.user_name), game.teams.last)
-
-    deck = BuildDeck.new.call
-    DealRound.new.call(game, deck, [11, 21, 12, 22])
-  end
+  let(:game)   { games(:playing_game) }
+  let(:round)  { rounds(:playing_round) }
+  let(:trick)  { tricks(:first_trick) }
+  let(:kieran) { players(:kieran) }
+  let(:mitch)  { players(:mitch) }
+  let(:pragya) { players(:pragya) }
+  let(:mikee)  { players(:mikee) }
+  let(:player) { kieran }
+  let(:card)   { playing_cards(:kierans_joker) }
 
   describe "#call" do
-    let(:trick)         { tricks(:fresh_trick) }
-    let(:card)          { cards(:ace_of_spades) }
     let(:card_player)   { PlayCard.new(round: round, player: player) }
     subject(:play_card) { card_player.call(card: card, trick: trick) }
 
     context "when the card can be played" do
-
       it "adds the card to the trick" do
-        expect{ play_card }.to change{ trick.cards.count }.by(1)
+        expect{ play_card }.to change{ trick.playing_cards.count }.by(1)
       end
     end
 
