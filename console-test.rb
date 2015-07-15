@@ -13,7 +13,7 @@ JoinTeam.new(user4).call(game.teams.last)
 
 deck_builder = BuildDeck.new(game.deck_type)
 
-DealRound.new.call(game, deck, [11, 21, 12, 22])
+DealRound.new(game: game).call(playing_order: [11, 21, 12, 22])
 
 p1 = game.teams.first.players.first
 p2 = game.teams.last.players.first

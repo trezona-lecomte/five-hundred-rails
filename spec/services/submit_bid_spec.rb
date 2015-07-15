@@ -86,7 +86,7 @@ RSpec.describe SubmitBid, type: :service do
 
           before { submit_bid }
 
-          it "raises a 'not your turn' error" do
+          it "stores a 'not your turn' error" do
               expect(bid_submitter.error).to eq(not_turn_error)
           end
         end
@@ -106,7 +106,7 @@ RSpec.describe SubmitBid, type: :service do
 
           before { submit_bid }
 
-          it "raises a 'not your turn' error" do
+          it "stores a 'not your turn' error" do
             expect(bid_submitter.error).to eq(not_turn_error)
           end
         end
@@ -122,7 +122,7 @@ RSpec.describe SubmitBid, type: :service do
             end
           end
 
-          it "raises a 'not your turn' error" do
+          it "stores a 'not your turn' error" do
             submit_bid = SubmitBid.new(round, player2)
             submit_bid.call(tricks, suit)
 
@@ -139,7 +139,7 @@ RSpec.describe SubmitBid, type: :service do
             expect{ submit_bid }.to_not change(Bid, :count)
           end
 
-          it "raises a 'bid too low' error" do
+          it "stores a 'bid too low' error" do
             submit_bid = SubmitBid.new(round, player)
             submit_bid.call(tricks, suit)
 
@@ -156,7 +156,7 @@ RSpec.describe SubmitBid, type: :service do
             expect{ submit_bid }.to_not change(Bid, :count)
           end
 
-          it "raises a 'bid too low' error" do
+          it "stores a 'bid too low' error" do
             submit_bid = SubmitBid.new(round, player)
             submit_bid.call(tricks, Suits::NO_TRUMPS)
 

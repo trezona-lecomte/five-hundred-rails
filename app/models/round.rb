@@ -1,16 +1,18 @@
 class Round < ActiveRecord::Base
   MAX_TRICKS = 10
-  enum stage: [:bidding, :playing]
 
   belongs_to :game
-  has_many   :tricks, dependent: :destroy
-  has_many   :hands, -> { where.not(player_id: nil) }, class_name: "CardCollection"
-  has_one    :kitty, -> { where(player_id:  nil) }, class_name: "CardCollection"
-  has_many   :bids, dependent: :destroy, after_add: :progress_to_playing_stage
-
-  serialize :playing_order, Array
+  has_many :tricks, dependent: :destroy
+  has_many :bids, dependent: :destroy, after_add: :progress_to_playing_stage
+  has_many :hands, -> { where.not(player_id: nil) }, class_name: "CardCollection",
+                                                     dependent: :destroy
+  has_one :kitty, -> { where(player_id:  nil) }, class_name: "CardCollection",
+                                                 dependent: :destroy
 
   validates_presence_of :playing_order
+
+  enum stage: [:bidding, :playing]
+  serialize :playing_order, Array
 
   def progress_to_playing_stage(bid)
     playing! if bids.passes.count >= (hands.count - 1)
@@ -20,7 +22,7 @@ class Round < ActiveRecord::Base
     if bidding?
       bids.passes.where(player: player).empty? && (player.table_position == next_table_position)
     elsif playing?
-
+      player.table_position == next_table_position
     end
   end
 

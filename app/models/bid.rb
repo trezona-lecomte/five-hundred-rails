@@ -1,4 +1,4 @@
-require_dependency 'suits'
+require_dependency "suits"
 
 class Bid < ActiveRecord::Base
   belongs_to :player
