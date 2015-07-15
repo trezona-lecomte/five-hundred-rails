@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe PlayCard, type: :service do
-  fixtures :tricks
   fixtures :cards
   fixtures :games
   # let(:game)    { CreateGame.new.call }
+  fixtures :tricks
   fixtures :rounds
   let(:round)   { game.rounds.first }
   let(:player1) { game.teams.first.players.first }
@@ -12,9 +12,9 @@ RSpec.describe PlayCard, type: :service do
   let(:player3) { game.teams.first.players.last }
   let(:player4) { game.teams.last.players.last }
   let(:players) { [player1, player2, player3, player4] }
-  let(:not_turn_error)       { "It's not your turn to bid." }
-  let(:bid_too_low_error)    { "Your last bid was too low." }
-  let(:bidding_over_error)   { "Bidding for this round has finished." }
+  let(:not_turn_error)     { "It's not your turn to bid." }
+  let(:bid_too_low_error)  { "Your last bid was too low." }
+  let(:bidding_over_error) { "Bidding for this round has finished." }
 
   before do
     JoinTeam.new.call(User.create!(username: Faker::Internet.user_name), game.teams.first)

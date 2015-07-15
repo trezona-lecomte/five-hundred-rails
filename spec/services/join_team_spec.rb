@@ -1,13 +1,22 @@
 require 'rails_helper'
 
 RSpec.describe JoinTeam, type: :service do
-  let(:user)  { User.create!(username: Faker::Internet.user_name) }
-  let(:game)  { CreateGame.new.call }
-  let(:team1) { game.teams.first }
-  let(:team2) { game.teams.last }
+  fixtures :games
+  fixtures :teams
+  fixtures :users
+  fixtures :players
 
   describe "#call" do
-    subject(:join_team) { JoinTeam.new.call(user, team1) }
+    let(:user1) { users(:user1) }
+    let(:user2) { users(:user2) }
+    let(:user)  { user1 }
+    let(:game)  { games(:bidding_game) }
+    let(:team1) { teams(:fresh_team_1) }
+    let(:team2) { teams(:fresh_team_2) }
+    let(:team)  { team1 }
+
+    let(:team_joiner)   { JoinTeam.new(user) }
+    subject(:join_team) { team_joiner.call(team) }
 
     context "when successful" do
       it "creates a new player" do
@@ -31,12 +40,14 @@ RSpec.describe JoinTeam, type: :service do
           end
 
           it "allocates a player number of 11" do
-            expect(game.players.last.number).to eq(11)
+            expect(game.players.last.table_position).to eq(11)
           end
         end
 
         context "joins team 2" do
-          before { JoinTeam.new.call(user, team2) }
+          let(:team) { team2 }
+
+          before { join_team }
 
           it "assigns the player to team 2" do
             expect(game.players.last.team.number).to eq(2)
@@ -51,26 +62,27 @@ RSpec.describe JoinTeam, type: :service do
           end
 
           it "allocates a player number of 21" do
-            expect(game.players.last.number).to eq(21)
+            expect(game.players.last.table_position).to eq(21)
           end
         end
       end
 
       context "when a second player joins a team" do
         before do
-          JoinTeam.new.call(User.create!(username: Faker::Internet.user_name), team1)
-          JoinTeam.new.call(User.create!(username: Faker::Internet.user_name), team1)
+          JoinTeam.new(user1).call(team)
+          JoinTeam.new(user2).call(team)
         end
 
         it "allocates a player number of 12" do
-          expect(game.players.last.number).to eq(12)
+          expect(game.players.last.table_position).to eq(12)
         end
       end
     end
 
     context "when unsuccessful" do
+      # TODO This belongs in the model spec:
       context "when a user tries to join the same team twice" do
-        before { game.players.create!(user: user, team: team1, number: 21) }
+        before { game.players.create!(user: user, team: team1, table_position: 21) }
 
         it "raises an error" do
           expect{ join_team }.to raise_error(ActiveRecord::RecordInvalid)
@@ -78,28 +90,24 @@ RSpec.describe JoinTeam, type: :service do
       end
 
       context "when more than #{Team::MAX_PLAYERS} players try to join a team" do
-        before do
-          (Team::MAX_PLAYERS + 1).times do
-            JoinTeam.new.call(User.create!(username: Faker::Internet.user_name), team1)
-          end
-        end
+        let(:team) { teams(:full_team_1) }
+
+        before { team_joiner.call(team) }
 
         it "adds an error to the team" do
-          expect(team1).to have(1).errors
+          expect(team_joiner.error).to eq("No more than #{Team::MAX_PLAYERS} players can join this team.")
         end
 
         it "doesn't create any more than #{Team::MAX_PLAYERS} players on the team" do
-          expect(team1.players.count).to eq(Team::MAX_PLAYERS)
+          expect(team.players.count).to eq(Team::MAX_PLAYERS)
         end
       end
 
       context "when a user tries to join multiple teams on the same game" do
-        before do
-          JoinTeam.new.call(user, team1)
-        end
+        before { team_joiner.call(team1) }
 
         it "raises an error" do
-          expect{ JoinTeam.new.call(user, team2) }.to raise_error(ActiveRecord::RecordInvalid)
+          expect{ team_joiner.call(team2) }.to raise_error(ActiveRecord::RecordInvalid)
         end
       end
     end

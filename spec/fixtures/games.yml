@@ -1,8 +1,8 @@
-fresh_game:
-  id: 1
+bidding_game:
+  playing_order: []
 
-in_progress_game:
-  id: 2
+playing_game:
+  playing_order: []
 
 finished_game:
-  id: 3
+  playing_order: []

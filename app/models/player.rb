@@ -8,6 +8,6 @@ class Player < ActiveRecord::Base
 
   validates :user, presence: true
   validates_uniqueness_of :user, scope: :game
-  validates :number, numericality: { only_integer: true,
+  validates :table_position, numericality: { only_integer: true,
                                      greater_than: 0 }
 end

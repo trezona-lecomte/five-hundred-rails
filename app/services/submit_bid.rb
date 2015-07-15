@@ -25,8 +25,8 @@ class SubmitBid
 
   private
 
-  def add_error(str)
-    @error = str
+  def add_error(message)
+    @error = message
   end
 
   def valid_bid?
@@ -58,7 +58,7 @@ class SubmitBid
   end
 
   def validate_first_player
-    if round.bids.empty? && !(player.number == round.playing_order.first)
+    if round.bids.empty? && !(player.table_position == round.playing_order.first)
       add_error("It's not your turn to bid.")
     end
   end

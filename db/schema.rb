@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150713235400) do
+ActiveRecord::Schema.define(version: 20150714222909) do
 
   create_table "bids", force: :cascade do |t|
     t.integer  "tricks",     limit: 4
@@ -48,10 +48,10 @@ ActiveRecord::Schema.define(version: 20150713235400) do
   end
 
   create_table "players", force: :cascade do |t|
-    t.integer "user_id", limit: 4
-    t.integer "game_id", limit: 4
-    t.integer "number",  limit: 4
-    t.integer "team_id", limit: 4
+    t.integer "user_id",        limit: 4
+    t.integer "game_id",        limit: 4
+    t.integer "table_position", limit: 4
+    t.integer "team_id",        limit: 4
   end
 
   add_index "players", ["game_id"], name: "index_players_on_game_id", using: :btree
