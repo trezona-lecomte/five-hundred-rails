@@ -1,214 +1,171 @@
 4_of_hearts:
   suit: "hearts"
   number: 4
-  card_collection: kitty
 
 4_of_diamonds:
   suit: "diamonds"
   number: 4
-  card_collection: kitty
 
 5_of_hearts:
   suit: "hearts"
   number: 5
-  card_collection: kitty
 
 5_of_diamonds:
   suit: "diamonds"
   number: 5
-  card_collection: mikees_hand
 
 5_of_clubs:
   suit: "clubs"
   number: 5
-  card_collection: mikees_hand
 
 5_of_spades:
   suit: "spades"
   number: 5
-  card_collection: mikees_hand
 
 6_of_hearts:
   suit: "hearts"
   number: 6
-  card_collection: mikees_hand
 
 6_of_diamonds:
   suit: "diamonds"
   number: 6
-  card_collection: mikees_hand
 
 6_of_clubs:
   suit: "clubs"
   number: 6
-  card_collection: mikees_hand
 
 6_of_spades:
   suit: "spades"
   number: 6
-  card_collection: mikees_hand
 
 7_of_hearts:
   suit: "hearts"
   number: 7
-  card_collection: mikees_hand
 
 7_of_diamonds:
   suit: "diamonds"
   number: 7
-  card_collection: mikees_hand
 
 7_of_clubs:
   suit: "clubs"
   number: 7
-  card_collection: mikees_hand
 
 7_of_spades:
   suit: "spades"
   number: 7
-  card_collection: mitches_hand
 
 8_of_hearts:
   suit: "hearts"
   number: 8
-  card_collection: mitches_hand
 
 8_of_diamonds:
   suit: "diamonds"
   number: 8
-  card_collection: mitches_hand
 
 8_of_clubs:
   suit: "clubs"
   number: 8
-  card_collection: mitches_hand
 
 8_of_spades:
   suit: "spades"
   number: 8
-  card_collection: mitches_hand
 
 9_of_hearts:
   suit: "hearts"
   number: 9
-  card_collection: mitches_hand
 
 9_of_diamonds:
   suit: "diamonds"
   number: 9
-  card_collection: mitches_hand
 
 9_of_clubs:
   suit: "clubs"
   number: 9
-  card_collection: mitches_hand
 
 9_of_spades:
   suit: "spades"
   number: 9
-  card_collection: mitches_hand
 
 10_of_hearts:
   suit: "hearts"
   number: 10
-  card_collection: mitches_hand
 
 10_of_diamonds:
   suit: "diamonds"
   number: 10
-  card_collection: pragyas_hand
 
 10_of_clubs:
   suit: "clubs"
   number: 10
-  card_collection: pragyas_hand
 
 10_of_spades:
   suit: "spades"
   number: 10
-  card_collection: pragyas_hand
 
 jack_of_hearts:
   suit: "hearts"
   number: 11
-  card_collection: pragyas_hand
 
 jack_of_diamonds:
   suit: "diamonds"
   number: 11
-  card_collection: pragyas_hand
 
 jack_of_clubs:
   suit: "clubs"
   number: 11
-  card_collection: pragyas_hand
 
 jack_of_spades:
   suit: "spades"
   number: 11
-  card_collection: pragyas_hand
 
 queen_of_hearts:
   suit: "hearts"
   number: 12
-  card_collection: pragyas_hand
 
 queen_of_diamonds:
   suit: "diamonds"
   number: 12
-  card_collection: pragyas_hand
 
 queen_of_clubs:
   suit: "clubs"
   number: 12
-  card_collection: pragyas_hand
 
 queen_of_spades:
   suit: "spades"
   number: 12
-  card_collection: kierans_hand
 
 king_of_hearts:
   suit: "hearts"
   number: 13
-  card_collection: kierans_hand
 
 king_of_diamonds:
   suit: "diamonds"
   number: 13
-  card_collection: kierans_hand
 
 king_of_clubs:
   suit: "clubs"
   number: 13
-  card_collection: kierans_hand
 
 king_of_spades:
   suit: "spades"
   number: 13
-  card_collection: kierans_hand
 
 ace_of_hearts:
   suit: "hearts"
   number: 14
-  card_collection: kierans_hand
 
 ace_of_diamonds:
   suit: "diamonds"
   number: 14
-  card_collection: kierans_hand
 
 ace_of_clubs:
   suit: "clubs"
   number: 14
-  card_collection: kierans_hand
 
 ace_of_spades:
   suit: "spades"
   number: 14
-  card_collection: kierans_hand
 
 joker:
   suit: "no trumps"
   number: 15
-  card_collection: kierans_hand

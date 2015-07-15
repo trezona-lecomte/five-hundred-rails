@@ -34,14 +34,9 @@ ActiveRecord::Schema.define(version: 20150714222909) do
   add_index "card_collections", ["round_id"], name: "index_card_collections_on_round_id", using: :btree
 
   create_table "cards", force: :cascade do |t|
-    t.integer "number",             limit: 4
-    t.string  "suit",               limit: 255
-    t.integer "trick_id",           limit: 4
-    t.integer "card_collection_id", limit: 4
+    t.integer "number", limit: 4
+    t.string  "suit",   limit: 255
   end
-
-  add_index "cards", ["card_collection_id"], name: "index_cards_on_card_collection_id", using: :btree
-  add_index "cards", ["trick_id"], name: "index_cards_on_trick_id", using: :btree
 
   create_table "games", force: :cascade do |t|
     t.text "playing_order", limit: 65535
@@ -90,8 +85,6 @@ ActiveRecord::Schema.define(version: 20150714222909) do
   add_foreign_key "bids", "rounds"
   add_foreign_key "card_collections", "players"
   add_foreign_key "card_collections", "rounds"
-  add_foreign_key "cards", "card_collections"
-  add_foreign_key "cards", "tricks"
   add_foreign_key "players", "games"
   add_foreign_key "players", "teams"
   add_foreign_key "players", "users"

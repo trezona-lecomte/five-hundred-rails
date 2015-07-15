@@ -1,0 +1,21 @@
+require_dependency 'suits'
+
+module Decks
+  attr_reader :numbers_suits
+
+  def self.standard_deck
+    cards = [
+        { number: 4, suit: Suits::HEARTS },
+        { number: 4, suit: Suits::DIAMONDS },
+      ]
+
+    [Suits::HEARTS, Suits::DIAMONDS, Suits::CLUBS, Suits::SPADES].each do |suit|
+      (5..14).to_a.each do |number|
+        cards << { number: number, suit: suit }
+      end
+    end
+
+    cards << { number: 15, suit: Suits::NO_TRUMPS }
+  end
+
+end
