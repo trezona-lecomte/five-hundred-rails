@@ -27,12 +27,15 @@ class Round < ActiveRecord::Base
   end
 
   def next_table_position
-    index_of_last_player = playing_order.index(Bid.most_recent.first.player.table_position)
+    if bidding?
+      index_of_last_player = playing_order.index(Bid.most_recent.first.player.table_position)
 
-    if index_of_last_player >= (playing_order.length - 1)
-      playing_order[0]
-    else
-      playing_order[index_of_last_player + 1]
-    end
+      if index_of_last_player >= (playing_order.length - 1)
+        playing_order[0]
+      else
+        playing_order[index_of_last_player + 1]
+      end
+    elsif playing?
+      index_of_last_player = playing
   end
 end

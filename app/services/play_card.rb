@@ -11,8 +11,10 @@ class PlayCard
 
     @trick = trick
 
-    if valid_play?(playing_card)
+    if round.next_player?(player)
       trick.playing_cards << playing_card
+    else
+      add_error("It's not your turn to play.")
     end
   end
 
@@ -22,7 +24,7 @@ class PlayCard
     @error = message
   end
 
-  def valid_play?(playing_card)
-    round.next_player?(playing_card.player)
-  end
+  # def valid_play?(playing_card)
+  #   round.next_player?(playing_card.player)
+  # end
 end

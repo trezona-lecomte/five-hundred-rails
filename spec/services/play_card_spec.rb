@@ -30,9 +30,10 @@ RSpec.describe PlayCard, type: :service do
         it "doesn't add the card to the trick" do
           expect{ play_card }.to_not change{ trick.playing_cards.count }
         end
-        # it "raises error" do
-          # expect{ play_card }.to raise_error(ActiveRecord::RecordInvalid)
-        # end
+
+        it "stores a 'not your turn' error" do
+          expect(card_player.error).to eq("It's not your turn to play.")
+        end
       end
 
       context "when the trick has finished" do
