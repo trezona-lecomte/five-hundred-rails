@@ -1,5 +1,7 @@
-require_dependency "suits"
-
 class Card < ActiveRecord::Base
-  validates :suit, inclusion: { in: Suits::ALL_SUITS }
+  belongs_to :round
+  belongs_to :player
+
+  enum rank: %w(4 5 6 7 8 9 10 jack queen king ace joker)
+  enum suit: %i(spades clubs diamonds hearts no_suit)
 end

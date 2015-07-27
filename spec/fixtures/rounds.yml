@@ -1,9 +1,0 @@
-bidding_round:
-  game: bidding_game
-  playing_order: [11, 21, 12, 22]
-  stage: 0
-
-playing_round:
-  game: playing_game
-  playing_order: [11, 21, 12, 22]
-  stage: 1

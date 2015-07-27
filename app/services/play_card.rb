@@ -1,30 +1,32 @@
 class PlayCard
-  attr_reader :round, :player, :card, :trick, :error
+  attr_reader :round, :card
 
-  def initialize(round:, player:)
+  def initialize(round, card)
     @round = round
-    @player = player
+    @card = card
   end
 
-  def call(playing_card:, trick:)
-    add_error("Cards can't be played at this stage of the game.") and return unless round.playing?
-
-    @trick = trick
-
-    if round.next_player?(player)
-      trick.playing_cards << playing_card
-    else
-      add_error("It's not your turn to play.")
+  def call
+    @round.with_lock do
+      play_card if card_can_be_played
     end
+
+    success?
   end
 
   private
 
-  def add_error(message)
-    @error = message
+  def card_can_be_played
+    true
   end
 
-  # def valid_play?(playing_card)
-  #   round.next_player?(playing_card.player)
-  # end
+  def play_card
+    round.actions.new(player: @card.player, card: @card)
+
+    round.save
+  end
+
+  def success?
+    @round.errors.empty?
+  end
 end

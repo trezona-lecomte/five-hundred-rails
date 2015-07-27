@@ -1,14 +1,11 @@
 Rails.application.routes.draw do
-  resources :bids
-  resources :teams
-  resources :bids
-  resources :teams
-  resources :cards
-  resources :games
-  resources :tricks
-  resources :rounds
-  resources :hands
-  resources :players
+  resources :games, except: [:new, :edit] do
+    resources :players, only: [:create]
+
+    resources :rounds, only: [:index, :create, :show] do
+      resources :actions, only: [:create]
+    end
+  end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

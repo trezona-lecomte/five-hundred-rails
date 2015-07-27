@@ -1,2 +1,0 @@
-class TricksController < ApplicationController
-end
