@@ -1,5 +1,22 @@
 game = Game.create!
 
+JoinGame.new(game, Faker::Internet.user_name).call
+p1 = game.players.last
+JoinGame.new(game, Faker::Internet.user_name).call
+p2 = game.players.last
+JoinGame.new(game, Faker::Internet.user_name).call
+p3 = game.players.last
+JoinGame.new(game, Faker::Internet.user_name).call
+p4 = game.players.last
+
+round = game.rounds.create!
+
+10.times { round.tricks.create! }
+
+DealCards.new(game, round).call
+
+
+
 
 
 # round = game.rounds.create!
