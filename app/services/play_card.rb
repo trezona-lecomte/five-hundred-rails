@@ -1,13 +1,14 @@
 class PlayCard
   attr_reader :round, :card
 
-  def initialize(round, card)
-    @round = round
+  def initialize(trick, player, card)
+    @trick = trick
+    @player = player
     @card = card
   end
 
   def call
-    @round.with_lock do
+    @card.with_lock do
       play_card if card_can_be_played
     end
 
@@ -17,16 +18,24 @@ class PlayCard
   private
 
   def card_can_be_played
-    true
+    if @card.trick.blank? && @card.player == @player
+      true
+    else
+      @card.errors.add(:trick, "can't have this card played by this player")
+
+      false
+    end
   end
 
   def play_card
-    round.actions.new(player: @card.player, card: @card)
+    @card.trick = @trick
 
-    round.save
+    unless @card.save
+      @card.errors.add(:trick, "can't have this card played")
+    end
   end
 
   def success?
-    @round.errors.empty?
+    @card.errors.empty?
   end
 end
