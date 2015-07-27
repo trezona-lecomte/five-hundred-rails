@@ -1,4 +1,10 @@
 class RoundsController < ApplicationController
+  before_action :set_round, only: [:show]
+
+  def show
+    render json: @round
+  end
+
   def index
     @rounds = Round.all
 
@@ -24,7 +30,12 @@ class RoundsController < ApplicationController
 
     render json: @round
   end
+
   private
+
+  def set_round
+    @round = Round.find(params[:id])
+  end
 
   def round_params
     params.permit(:game_id)
