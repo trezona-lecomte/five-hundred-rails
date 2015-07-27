@@ -23,9 +23,9 @@ class JoinGame
   end
 
   def join_game
-    @game.players.new(handle: @handle)
+    @player = @game.players.new(handle: @handle)
 
-    @game.save
+    @player.save
   end
 
   def success?
