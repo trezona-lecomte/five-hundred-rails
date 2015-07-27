@@ -8,4 +8,5 @@ gem 'active_model_serializers', git: "https://github.com/rails-api/active_model_
 
 group :development, :test do
   gem 'pry-byebug'
+  gem 'faker'
 end
