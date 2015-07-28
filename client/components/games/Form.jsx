@@ -2,6 +2,7 @@ var React = require("react");
 
 module.exports = React.createClass({
     handleSubmit: function(e) {
+        this.props.optimisticUpdate({id: ""});
        this.props.writeGameToAPI(JSON.stringify({game: { }}));
     },
     render: function() {

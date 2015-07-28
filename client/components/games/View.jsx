@@ -17,15 +17,21 @@ module.exports = React.createClass({
     writeGameToAPI: function(data) {
         this.props.writeToAPI("post", this.props.origin + "/games", data, function(game) {
             var games = this.state.data;
+            games.shift();
             games.unshift(game);
             this.setState({data: games});
         }.bind(this));
+    },
+    optimisticUpdate: function(game) {
+        var games = this.state.data;
+        games.unshift(game);
+        this.setState({data: games});
     },
     render: function() {
         return (
             <div className="games-view">
               <h2>GamesView:</h2>
-              <GamesForm writeGameToAPI={this.writeGameToAPI} />
+              <GamesForm writeGameToAPI={this.writeGameToAPI} optimisticUpdate={this.optimisticUpdate} />
               <GamesList data={this.state.data} />
             </div>
         );
