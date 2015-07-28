@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  match '*all', to: 'application#preflight', via: [:options]
+
   resources :games, except: [:new, :edit] do
     resources :players, only: [:index, :create]
 
