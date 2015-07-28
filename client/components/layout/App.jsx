@@ -1,4 +1,5 @@
 var React = require('react');
+var Reqwest = require('reqwest');
 var GamesView = require('../games/View.jsx');
 
 module.exports = React.createClass({
