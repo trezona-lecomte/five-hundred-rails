@@ -7,6 +7,10 @@ class ApplicationController < ActionController::API
     render nothing: true
   end
 
+  def index
+    render file: "public/index.html"
+  end
+
   private
 
   def allow_cross_origin_requests

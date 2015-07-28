@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  match '*all', to: 'application#preflight', via: [:options]
+  match "*all", to: "application#preflight", via: [:options]
 
   resources :games, except: [:new, :edit] do
     resources :players, only: [:index, :create]
@@ -8,4 +8,6 @@ Rails.application.routes.draw do
       resources :tricks, only: [:show, :update]
     end
   end
+
+  match "*all", to: "application#index", via: [:get]
 end
