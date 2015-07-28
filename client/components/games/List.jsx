@@ -11,6 +11,7 @@ module.exports = React.createClass({
 
         return (
             <ul className="games-list">
+              <h3>GamesList:</h3>
               {games}
             </ul>
         );

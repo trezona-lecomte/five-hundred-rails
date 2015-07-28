@@ -16,6 +16,7 @@ module.exports = React.createClass({
     render: function() {
         return (
             <div className="games-view">
+              <h2>GamesView:</h2>
               <GamesList data={this.state.data} />
             </div>
         );
