@@ -1,5 +1,6 @@
-var React = require('react');
-var GamesList = require('./List.jsx');
+var React = require("react");
+var GamesList = require("./List.jsx");
+var GamesForm = require("./Form.jsx");
 
 module.exports = React.createClass({
     getInitialState: function() {
@@ -13,10 +14,18 @@ module.exports = React.createClass({
             this.setState({data: game_data.games});
         }.bind(this));
     },
+    writeGameToAPI: function(data) {
+        this.props.writeToAPI("post", this.props.origin + "/games", data, function(game) {
+            var games = this.state.data;
+            games.unshift(game);
+            this.setState({data: games});
+        }.bind(this));
+    },
     render: function() {
         return (
             <div className="games-view">
               <h2>GamesView:</h2>
+              <GamesForm writeGameToAPI={this.writeGameToAPI} />
               <GamesList data={this.state.data} />
             </div>
         );
