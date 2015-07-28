@@ -22646,30 +22646,156 @@
 
 	var React = __webpack_require__(/*! react */ 2);
 	var Router = __webpack_require__(/*! react-router */ 156);
-	var App = __webpack_require__(/*! ../components/layout/App.jsx */ 198);
-	var GamesView = __webpack_require__(/*! ../components/games/View.jsx */ 200);
-	var RulesView = __webpack_require__(/*! ../components/static/RulesView.jsx */ 205);
+	var App = __webpack_require__(/*! ../components/layout/App.jsx */ 202);
+	var GamesView = __webpack_require__(/*! ../components/games/View.jsx */ 198);
+	var Game = __webpack_require__(/*! ../components/games/Game.jsx */ 205)
+	var RulesView = __webpack_require__(/*! ../components/static/RulesView.jsx */ 206);
 	var DefaultRoute = Router.DefaultRoute;
 	var Route = Router.Route;
 	
 	module.exports = (
-	  React.createElement(Route, {name: "app", path: "/", handler: App}, 
-	    React.createElement(DefaultRoute, {name: "games", handler: GamesView}), 
-	    React.createElement(Route, {name: "rules", handler: RulesView})
-	  )
+	    React.createElement(Route, {name: "app", path: "/", handler: App}, 
+	      React.createElement(DefaultRoute, {name: "games", handler: GamesView}), 
+	        React.createElement(Route, {name: "game", path: "games/:gameId", handler: Game}), 
+	
+	      React.createElement(Route, {name: "rules", handler: RulesView})
+	    )
 	);
 
 
 /***/ },
 /* 198 */
 /*!******************************************!*\
+  !*** ./client/components/games/View.jsx ***!
+  \******************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(/*! react */ 2);
+	var GamesList = __webpack_require__(/*! ./List.jsx */ 199);
+	var GamesForm = __webpack_require__(/*! ./Form.jsx */ 201);
+	
+	module.exports = React.createClass({displayName: "exports",
+	    getInitialState: function() {
+	        return {data: []};
+	    },
+	    componentDidMount: function() {
+	        this.readGamesFromAPI();
+	    },
+	    readGamesFromAPI: function() {
+	        this.props.readFromAPI(this.props.origin + "/games", function(game_data) {
+	            this.setState({data: game_data.games});
+	        }.bind(this));
+	    },
+	    writeGameToAPI: function(data) {
+	        this.props.writeToAPI("post", this.props.origin + "/games", data, function(game) {
+	            var games = this.state.data;
+	            games.shift();
+	            games.unshift(game);
+	            this.setState({data: games});
+	        }.bind(this));
+	    },
+	    optimisticUpdate: function(game) {
+	        var games = this.state.data;
+	        games.unshift(game);
+	        this.setState({data: games});
+	    },
+	    render: function() {
+	        return (
+	            React.createElement("div", {className: "games-view"}, 
+	              React.createElement("h2", null, "GamesView:"), 
+	              React.createElement(GamesForm, {writeGameToAPI: this.writeGameToAPI, optimisticUpdate: this.optimisticUpdate}), 
+	              React.createElement(GamesList, {data: this.state.data})
+	            )
+	        );
+	    }
+	});
+
+
+/***/ },
+/* 199 */
+/*!******************************************!*\
+  !*** ./client/components/games/List.jsx ***!
+  \******************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(/*! react */ 2);
+	
+	var GameBadge = __webpack_require__(/*! ./GameBadge.jsx */ 200);
+	
+	module.exports = React.createClass({displayName: "exports",
+	    render: function() {
+	        var gameBadges = this.props.data.map(function(game) {
+	            return (
+	                React.createElement(GameBadge, {key: game.id, num: game.id})
+	           );
+	        });
+	
+	        return (
+	            React.createElement("ul", {className: "games-list"}, 
+	              React.createElement("h3", null, "GamesList:"), 
+	              gameBadges
+	            )
+	        );
+	    }
+	});
+
+
+/***/ },
+/* 200 */
+/*!***********************************************!*\
+  !*** ./client/components/games/GameBadge.jsx ***!
+  \***********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(/*! react */ 2);
+	var Router = __webpack_require__(/*! react-router */ 156);
+	var Link = Router.Link
+	
+	module.exports = React.createClass({displayName: "exports",
+	    render: function() {
+	        return (
+	            React.createElement("li", {className: "game-badge"}, 
+	            React.createElement(Link, {to: "game", params: {gameId: this.props.num}}, "Game ", this.props.num)
+	            )
+	        );
+	    }
+	});
+
+
+/***/ },
+/* 201 */
+/*!******************************************!*\
+  !*** ./client/components/games/Form.jsx ***!
+  \******************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(/*! react */ 2);
+	
+	module.exports = React.createClass({displayName: "exports",
+	    handleSubmit: function(e) {
+	        this.props.optimisticUpdate({id: ""});
+	       this.props.writeGameToAPI(JSON.stringify({game: { }}));
+	    },
+	    render: function() {
+	        return (
+	            React.createElement("form", {className: "games-form pure-form", onSubmit: this.handleSubmit}, 
+	              React.createElement("button", {type: "submit", className: "pure-button pure-button-primary"}, "New Game")
+	            )
+	        );
+	    }
+	});
+
+
+/***/ },
+/* 202 */
+/*!******************************************!*\
   !*** ./client/components/layout/App.jsx ***!
   \******************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(/*! react */ 2);
-	var Reqwest = __webpack_require__(/*! reqwest */ 199);
-	var GamesView = __webpack_require__(/*! ../games/View.jsx */ 200);
+	var Reqwest = __webpack_require__(/*! reqwest */ 203);
+	var GamesView = __webpack_require__(/*! ../games/View.jsx */ 198);
 	var Menu = __webpack_require__(/*! ./Menu.jsx */ 204);
 	var Router = __webpack_require__(/*! react-router */ 156);
 	var RouteHandler = Router.RouteHandler;
@@ -22728,7 +22854,7 @@
 
 
 /***/ },
-/* 199 */
+/* 203 */
 /*!******************************!*\
   !*** ./~/reqwest/reqwest.js ***!
   \******************************/
@@ -23352,126 +23478,6 @@
 
 
 /***/ },
-/* 200 */
-/*!******************************************!*\
-  !*** ./client/components/games/View.jsx ***!
-  \******************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(/*! react */ 2);
-	var GamesList = __webpack_require__(/*! ./List.jsx */ 201);
-	var GamesForm = __webpack_require__(/*! ./Form.jsx */ 203);
-	
-	module.exports = React.createClass({displayName: "exports",
-	    getInitialState: function() {
-	        return {data: []};
-	    },
-	    componentDidMount: function() {
-	        this.readGamesFromAPI();
-	    },
-	    readGamesFromAPI: function() {
-	        this.props.readFromAPI(this.props.origin + "/games", function(game_data) {
-	            this.setState({data: game_data.games});
-	        }.bind(this));
-	    },
-	    writeGameToAPI: function(data) {
-	        this.props.writeToAPI("post", this.props.origin + "/games", data, function(game) {
-	            var games = this.state.data;
-	            games.shift();
-	            games.unshift(game);
-	            this.setState({data: games});
-	        }.bind(this));
-	    },
-	    optimisticUpdate: function(game) {
-	        var games = this.state.data;
-	        games.unshift(game);
-	        this.setState({data: games});
-	    },
-	    render: function() {
-	        return (
-	            React.createElement("div", {className: "games-view"}, 
-	              React.createElement("h2", null, "GamesView:"), 
-	              React.createElement(GamesForm, {writeGameToAPI: this.writeGameToAPI, optimisticUpdate: this.optimisticUpdate}), 
-	              React.createElement(GamesList, {data: this.state.data})
-	            )
-	        );
-	    }
-	});
-
-
-/***/ },
-/* 201 */
-/*!******************************************!*\
-  !*** ./client/components/games/List.jsx ***!
-  \******************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(/*! react */ 2);
-	var Game = __webpack_require__(/*! ./Game.jsx */ 202);
-	
-	module.exports = React.createClass({displayName: "exports",
-	    render: function() {
-	        var games = this.props.data.map(function(game) {
-	            return (
-	                React.createElement(Game, {key: game.id, num: game.id})
-	           );
-	        });
-	
-	        return (
-	            React.createElement("ul", {className: "games-list"}, 
-	              React.createElement("h3", null, "GamesList:"), 
-	              games
-	            )
-	        );
-	    }
-	});
-
-
-/***/ },
-/* 202 */
-/*!******************************************!*\
-  !*** ./client/components/games/Game.jsx ***!
-  \******************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(/*! react */ 2);
-	
-	module.exports = React.createClass({displayName: "exports",
-	    render: function() {
-	        return (
-	            React.createElement("li", {className: "game"}, 
-	              React.createElement("span", {className: "game-label"}, "Game "), 
-	              React.createElement("span", {className: "game-num"}, this.props.num)
-	            )
-	        );
-	    }
-	});
-
-/***/ },
-/* 203 */
-/*!******************************************!*\
-  !*** ./client/components/games/Form.jsx ***!
-  \******************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(/*! react */ 2);
-	
-	module.exports = React.createClass({displayName: "exports",
-	    handleSubmit: function(e) {
-	        this.props.optimisticUpdate({id: ""});
-	       this.props.writeGameToAPI(JSON.stringify({game: { }}));
-	    },
-	    render: function() {
-	        return (
-	            React.createElement("form", {className: "games-form pure-form", onSubmit: this.handleSubmit}, 
-	              React.createElement("button", {type: "submit", className: "pure-button pure-button-primary"}, "New Game")
-	            )
-	        );
-	    }
-	});
-
-
-/***/ },
 /* 204 */
 /*!*******************************************!*\
   !*** ./client/components/layout/Menu.jsx ***!
@@ -23504,6 +23510,41 @@
 
 /***/ },
 /* 205 */
+/*!******************************************!*\
+  !*** ./client/components/games/Game.jsx ***!
+  \******************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(/*! react */ 2);
+	
+	module.exports = React.createClass({displayName: "exports",
+	    getInitialState: function() {
+	        return {data: []};
+	    },
+	    componentDidMount: function() {
+	        // from the path '/games/:id'
+	        console.log(this.props.params);
+	        var id = this.props.params.gameId;
+	        readGameFromAPI(id)
+	    },
+	    readGameFromAPI: function(id) {
+	        this.props.readFromAPI(this.props.origin + "/games" + id, function(game_data) {
+	            this.setState({data: game_data});
+	        }.bind(this));
+	    },
+	    render: function() {
+	        var game = this.state.data
+	        return (
+	            React.createElement("div", {className: "game"}, 
+	              React.createElement("h2", null, "Game:"), 
+	              game
+	            )
+	        );
+	    }
+	});
+
+/***/ },
+/* 206 */
 /*!************************************************!*\
   !*** ./client/components/static/RulesView.jsx ***!
   \************************************************/

@@ -1,6 +1,12 @@
 class GameSerializer < ActiveModel::Serializer
-  attributes :id
+  include Rails.application.routes.url_helpers
+
+  attributes :id, :url
 
   has_many :players
   has_many :rounds
+
+  def url
+    game_path(object)
+  end
 end

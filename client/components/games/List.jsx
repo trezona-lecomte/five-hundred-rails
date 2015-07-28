@@ -1,18 +1,19 @@
-var React = require('react');
-var Game = require('./Game.jsx');
+var React = require("react");
+
+var GameBadge = require("./GameBadge.jsx");
 
 module.exports = React.createClass({
     render: function() {
-        var games = this.props.data.map(function(game) {
+        var gameBadges = this.props.data.map(function(game) {
             return (
-                <Game key={game.id} num={game.id}/>
+                <GameBadge key={game.id} num={game.id} />
            );
         });
 
         return (
             <ul className="games-list">
               <h3>GamesList:</h3>
-              {games}
+              {gameBadges}
             </ul>
         );
     }

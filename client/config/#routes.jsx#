@@ -9,8 +9,8 @@ var Route = Router.Route;
 
 module.exports = (
     <Route name="app" path="/" handler={App}>
-      <DefaultRoute name="games" handler={GamesView} />
-        <Route name="game" path="games/:gameId" handler={Game} />
+      <DefaultRoute name="games" handler={GamesView}>
+        <Route path="/:gameId" handler={Game} />
 
       <Route name="rules" handler={RulesView} />
     </Route>
