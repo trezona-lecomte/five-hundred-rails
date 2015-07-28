@@ -13,4 +13,4 @@
 /tmp
 
 # Ignore node modules
-/node_modules
+/client/node_modules/
