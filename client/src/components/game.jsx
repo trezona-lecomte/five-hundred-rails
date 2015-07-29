@@ -1,7 +1,10 @@
 var React = require('react');
-var Actions = require('../actions');
-var RoundStore = require('../stores/round-store');
 var Reflux = require('reflux');
+var Actions = require('../actions');
+var ReactRouter = require('react-router');
+var Link = ReactRouter.Link;
+var Round = require('./round');
+var RoundStore = require('../stores/round-store');
 
 module.exports = React.createClass({
   mixins: [
@@ -13,12 +16,25 @@ module.exports = React.createClass({
   componentWillMount: function() {
     Actions.getRounds(this.props.params.id);
   },
+  componentWillReceiveProps: function(nextProps) {
+    Actions.getRounds(nextProps.params.id);
+  },
   render: function() {
     return <div>
-      {this.state.rounds}
+    <h2>Game {this.props.params.id}</h2>
+    {this.renderRoundPreviews()}
     </div>
   },
+  renderRoundPreviews: function() {
+    return this.state.rounds.map(function(round) {
+      return (
+        <Link to={"rounds/" + round.id} className="list-group-item" key={round.id}>
+        <h4>Round {round.id}</h4>
+        </Link>
+      );
+    });
+  },
   onChange: function(event, rounds) {
-    this.setState({rounds: rounds});
+    this.setState({rounds: rounds})
   }
 });

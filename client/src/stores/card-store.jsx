@@ -5,14 +5,15 @@ var Actions = require('../actions');
 
 module.exports = Reflux.createStore({
   listenables: [Actions],
-  getRounds: function(gameId) {
-    Api.get('games/' + gameId)
+  getCards: function(trickId) {
+    Api.get('tricks/' + trickId)
       .then(function(json) {
-        this.rounds = json.game.rounds;
+        this.cards = json.trick.cards;
         this.triggerChange();
       }.bind(this));
   },
   triggerChange: function() {
-    this.trigger('change', this.rounds);
+    console.log(this.cards);
+    this.trigger('change', this.cards);
   }
 });

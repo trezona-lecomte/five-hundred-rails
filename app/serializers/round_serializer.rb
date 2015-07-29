@@ -1,5 +1,5 @@
 class RoundSerializer < ActiveModel::Serializer
-  attributes :id
+  attributes :id, :tricks
 
-  has_many :tricks
+  #has_many :tricks
 end

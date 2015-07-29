@@ -1,7 +1,7 @@
 var Fetch = require('whatwg-fetch');
 var rootUrl = 'http://localhost:3000/';
 
-module.exports = window.api = {
+module.exports = {
   get: function(url) {
     return fetch(rootUrl + url, {
       headers: {

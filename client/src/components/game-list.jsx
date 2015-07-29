@@ -1,34 +1,38 @@
 var React = require('react');
 var Reflux = require('reflux');
-var GameStore = require('../stores/game-store');
+var GamePreviewStore = require('../stores/game-preview-store');
 var Actions = require('../actions');
 var ReactRouter = require('react-router');
 var Link = ReactRouter.Link;
 
 module.exports = React.createClass({
   mixins: [
-    Reflux.listenTo(GameStore, 'onChange')
+    Reflux.listenTo(GamePreviewStore, 'onChange')
   ],
   getInitialState: function() {
-    return {games: []}
+    return {gamePreviews: []}
   },
   componentWillMount: function() {
-    Actions.getGames();
+    Actions.getGamePreviews();
   },
   render: function() {
-    return <div className="list-group">
+    return (
+      <div className="list-group">
       Game List
-      {this.renderGames()}
-    </div>
+      {this.renderGamePreviews()}
+      </div>
+    );
   },
-  renderGames: function() {
-    return this.state.games.map(function(game) {
-      return <Link to={"games/" + game.id} className="list-group-item" key={game.id}>
+  renderGamePreviews: function() {
+    return this.state.gamePreviews.map(function(game) {
+      return (
+        <Link to={"games/" + game.id} className="list-group-item" key={game.id}>
         <h4>Game {game.id}</h4>
-      </Link>
+        </Link>
+      );
     });
   },
-  onChange: function(event, games) {
-    this.setState({games: games});
+  onChange: function(event, gamePreviews) {
+    this.setState({gamePreviews: gamePreviews})
   }
 });
