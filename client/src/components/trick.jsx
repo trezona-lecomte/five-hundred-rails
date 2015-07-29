@@ -31,7 +31,7 @@ module.exports = React.createClass({
         <Link to={"cards/" + card.id} className="list-group-item" key={card.id}>
         <h4>Card {card.id}</h4>
         </Link>
-      );
+      )
     });
   },
   onChange: function(event, cards) {

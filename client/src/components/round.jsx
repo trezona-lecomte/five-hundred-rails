@@ -24,16 +24,16 @@ module.exports = React.createClass({
           <h2>Round {this.props.params.id}</h2>
           <p>status: {this.state}</p>
       </div>
-    )
+    );
   },
   renderPlayerCards() {
     return this.state.playerCards.map(function(card) {
       return (
         <li className="list-group-item" key={card.id}>
-            <h4>Card {card.id}
-
-      )
-    })
+            <h4>Card {card.id}</h4>
+        </li>
+      );
+    });
   },
   onChange: function() {
     this.setState({
