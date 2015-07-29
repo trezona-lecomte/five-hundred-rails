@@ -14,11 +14,12 @@ module.exports = Reflux.createStore({
     }.bind(this));
   },
   getRound: function(roundId) {
-    console.log('getRound called');
+    console.log('getRound called in round-store');
     Api.get('rounds/' + roundId)
       .then(function(json) {
         if(this.rounds) {
           //console.log('json: ' + json);
+
           this.rounds.push(json.round);
         } else {
           //console.log('storing the first round in round-store...');
@@ -28,6 +29,7 @@ module.exports = Reflux.createStore({
       }.bind(this));
   },
   find: function(roundId) {
+    console.log('find called in round-store');
     var round = _.findWhere(this.rounds, {id: roundId});
     if(round) {
       return round
