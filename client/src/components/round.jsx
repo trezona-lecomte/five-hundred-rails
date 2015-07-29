@@ -3,40 +3,41 @@ var Reflux = require('reflux');
 var Actions = require('../actions');
 var ReactRouter = require('react-router');
 var Link = ReactRouter.Link;
-var Trick = require('./trick');
-var TrickStore = require('../stores/trick-store');
+var RoundStore = require('../stores/round-store');
 
 module.exports = React.createClass({
   mixins: [
-    Reflux.listenTo(TrickStore, 'onChange')
+    Reflux.listenTo(RoundStore, 'onChange')
   ],
   getInitialState: function() {
-    return {tricks: []}
+    return {
+      round: null
+    }
   },
   componentWillMount: function() {
-    Actions.getTricks(this.props.params.id);
-  },
-  componentWillReceiveProps: function(nextProps) {
-    Actions.getTricks(nextProps.params.id);
+    console.log('calling getRound from Round#componentWillMount...')
+    Actions.getRound(this.props.params.id);
   },
   render: function() {
     return (
       <div>
-      <h2>Round {this.props.id}</h2>
-      {this.renderTrickPreviews()}
+          <h2>Round {this.props.params.id}</h2>
+          <p>status: {this.state}</p>
       </div>
     )
   },
-  renderTrickPreviews: function() {
-    return this.state.tricks.map(function(trick) {
+  renderPlayerCards() {
+    return this.state.playerCards.map(function(card) {
       return (
-        <Link to={"tricks/" + trick.id} className="list-group-item" key={trick.id}>
-        <h5>Trick {trick.id}</h5>
-        </Link>
-      );
-    });
+        <li className="list-group-item" key={card.id}>
+            <h4>Card {card.id}
+
+      )
+    })
   },
-  onChange: function(event, tricks) {
-    this.setState({tricks: tricks})
+  onChange: function() {
+    this.setState({
+      round: RoundStore.find(this.props.params.id)
+    });
   }
 });

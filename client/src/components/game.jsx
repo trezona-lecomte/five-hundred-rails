@@ -3,15 +3,19 @@ var Reflux = require('reflux');
 var Actions = require('../actions');
 var ReactRouter = require('react-router');
 var Link = ReactRouter.Link;
-var Round = require('./round');
+//var Round = require('./round');
 var RoundStore = require('../stores/round-store');
+var TrickStore = require('../stores/trick-store');
 
 module.exports = React.createClass({
   mixins: [
+    Reflux.listenTo(RoundStore, 'onChange'),
     Reflux.listenTo(RoundStore, 'onChange')
   ],
   getInitialState: function() {
-    return {rounds: []}
+    return {
+      rounds: []
+    }
   },
   componentWillMount: function() {
     Actions.getRounds(this.props.params.id);
@@ -35,6 +39,6 @@ module.exports = React.createClass({
     });
   },
   onChange: function(event, rounds) {
-    this.setState({rounds: rounds})
+    rounds: this.setState({rounds: rounds})
   }
 });

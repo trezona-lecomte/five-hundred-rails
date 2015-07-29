@@ -4,6 +4,7 @@ module.exports = Reflux.createActions([
   'getGamePreviews',
   'getGame',
   'getRounds',
+  'getRound',
   'getTricks',
   'getCards'
 ]);
