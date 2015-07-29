@@ -1,4 +1,3 @@
 class PlayerSerializer < ActiveModel::Serializer
-  attributes :id, :game_id, :handle, :cards
-  has_many :cards
+  attributes :id, :cards#, :game_id, :handle, :cards
 end

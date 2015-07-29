@@ -1,6 +1,5 @@
 class TrickSerializer < ActiveModel::Serializer
-  attributes :id, :cards
+  attributes :id, :round_id, :cards
 
-  #belongs_to :round
-  #has_many :cards
+  has_many :cards
 end
