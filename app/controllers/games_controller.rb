@@ -27,7 +27,7 @@ class GamesController < ApplicationController
     play_card = PlayCard.new(trick, player, card)
 
     if play_card.call
-      render :update, status: 200
+      render :update, status: 200, locals: {error_player_id: -1, errors: []}
     else
       render :update, status: 422, locals: {error_player_id: player.id, errors: play_card.errors}
     end

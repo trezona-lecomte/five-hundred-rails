@@ -49,6 +49,5 @@ module.exports = React.createClass({
       players: game.players,
       rounds: game.rounds
     });
-    console.log(JSON.stringify(game));
   }
 });

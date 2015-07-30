@@ -13,6 +13,6 @@ module.exports = React.createClass({
       </div>
 
       // <li className="card">{this.props.rank} of {this.props.suit}</li>
-    );
+    );o
   }
 });

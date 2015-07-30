@@ -20,19 +20,29 @@ module.exports = React.createClass({
   },
   renderTricks: function() {
     console.log('rendering tricks, count: ' + this.props.tricks.length);
+    var playedCards = this.playedCards(this.props.hands);
     return this.props.tricks.map(function(trick) {
       return (
-        <Trick key={trick.id} num={trick.id} />
+        <Trick key={trick.id} id={trick.id} allPlayedCards={playedCards} />
       );
     });
   },
   renderHands: function() {
-    console.log('rendering hands, count: ' + this.props.hands.length);
     return this.props.hands.map(function(hand) {
-      console.log('hand: ' + hand.id + ' rendered');
       return (
         <Hand key={hand.id} cards={hand.cards} playerId={hand.player_id} />
       );
     });
+  },
+  playedCards: function(hands) {
+    cards = [];
+    hands.map(function(hand) {
+      hand.cards.filter(function(card) {
+        if (card.trick_id) {
+          cards.push(card);
+        }
+      });
+    });
+    return cards;
   }
 });
