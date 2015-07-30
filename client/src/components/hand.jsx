@@ -4,13 +4,18 @@ var Card = require('./card');
 module.exports = React.createClass({
   getDefaultProps: function() {
     return {
-      cards: []
+      cards: [],
+      playerdId: null,
+      gameId: null,
+      activeTrickId: null
     }
   },
   render: function() {
-    console.log('rendering hand, card count: ' + this.props.cards.length);
     playerId = this.props.playerId;
-    console.log("HAND: " + JSON.stringify(this.props.cards));
+    gameId = this.props.gameId;
+    console.log(this.props.activeTrickId);
+    activeTrickId = this.props.activeTrickId;
+
     return (
       <div id="hand">
         <h3>Hand of player {this.props.playerId}</h3>
@@ -22,7 +27,8 @@ module.exports = React.createClass({
                     rank={card.rank}
                     suit={card.suit}
                     playerId={playerId}
-                    trickId={card.trick_id} />
+                    trickId={activeTrickId}
+                    gameId={gameId} />
               </div>
             );
           })
