@@ -1,4 +1,5 @@
 json.(@game, :id)
+json.errors(errors)
 
 json.players @game.players do |player|
   json.(player, :id, :handle)

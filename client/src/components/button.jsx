@@ -1,8 +1,22 @@
 var React = require('react');
+var Actions = require('../actions');
 
 module.exports = React.createClass({
+  getDefaultProps: function() {
+    return {
+      className: null,
+      gameId: null,
+      trickId: null,
+      playerId: null,
+      cardId: null
+    }
+  },
   handleClick: function() {
-    alert('button clicked');
+
+    Actions.playCard(this.props.gameId,
+                     this.props.trickId,
+                     this.props.playerId,
+                     this.props.cardId);
   },
   render: function() {
     return (

@@ -22,22 +22,28 @@ module.exports = React.createClass({
     Actions.getGame(this.props.params.id);
   },
   render: function() {
-    console.log("Game render count: " + ++renderCount)
+
     return (
       <div>
-        <h2>Game {this.props.params.id}</h2>
+      <h2>Game {this.props.params.id}</h2>
+        {this.displayPlayerErrors()}
         {this.renderRounds()}
       </div>
     )
   },
   renderRounds: function() {
-    console.log('rendering rounds...');
+
+    var gameId = this.props.params.id;
     return (
       <div id="rounds">
         {this.state.rounds.map(function(round) {
           return (
             <div id="round">
-              <Round key={round.id} tricks={round.tricks} hands={round.hands} num={round.id} />
+            <Round key={round.id}
+                   tricks={round.tricks}
+                   hands={round.hands}
+                   id={round.id}
+                   gameId={gameId}/>
             </div>
           );
         })}
@@ -49,6 +55,18 @@ module.exports = React.createClass({
       players: game.players,
       rounds: game.rounds
     });
-    console.log(JSON.stringify(game));
+  },
+  displayPlayerErrors: function() {
+    this.state.players.map(function(player) {
+      if(typeof player.errors !== 'undefined' && player.errors.length > 0) {
+
+        return (
+          <div id="errors">
+            <h5>Error: </h5>
+            {player.errors[0]}
+          </div>
+        );
+      }
+    });
   }
 });

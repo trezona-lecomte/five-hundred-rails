@@ -5,20 +5,24 @@ module.exports = {
   get: function(url) {
     return fetch(rootUrl + url, {
       headers: {
-
+        'Accept': 'application/json'
       }
     })
     .then(function(response){
       return response.json()
     });
   },
-  put: function(url) {
+  put: function(url, body) {
     return fetch(rootUrl + url, {
       method: 'put',
-      body:
-    }
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: body
     })
-  .then(function(response){
-
-  });
+    .then(function(response){
+      return response.json()
+    });
+  }
 };
