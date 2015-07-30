@@ -27,9 +27,9 @@ class GamesController < ApplicationController
     play_card = PlayCard.new(trick, player, card)
 
     if play_card.call
-      render :show, status: 200
+      render :update, status: 200
     else
-      render :show, status: 422, locals: {error_player_id: player.id, errors: play_card.errors}
+      render :update, status: 422, locals: {error_player_id: player.id, errors: play_card.errors}
     end
   end
   # def destroy
