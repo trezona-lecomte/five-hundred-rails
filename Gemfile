@@ -8,6 +8,7 @@ gem 'jbuilder'
 
 group :development, :test do
   gem 'pry-byebug'
+  gem 'pry-rails'
   gem 'faker'
   gem 'rspec-rails'
 end

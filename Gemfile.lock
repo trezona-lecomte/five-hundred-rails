@@ -71,6 +71,8 @@ GEM
     pry-byebug (3.2.0)
       byebug (~> 5.0)
       pry (~> 0.10)
+    pry-rails (0.3.4)
+      pry (>= 0.9.10)
     rack (1.6.4)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -140,6 +142,7 @@ DEPENDENCIES
   faker
   jbuilder
   pry-byebug
+  pry-rails
   rails (= 4.2.1)
   rails-api
   rspec-rails
