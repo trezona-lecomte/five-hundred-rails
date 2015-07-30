@@ -16,7 +16,6 @@ ActiveRecord::Schema.define(version: 20150729231246) do
   create_table "cards", force: :cascade do |t|
     t.integer  "suit"
     t.integer  "rank"
-    t.integer  "player_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "trick_id"
@@ -24,7 +23,6 @@ ActiveRecord::Schema.define(version: 20150729231246) do
   end
 
   add_index "cards", ["hand_id"], name: "index_cards_on_hand_id"
-  add_index "cards", ["player_id"], name: "index_cards_on_player_id"
   add_index "cards", ["trick_id"], name: "index_cards_on_trick_id"
 
   create_table "games", force: :cascade do |t|

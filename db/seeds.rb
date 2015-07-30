@@ -11,7 +11,7 @@ p4 = game.players.last
 
 round = game.rounds.create!
 
-10.times { round.tricks.create! }
+round.tricks.create!
 
 DealCards.new(game, round).call
 
