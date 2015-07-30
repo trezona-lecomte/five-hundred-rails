@@ -1,13 +1,8 @@
 json.(@game, :id)
+json.errors(errors)
 
 json.players @game.players do |player|
   json.(player, :id, :handle)
-
-  if errors.present? && error_player_id == player.id
-    json.errors(errors)
-  else
-    json.errors([])
-  end
 end
 
 json.rounds @game.rounds do |round|

@@ -27,9 +27,9 @@ class GamesController < ApplicationController
     play_card = PlayCard.new(trick, player, card)
 
     if play_card.call
-      render :update, status: 200, locals: {error_player_id: -1, errors: []}
+      render :update, status: 200, locals: {errors: []}
     else
-      render :update, status: 422, locals: {error_player_id: player.id, errors: play_card.errors}
+      render :update, status: 422, locals: {errors: play_card.errors}
     end
   end
   # def destroy
@@ -45,6 +45,6 @@ class GamesController < ApplicationController
   end
 
   def game_params
-    params.permit(:trick_id, :player_id, :card_id)
+    params.permit(:id, :trick_id, :player_id, :card_id)
   end
 end
