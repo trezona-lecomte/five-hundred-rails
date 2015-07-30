@@ -3,7 +3,6 @@ class CreateCards < ActiveRecord::Migration
     create_table :cards do |t|
       t.integer :suit
       t.integer :rank
-      t.references :round, index: true, foreign_key: true
       t.references :player, index: true, foreign_key: true
 
       t.timestamps null: false

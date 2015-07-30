@@ -7,7 +7,7 @@ module.exports = Reflux.createStore({
   getGamePreviews: function() {
     return Api.get('games')
     .then(function(json) {
-      this.game_previews = json.game_previews;
+      this.game_previews = json.games;
       this.triggerChange();
     }.bind(this));
   },

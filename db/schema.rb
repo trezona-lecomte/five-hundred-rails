@@ -11,38 +11,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150727203207) do
-
-  create_table "actions", force: :cascade do |t|
-    t.integer  "round_id"
-    t.integer  "card_id"
-    t.integer  "player_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "actions", ["card_id"], name: "index_actions_on_card_id"
-  add_index "actions", ["player_id"], name: "index_actions_on_player_id"
-  add_index "actions", ["round_id"], name: "index_actions_on_round_id"
+ActiveRecord::Schema.define(version: 20150729231246) do
 
   create_table "cards", force: :cascade do |t|
     t.integer  "suit"
     t.integer  "rank"
-    t.integer  "round_id"
     t.integer  "player_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "trick_id"
+    t.integer  "hand_id"
   end
 
+  add_index "cards", ["hand_id"], name: "index_cards_on_hand_id"
   add_index "cards", ["player_id"], name: "index_cards_on_player_id"
-  add_index "cards", ["round_id"], name: "index_cards_on_round_id"
   add_index "cards", ["trick_id"], name: "index_cards_on_trick_id"
 
   create_table "games", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "hands", force: :cascade do |t|
+    t.integer  "player_id"
+    t.integer  "round_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "hands", ["player_id", "round_id"], name: "index_hands_on_player_id_and_round_id"
+  add_index "hands", ["player_id"], name: "index_hands_on_player_id"
+  add_index "hands", ["round_id"], name: "index_hands_on_round_id"
 
   create_table "players", force: :cascade do |t|
     t.string   "handle"

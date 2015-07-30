@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::API
-  include ActionController::Serialization
+  #include ActionController::Serialization
 
   before_action :allow_cross_origin_requests, if: proc { Rails.env.development? }
 

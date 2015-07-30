@@ -4,7 +4,7 @@ module.exports = React.createClass({
   render: function() {
     return (
       <div>
-        <h2>Card {this.props.id}</h2>
+        <h2>Card:</h2>
         {this.props.rank} of {this.props.suit}
       </div>
     );

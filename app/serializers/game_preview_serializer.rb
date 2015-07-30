@@ -1,3 +1,3 @@
-class GamePreviewSerializer < ActiveModel::Serializer
-  attributes :id
-end
+# class GamePreviewSerializer < ActiveModel::Serializer
+#   attributes :id
+# end

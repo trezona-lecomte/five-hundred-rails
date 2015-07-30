@@ -22,9 +22,10 @@ class DealCards
     deck = fresh_deck
 
     @game.players.each do |player|
-      player.cards << deck.pop(10)
+      hand = player.hands.create!(round: @round)
+      hand.cards << deck.pop(10)
 
-      unless player.save
+      unless hand.save
         @round.errors.add(:base, "unable to deal cards to #{player.handle}")
       end
     end
@@ -40,11 +41,11 @@ class DealCards
       unless suit == "no_suit" ||
              rank == "joker" ||
              ((suit == "spades" || suit == "clubs") && rank == "4")
-        cards << Card.new(rank: rank, suit: suit, round: @round)
+        cards << Card.new(rank: rank, suit: suit)
       end
     end
 
-    cards << Card.new(rank: "joker", suit: "no_suit", round: @round)
+    cards << Card.new(rank: "joker", suit: "no_suit")
 
     cards
   end

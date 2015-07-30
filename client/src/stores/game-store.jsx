@@ -7,7 +7,7 @@ module.exports = Reflux.createStore({
   getGame: function(gameId) {
     return Api.get('games/' + gameId)
     .then(function(json) {
-      this.game = json.game;
+      this.game = json;
       this.triggerChange();
     }.bind(this));
   },
