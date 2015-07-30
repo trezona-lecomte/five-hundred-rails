@@ -29,6 +29,10 @@ class PlayCard
   end
 
   def play_card
+    if @trick.cards.count > 3
+      @trick = @trick.round.tricks.create!
+    end
+
     @card.trick = @trick
 
     unless @card.save
