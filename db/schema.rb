@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150729231246) do
+ActiveRecord::Schema.define(version: 20150730205039) do
 
   create_table "cards", force: :cascade do |t|
     t.integer  "suit"
@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20150729231246) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "trick_id"
-    t.integer  "hand_id"
+    t.integer  "hand_id",    null: false
   end
 
   add_index "cards", ["hand_id"], name: "index_cards_on_hand_id"
@@ -31,8 +31,8 @@ ActiveRecord::Schema.define(version: 20150729231246) do
   end
 
   create_table "hands", force: :cascade do |t|
-    t.integer  "player_id"
-    t.integer  "round_id"
+    t.integer  "player_id",  null: false
+    t.integer  "round_id",   null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 20150729231246) do
     t.string   "handle"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer  "game_id"
+    t.integer  "game_id",    null: false
   end
 
   add_index "players", ["game_id"], name: "index_players_on_game_id"
@@ -53,13 +53,13 @@ ActiveRecord::Schema.define(version: 20150729231246) do
   create_table "rounds", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer  "game_id"
+    t.integer  "game_id",    null: false
   end
 
   add_index "rounds", ["game_id"], name: "index_rounds_on_game_id"
 
   create_table "tricks", force: :cascade do |t|
-    t.integer  "round_id"
+    t.integer  "round_id",   null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
