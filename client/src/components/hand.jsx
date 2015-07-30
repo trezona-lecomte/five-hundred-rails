@@ -2,13 +2,24 @@ var React = require('react');
 var Card = require('./card');
 
 module.exports = React.createClass({
-  render: function() {
-    console.log('rending a hand');
-    var cards = this.props.cards;
-    if (typeof cards !== 'undefined' && cards.length > 0) {
-      return this.props.cards.map(function(card) {
-        <Card key={card.id} rank={card.rank} suit={card.suit} />
-      });
+  getDefaultProps: function() {
+    return {
+      cards: []
     }
+  },
+  render: function() {
+    console.log('rendering hand, card count: ' + this.props.cards.length);
+    return (
+      <div id="hand">
+        <h3>Hand of player {this.props.playerId}</h3>
+        {this.props.cards.map(function(card) {
+          return (
+            <div id="cards">
+              <Card key={card.id} rank={card.rank} suit={card.suit} />
+            </div>
+          );
+        })}
+      </div>
+    );
   }
 });

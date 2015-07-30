@@ -21,27 +21,28 @@ module.exports = React.createClass({
   componentWillMount: function() {
     Actions.getGame(this.props.params.id);
   },
-  // componentWillReceiveProps: function(nextProps) {
-  //   Actions.getGame(nextProps.params.id);
-  // },
-
   render: function() {
     console.log("Game render count: " + ++renderCount)
     return (
       <div>
-      <h2>Game {this.props.params.id}</h2>
+        <h2>Game {this.props.params.id}</h2>
         {this.renderRounds()}
       </div>
-      )
+    )
   },
   renderRounds: function() {
-    return this.state.rounds.map(function(round) {
-      return (
-        <div>
-          <Round tricks={round.tricks} hands={round.hands} key={round.id} />
-        </div>
+    console.log('rendering rounds...');
+    return (
+      <div id="rounds">
+        {this.state.rounds.map(function(round) {
+          return (
+            <div id="round">
+              <Round key={round.id} tricks={round.tricks} hands={round.hands} num={round.id} />
+            </div>
+          );
+        })}
+      </div>
       );
-    });
   },
   onChange: function(event, game) {
     this.setState({

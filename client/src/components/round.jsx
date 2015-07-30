@@ -1,5 +1,4 @@
 var React = require('react');
-var Reflux = require('reflux');
 var Trick = require('./trick');
 var Hand = require('./hand');
 
@@ -13,22 +12,27 @@ module.exports = React.createClass({
   render: function() {
     return (
       <div>
-          <h2>Round </h2>
+          <h2>Round {this.props.num}</h2>
           {this.renderTricks()}
           {this.renderHands()}
       </div>
     );
   },
   renderTricks: function() {
-    console.log('rendering tricks');
+    console.log('rendering tricks, count: ' + this.props.tricks.length);
     return this.props.tricks.map(function(trick) {
-      <Trick num={trick.id} key={trick.id} />
+      return (
+        <Trick key={trick.id} num={trick.id} />
+      );
     });
   },
   renderHands: function() {
-    console.log('rending hands');
+    console.log('rendering hands, count: ' + this.props.hands.length);
     return this.props.hands.map(function(hand) {
-      <Hand cards={hand.cards} key={hand.id} />
+      console.log('hand: ' + hand.id + ' rendered');
+      return (
+        <Hand key={hand.id} cards={hand.cards} playerId={hand.player_id} />
+      );
     });
   }
 });
