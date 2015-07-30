@@ -3,5 +3,5 @@ class RoundSerializer < ActiveModel::Serializer
 
   belongs_to :game
   has_many :tricks
-  has_many :hands
+  has_many :cards
 end

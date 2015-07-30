@@ -3,10 +3,9 @@ class CardsController < ApplicationController
     @card = Card.find(params[:id])
 
     if @card.update(card_params)
-      render template: "games/show", locals: { game: @card.hand.round.game }
+      render template: "games/show", locals: { game: @card.round.game }
     else
-      byebug
-      render template: "games/show", locals: { game: @card.hand.round.game }
+      render template: "games/show", locals: { game: @card.round.game }
     end
   end
 

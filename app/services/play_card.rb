@@ -19,7 +19,7 @@ class PlayCard
   private
 
   def card_can_be_played
-    if @card.trick.blank? && @card.hand.player == @player
+    if @card.trick.blank? && @card.player == @player
       true
     else
       add_error("you can't play this card right now")
