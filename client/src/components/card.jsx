@@ -7,7 +7,7 @@ module.exports = React.createClass({
       <div className="card">
         <Button
           gameId={this.props.gameId}
-          trickId={this.props.trickId}
+          roundId={this.props.roundId}
           playerId={this.props.playerId}
           cardId={this.props.id}
           className="btn-default"

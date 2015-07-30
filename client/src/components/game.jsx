@@ -22,7 +22,6 @@ module.exports = React.createClass({
     Actions.getGame(this.props.params.id);
   },
   render: function() {
-
     return (
       <div>
       <h2>Game {this.props.params.id}</h2>
@@ -32,7 +31,6 @@ module.exports = React.createClass({
     )
   },
   renderRounds: function() {
-
     var gameId = this.props.params.id;
     return (
       <div id="rounds">
@@ -51,6 +49,7 @@ module.exports = React.createClass({
       );
   },
   onChange: function(event, game) {
+    console.log(game);
     this.setState({
       players: game.players,
       rounds: game.rounds

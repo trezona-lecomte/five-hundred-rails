@@ -1,8 +1,8 @@
 class PlayCard
   attr_reader :round, :card, :errors
 
-  def initialize(trick, player, card)
-    @trick = trick
+  def initialize(round, player, card)
+    @round = round
     @player = player
     @card = card
     @errors = []
@@ -29,11 +29,13 @@ class PlayCard
   end
 
   def play_card
-    if @trick.cards.count > 3
-      @trick = @trick.round.tricks.create!
+    trick = @round.tricks.last
+
+    if trick.cards.count > 3
+      trick = trick.round.tricks.create!
     end
 
-    @card.trick = @trick
+    @card.trick = trick
 
     unless @card.save
       add_error("you can't play this card right now")

@@ -7,14 +7,14 @@ module.exports = React.createClass({
       cards: [],
       playerdId: null,
       gameId: null,
-      activeTrickId: null
+      roundId: null
     }
   },
   render: function() {
     playerId = this.props.playerId;
     gameId = this.props.gameId;
     console.log(this.props.activeTrickId);
-    activeTrickId = this.props.activeTrickId;
+    roundId = this.props.roundId;
 
     return (
       <div id="hand">
@@ -27,7 +27,7 @@ module.exports = React.createClass({
                     rank={card.rank}
                     suit={card.suit}
                     playerId={playerId}
-                    trickId={activeTrickId}
+                    roundId={roundId}
                     gameId={gameId} />
               </div>
             );

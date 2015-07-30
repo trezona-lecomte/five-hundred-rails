@@ -6,7 +6,7 @@ module.exports = React.createClass({
     return {
       className: null,
       gameId: null,
-      trickId: null,
+      roundId: null,
       playerId: null,
       cardId: null
     }
@@ -14,7 +14,7 @@ module.exports = React.createClass({
   handleClick: function() {
 
     Actions.playCard(this.props.gameId,
-                     this.props.trickId,
+                     this.props.roundId,
                      this.props.playerId,
                      this.props.cardId);
   },

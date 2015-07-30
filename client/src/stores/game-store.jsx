@@ -11,10 +11,10 @@ module.exports = Reflux.createStore({
       this.triggerChange();
     }.bind(this));
   },
-  playCard: function(gameId, trickId, playerId, cardId) {
+  playCard: function(gameId, roundId, playerId, cardId) {
     console.log('playing card: ' + cardId)
     var body = JSON.stringify({
-        trick_id: trickId,
+        round_id: roundId,
         player_id: playerId,
         card_id: cardId
     });

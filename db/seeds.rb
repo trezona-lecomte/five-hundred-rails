@@ -9,27 +9,14 @@ p3 = game.players.last
 JoinGame.new(game, Faker::Internet.user_name).call
 p4 = game.players.last
 
-round = game.rounds.create!
-
-round.tricks.create!
+start_round = StartRound.new(game)
+if start_round.call
+  round = start_round.round
+end
 
 DealCards.new(game, round).call
 
-
-
-
-
-# round = game.rounds.create!
-
-# # Card.r
-# anks.each do |rank|
-#   Card.suits.each do |suit|
-#     unless suit == "no_suit"
-#       round.cards.create!(rank: rank[0], suit: suit[0])
-#     end
-#   end
-# end
-
-# 4.times do
-#   round.players.create!
-# end
+PlayCard.new(round, p1, p1.cards.sample).call
+PlayCard.new(round, p2, p2.cards.sample).call
+PlayCard.new(round, p3, p3.cards.sample).call
+PlayCard.new(round, p4, p4.cards.sample).call

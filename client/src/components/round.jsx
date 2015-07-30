@@ -20,7 +20,6 @@ module.exports = React.createClass({
     );
   },
   renderTricks: function() {
-    
     var playedCards = this.playedCards(this.props.hands);
     return this.props.tricks.map(function(trick) {
       return (
@@ -30,14 +29,14 @@ module.exports = React.createClass({
   },
   renderHands: function() {
     var gameId = this.props.gameId;
-    var activeTrickId = this.activeTrickId();
+    var roundId = this.props.id;
     return this.props.hands.map(function(hand) {
       return (
         <Hand key={hand.id}
               cards={hand.cards}
-              playerId={hand.player_id}
+              playerId={hand.player.id}
               gameId={gameId}
-              activeTrickId={activeTrickId}/>
+              roundId={roundId}/>
       );
     });
   },
@@ -51,12 +50,5 @@ module.exports = React.createClass({
       });
     });
     return cards;
-  },
-  activeTrickId: function() {
-    if (this.props.tricks.length > 0) {
-      trick = this.props.tricks[this.props.tricks.length - 1];
-      console.log(trick);
-      return trick.id;
-    } 
   }
 });

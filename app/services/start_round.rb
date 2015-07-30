@@ -1,7 +1,10 @@
 class StartRound
-  def initialize(game, round)
+  attr_reader :errors, :round
+
+  def initialize(game)
     @game = game
-    @round = round
+    @round = nil
+    @errors = []
   end
 
   def call
@@ -15,16 +18,25 @@ class StartRound
   private
 
   def round_can_be_started
+    # TODO: implement validations for starting round
     true
   end
 
   def start_round
-    @game.rounds.new(players: @game.players)
+    @round = @game.rounds.new
 
-    @round.save
+    first_trick = @round.tricks.new
+
+    unless @round.save && first_trick.save
+      add_error("failed to start the round")
+    end
   end
 
   def success?
-    @round.errors.empty?
+    @errors.empty?
+  end
+
+  def add_error(message)
+    @errors << message
   end
 end

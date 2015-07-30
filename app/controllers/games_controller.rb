@@ -20,11 +20,11 @@ class GamesController < ApplicationController
   end
 
   def update
-    trick = Trick.find(game_params[:trick_id])
+    round = Round.find(game_params[:round_id])
     player = Player.find(game_params[:player_id])
     card = Card.find(game_params[:card_id])
 
-    play_card = PlayCard.new(trick, player, card)
+    play_card = PlayCard.new(round, player, card)
 
     if play_card.call
       render :update, status: 200, locals: {errors: []}
@@ -45,6 +45,6 @@ class GamesController < ApplicationController
   end
 
   def game_params
-    params.permit(:id, :trick_id, :player_id, :card_id)
+    params.permit(:id, :round_id, :player_id, :card_id)
   end
 end

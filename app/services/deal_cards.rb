@@ -25,8 +25,6 @@ class DealCards
   def deal_cards
     deck = fresh_deck
 
-    binding.pry
-
     deal_to_players(deck)
 
     deal_kitty(deck)
