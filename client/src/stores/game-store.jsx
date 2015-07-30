@@ -11,6 +11,7 @@ module.exports = Reflux.createStore({
       this.triggerChange();
     }.bind(this));
   },
+
   triggerChange: function() {
     this.trigger('change', this.game);
   }

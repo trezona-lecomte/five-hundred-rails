@@ -49,10 +49,6 @@ module.exports = React.createClass({
       players: game.players,
       rounds: game.rounds
     });
-    console.log('just got game: ' + this.state);
-    console.log('got ' + this.state.rounds.length + ' rounds');
-    console.log('got ' + this.state.players.length + ' players');
-    console.log('got ' + this.state.rounds[0].hands.length + ' hands');
-    console.log('got ' + this.state.rounds[0].tricks.length + ' tricks');
+    console.log(JSON.stringify(game));
   }
 });

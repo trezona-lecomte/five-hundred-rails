@@ -11,5 +11,14 @@ module.exports = {
     .then(function(response){
       return response.json()
     });
-  }
+  },
+  put: function(url) {
+    return fetch(rootUrl + url, {
+      method: 'put',
+      body:
+    }
+    })
+  .then(function(response){
+
+  });
 };

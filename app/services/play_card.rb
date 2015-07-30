@@ -1,10 +1,11 @@
 class PlayCard
-  attr_reader :round, :card
+  attr_reader :round, :card, :errors
 
   def initialize(trick, player, card)
     @trick = trick
     @player = player
     @card = card
+    @errors = []
   end
 
   def call
@@ -18,10 +19,10 @@ class PlayCard
   private
 
   def card_can_be_played
-    if @card.trick.blank? && @card.player == @player
+    if @card.trick.blank? && @card.hand.player == @player
       true
     else
-      @card.errors.add(:trick, "can't have this card played by this player")
+      add_error("you can't play this card right now")
 
       false
     end
@@ -31,11 +32,15 @@ class PlayCard
     @card.trick = @trick
 
     unless @card.save
-      @card.errors.add(:trick, "can't have this card played")
+      add_error("you can't play this card right now")
     end
   end
 
   def success?
-    @card.errors.empty?
+    @errors.empty?
+  end
+
+  def add_error(message)
+    @errors << message
   end
 end
