@@ -11,11 +11,11 @@ json.rounds @game.rounds do |round|
     json.(trick, :id)
   end
 
-  json.hands round.hands do |hand|
-    json.(hand, :player_id)
+  json.hands round.hands.each do |player, hand|
+    json.player(player, :id)
 
-    json.cards hand.cards do |card|
-      json.(card, :id, :rank, :suit, :trick_id)
+    json.cards hand.each do |card|
+      json.(card, :id, :player_id, :trick_id, :rank, :suit)
     end
   end
 end
