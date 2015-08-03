@@ -14,7 +14,9 @@ if start_round.call
   round = start_round.round
 end
 
-DealCards.new(game, round).call
+deck = BuildDeck.new.call
+
+DealCards.new(game, round, deck).call
 
 PlayCard.new(round, p1, p1.cards.sample).call
 PlayCard.new(round, p2, p2.cards.sample).call
