@@ -5,14 +5,15 @@ module.exports = React.createClass({
   render: function() {
     return (
       <div>
-        <h4>Trick {this.props.id}</h4>
+        <h4>Trick {this.props.num}</h4>
         {this.cardsInTrick(this.props.allPlayedCards, this.props.id).map(function(card) {
             return (
               <div id="card">
               <Card key={card.id}
                     id={card.id}
                     rank={card.rank}
-                    suit={card.suit} />
+                    suit={card.suit}
+                    playerId={card.player_id} />
               </div>
             );
         })}

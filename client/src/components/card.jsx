@@ -11,7 +11,7 @@ module.exports = React.createClass({
           playerId={this.props.playerId}
           cardId={this.props.id}
           className="btn-default"
-          title={this.props.rank + " of " + this.props.suit}
+          title={this.props.rank + " of " + this.props.suit + " | player: " + this.props.playerId}
         />
       </div>
 

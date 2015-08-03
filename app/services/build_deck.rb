@@ -12,8 +12,8 @@ class BuildDeck
   private
 
   def standard_deck
-    Card.ranks.select { |_, val| val.between?(5, 14) }.keys
-      .product(Card.suits.select { |suit, _| suit != "no_suit" }.keys)
+    Card.ranks.select { |_, rank| rank.between?(5, 14) }.keys
+      .product(Card.suits.select { |_, suit| suit != "no_suit" }.keys)
         .each do |rank, suit|
           @deck << Card.new(rank: rank, suit: suit)
       end

@@ -19,13 +19,27 @@ class PlayCard
   private
 
   def card_can_be_played
-    if @card.trick.blank? && @card.player == @player
+    if players_turn? && card_not_already_played? && player_owns_card?
       true
     else
       add_error("you can't play this card right now")
-
       false
     end
+  end
+
+  def players_turn?
+    # if it's trick 1, then the winning bidder starts
+
+    # if it's trick 2.. then the winner of the last trick starts
+    true
+  end
+
+  def card_not_already_played?
+    @card.trick.blank?
+  end
+
+  def player_owns_card?
+    @card.player == @player
   end
 
   def play_card

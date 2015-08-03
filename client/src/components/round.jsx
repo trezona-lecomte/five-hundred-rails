@@ -21,9 +21,10 @@ module.exports = React.createClass({
   },
   renderTricks: function() {
     var playedCards = this.playedCards(this.props.hands);
-    return this.props.tricks.map(function(trick) {
+    var tricks = this.props.tricks;
+    return tricks.map(function(trick) {
       return (
-        <Trick key={trick.id} id={trick.id} allPlayedCards={playedCards} />
+        <Trick key={trick.id} id={trick.id} num={tricks.indexOf(trick) + 1} allPlayedCards={playedCards} />
       );
     });
   },
