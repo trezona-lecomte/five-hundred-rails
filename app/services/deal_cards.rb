@@ -1,9 +1,10 @@
 class DealCards
   attr_reader :errors
 
-  def initialize(game, round)
+  def initialize(game, round, deck)
     @game = game
     @round = round
+    @deck = deck
     @errors = []
   end
 
@@ -23,47 +24,33 @@ class DealCards
   end
 
   def deal_cards
-    deck = fresh_deck
+    deal_hands
 
-    deal_to_players(deck)
-
-    deal_kitty(deck)
+    deal_kitty
   end
 
-  def deal_to_players(deck)
+  def deal_hands
     @game.players.each do |player|
-      deck.pop(10).each do |card|
+      @deck.pop(10).each do |card|
+        card.round = @round
+
         player.cards << card
 
         unless card.save
-          add_error("unable to deal card: #{card.rank} of #{card.suit} to player #{player.handle}")
+          add_error("unable to deal card: #{card.rank} of #{card.suit} to #{player.handle}")
         end
       end
     end
   end
 
-  def deal_kitty(deck)
-    deck.each do |card|
-      @round.cards << card
+  def deal_kitty
+    @deck.each do |card|
+      card.round = @round
 
       unless card.save
-        add_error("unable to deal card: #{card.rank} of #{card.suit} to kitty")
+        add_error("unable to deal card: #{card.rank} of #{card.suit} to the kitty")
       end
     end
-  end
-
-  def fresh_deck
-    cards = []
-    Card.ranks.keys.product(Card.suits.keys) do |rank, suit|
-      unless suit == "no_suit" ||
-             rank == "joker" ||
-             ((suit == "spades" || suit == "clubs") && rank == "4")
-        cards << Card.new(rank: rank, suit: suit, round: @round)
-      end
-    end
-
-    cards << Card.new(rank: "joker", suit: "no_suit", round: @round)
-    cards.shuffle!
   end
 
   def success?
