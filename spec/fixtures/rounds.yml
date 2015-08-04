@@ -1,0 +1,5 @@
+bidding_round:
+  game: bidding_game
+
+playing_round:
+  game: playing_game

@@ -1,0 +1,15 @@
+player1:
+  handle: "kieran"
+  game: playing_game
+
+player2:
+  handle: "mitch"
+  game: playing_game
+
+player3:
+  handle: "pragya"
+  game: playing_game
+
+player4:
+  handle: "mikee"
+  game: playing_game
