@@ -1,5 +1,5 @@
 bidding_game:
-  created_at: Time.now.utc.to_s(:db)
+  created_at: <%= Time.now.to_s(:db) %>
 
 playing_game:
-  created_at: Time.now.utc.to_s(:db)
+  created_at: <%= Time.now.to_s(:db) %>
