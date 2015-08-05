@@ -6,10 +6,15 @@ class PlayCard
     @player = player
     @card = card
     @errors = []
+    @trick = @round.tricks.last
   end
 
   def call
     @card.with_lock do
+      unless @trick && @trick.cards.count < 4
+        @trick = @round.tricks.create!
+      end
+
       validate_card_can_be_played
 
       play_card unless errors.present?
@@ -35,16 +40,10 @@ class PlayCard
   end
 
   def players_turn?
-    # if it's trick 1, then the winning bidder starts
-    # TODO: for now we assume that player 2 won the bidding:
-    if round.tricks.count == 1 && round.tricks.last.cards.empty?
-      @player == @round.game.players.first(2).last
-    else
-      # if it's trick 2.. then the winner of the last trick starts
-      trick = TricksDecorator.new(round.tricks.last)
+    find_next_player = NextPlayer.new(@round)
+    find_next_player.call
 
-      @player == trick.winning_card.player
-    end
+    @player == find_next_player.next_player
   end
 
   def card_already_played?
@@ -56,13 +55,7 @@ class PlayCard
   end
 
   def play_card
-    trick = @round.tricks.last
-
-    unless trick && trick.cards.count < 4
-      trick = trick.round.tricks.create!
-    end
-
-    @card.trick = trick
+    @card.trick = @trick
 
     unless @card.save
       add_error("you can't play this card right now")
