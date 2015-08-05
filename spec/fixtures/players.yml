@@ -18,3 +18,23 @@
     id: 4
     handle: "player 4"
     game: playing_game
+
+- bidder1:
+    id: 5
+    handle: "bidder 1"
+    game: bidding_game
+
+- bidder2:
+    id: 6
+    handle: "bidder 2"
+    game: bidding_game
+
+- bidder3:
+    id: 7
+    handle: "bidder 3"
+    game: bidding_game
+
+- bidder4:
+    id: 8
+    handle: "bidder 4"
+    game: bidding_game
