@@ -11,7 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150730215633) do
+ActiveRecord::Schema.define(version: 20150805071700) do
+
+  create_table "bids", force: :cascade do |t|
+    t.integer  "round_id",         limit: 4
+    t.integer  "player_id",        limit: 4
+    t.integer  "number_of_tricks", limit: 4
+    t.integer  "suit",             limit: 4
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "bids", ["player_id"], name: "index_bids_on_player_id", using: :btree
+  add_index "bids", ["round_id"], name: "index_bids_on_round_id", using: :btree
 
   create_table "cards", force: :cascade do |t|
     t.integer  "suit",       limit: 4
@@ -57,6 +69,8 @@ ActiveRecord::Schema.define(version: 20150730215633) do
 
   add_index "tricks", ["round_id"], name: "index_tricks_on_round_id", using: :btree
 
+  add_foreign_key "bids", "players"
+  add_foreign_key "bids", "rounds"
   add_foreign_key "cards", "players"
   add_foreign_key "cards", "rounds"
   add_foreign_key "cards", "tricks"

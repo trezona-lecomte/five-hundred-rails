@@ -37,6 +37,10 @@ deck = BuildDeck.new.call
 
 DealCards.new(game2, round, deck).call
 
+# bidding:
+#binding.pry
+#SubmitBid.new(round, p1, number_of_tricks, suit)
+
 PlayCard.new(round, p1, p1.cards.sample).call
 PlayCard.new(round, p2, p2.cards.sample).call
 PlayCard.new(round, p3, p3.cards.sample).call
