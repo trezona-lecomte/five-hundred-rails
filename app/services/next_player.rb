@@ -14,7 +14,7 @@ class NextPlayer
         active_trick = @round.tricks.first
 
         if active_trick.cards.none?           # winning bidder
-          @next_player = @players.find(2)
+          @next_player = @players.first(2).last
         else
           @next_player = next_player_based_on_cards_played(active_trick)
         end
@@ -37,7 +37,7 @@ class NextPlayer
   private
 
   def next_player_based_on_cards_played(active_trick)
-    last_player = active_trick.cards.order(:updated_at)[0].player
+    last_player = active_trick.cards.order(updated_at: :desc)[0].player
     next_player_index = @players.index(last_player) + 1
 
     if next_player_index < @players.length
