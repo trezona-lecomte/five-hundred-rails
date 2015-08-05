@@ -1,15 +1,20 @@
-player1:
-  handle: "kieran"
-  game: playing_game
+--- !omap
+- player1:
+    id: 1
+    handle: "player 1"
+    game: playing_game
 
-player2:
-  handle: "mitch"
-  game: playing_game
+- player2:
+    id: 2
+    handle: "player 2"
+    game: playing_game
 
-player3:
-  handle: "pragya"
-  game: playing_game
+- player3:
+    id: 3
+    handle: "player 3"
+    game: playing_game
 
-player4:
-  handle: "mikee"
-  game: playing_game
+- player4:
+    id: 4
+    handle: "player 4"
+    game: playing_game
