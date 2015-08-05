@@ -14,18 +14,18 @@
 ActiveRecord::Schema.define(version: 20150730215633) do
 
   create_table "cards", force: :cascade do |t|
-    t.integer  "suit"
-    t.integer  "rank"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer  "trick_id"
-    t.integer  "round_id",   null: false
-    t.integer  "player_id"
+    t.integer  "suit",       limit: 4
+    t.integer  "rank",       limit: 4
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.integer  "trick_id",   limit: 4
+    t.integer  "round_id",   limit: 4, null: false
+    t.integer  "player_id",  limit: 4
   end
 
-  add_index "cards", ["player_id"], name: "index_cards_on_player_id"
-  add_index "cards", ["round_id"], name: "index_cards_on_round_id"
-  add_index "cards", ["trick_id"], name: "index_cards_on_trick_id"
+  add_index "cards", ["player_id"], name: "index_cards_on_player_id", using: :btree
+  add_index "cards", ["round_id"], name: "index_cards_on_round_id", using: :btree
+  add_index "cards", ["trick_id"], name: "index_cards_on_trick_id", using: :btree
 
   create_table "games", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -33,28 +33,34 @@ ActiveRecord::Schema.define(version: 20150730215633) do
   end
 
   create_table "players", force: :cascade do |t|
-    t.string   "handle"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer  "game_id",    null: false
+    t.string   "handle",     limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.integer  "game_id",    limit: 4,   null: false
   end
 
-  add_index "players", ["game_id"], name: "index_players_on_game_id"
+  add_index "players", ["game_id"], name: "index_players_on_game_id", using: :btree
 
   create_table "rounds", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer  "game_id",    null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.integer  "game_id",    limit: 4, null: false
   end
 
-  add_index "rounds", ["game_id"], name: "index_rounds_on_game_id"
+  add_index "rounds", ["game_id"], name: "index_rounds_on_game_id", using: :btree
 
   create_table "tricks", force: :cascade do |t|
-    t.integer  "round_id",   null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "round_id",   limit: 4, null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
   end
 
-  add_index "tricks", ["round_id"], name: "index_tricks_on_round_id"
+  add_index "tricks", ["round_id"], name: "index_tricks_on_round_id", using: :btree
 
+  add_foreign_key "cards", "players"
+  add_foreign_key "cards", "rounds"
+  add_foreign_key "cards", "tricks"
+  add_foreign_key "players", "games"
+  add_foreign_key "rounds", "games"
+  add_foreign_key "tricks", "rounds"
 end
