@@ -1,300 +1,300 @@
 four_of_hearts:
-  suit: "hearts"
-  rank: "4"
+  suit: 3
+  rank: 4
   trick:
   round: playing_round
-  player: player4
+  player_id: 4
 
 four_of_diamonds:
-  suit: "diamonds"
-  rank: "4"
+  suit: 2
+  rank: 4
   trick:
   round: playing_round
-  player: player4
+  player_id: 4
 
 five_of_hearts:
-  suit: "hearts"
-  rank: "5"
+  suit: 3
+  rank: 5
   trick:
   round: playing_round
-  player: player4
+  player_id: 4
 
 five_of_diamonds:
-  suit: "diamonds"
-  rank: "5"
+  suit: 2
+  rank: 5
   trick:
   round: playing_round
-  player: player4
+  player_id: 4
 
 five_of_clubs:
-  suit: "clubs"
-  rank: "5"
+  suit: 1
+  rank: 5
   trick:
   round: playing_round
-  player: player4
+  player_id: 4
 
 five_of_spades:
-  suit: "spades"
-  rank: "5"
+  suit: 0
+  rank: 5
   trick:
   round: playing_round
-  player: player4
+  player_id: 4
 
 six_of_hearts:
-  suit: "hearts"
-  rank: "6"
+  suit: 3
+  rank: 6
   trick:
   round: playing_round
-  player: player4
+  player_id: 4
 
 six_of_diamonds:
-  suit: "diamonds"
-  rank: "6"
+  suit: 2
+  rank: 6
   trick:
   round: playing_round
-  player: player4
+  player_id: 4
 
 six_of_clubs:
-  suit: "clubs"
-  rank: "6"
+  suit: 1
+  rank: 6
   trick:
   round: playing_round
-  player: player4
+  player_id: 4
 
 six_of_spades:
-  suit: "spades"
-  rank: "6"
+  suit: 0
+  rank: 6
   trick:
   round: playing_round
-  player: player4
+  player_id: 4
 
 seven_of_hearts:
-  suit: "hearts"
-  rank: "7"
+  suit: 3
+  rank: 7
   trick:
   round: playing_round
-  player: player3
+  player_id: 3
 
 seven_of_diamonds:
-  suit: "diamonds"
-  rank: "7"
+  suit: 2
+  rank: 7
   trick:
   round: playing_round
-  player: player3
+  player_id: 3
 
 seven_of_clubs:
-  suit: "clubs"
-  rank: "7"
+  suit: 1
+  rank: 7
   trick:
   round: playing_round
-  player: player3
+  player_id: 3
 
 seven_of_spades:
-  suit: "spades"
-  rank: "7"
+  suit: 0
+  rank: 7
   trick:
   round: playing_round
-  player: player3
+  player_id: 3
 
 eight_of_hearts:
-  suit: "hearts"
-  rank: "8"
+  suit: 3
+  rank: 8
   trick:
   round: playing_round
-  player: player3
+  player_id: 3
 
 eight_of_diamonds:
-  suit: "diamonds"
-  rank: "8"
+  suit: 2
+  rank: 8
   trick:
   round: playing_round
-  player: player3
+  player_id: 3
 
 eight_of_clubs:
-  suit: "clubs"
-  rank: "8"
+  suit: 1
+  rank: 8
   trick:
   round: playing_round
-  player: player3
+  player_id: 3
 
 eight_of_spades:
-  suit: "spades"
-  rank: "8"
+  suit: 0
+  rank: 8
   trick:
   round: playing_round
-  player: player3
+  player_id: 3
 
 nine_of_hearts:
-  suit: "hearts"
-  rank: "9"
+  suit: 3
+  rank: 9
   trick:
   round: playing_round
-  player: player3
+  player_id: 3
 
 nine_of_diamonds:
-  suit: "diamonds"
-  rank: "9"
+  suit: 2
+  rank: 9
   trick:
   round: playing_round
-  player: player3
+  player_id: 3
 
 nine_of_clubs:
-  suit: "clubs"
-  rank: "9"
+  suit: 1
+  rank: 9
   trick:
   round: playing_round
-  player: player2
+  player_id: 2
 
 nine_of_spades:
-  suit: "spades"
-  rank: "9"
+  suit: 0
+  rank: 9
   trick:
   round: playing_round
-  player: player2
+  player_id: 2
 
 ten_of_hearts:
-  suit: "hearts"
-  rank: "10"
+  suit: 3
+  rank: 10
   trick:
   round: playing_round
-  player: player2
+  player_id: 2
 
 ten_of_diamonds:
-  suit: "diamonds"
-  rank: "10"
+  suit: 2
+  rank: 10
   trick:
   round: playing_round
-  player: player2
+  player_id: 2
 
 ten_of_clubs:
-  suit: "clubs"
-  rank: "10"
+  suit: 1
+  rank: 10
   trick:
   round: playing_round
-  player: player2
+  player_id: 2
 
 ten_of_spades:
-  suit: "spades"
-  rank: "10"
+  suit: 0
+  rank: 10
   trick:
   round: playing_round
-  player: player2
+  player_id: 2
 
 jack_of_hearts:
-  suit: "hearts"
-  rank: "jack"
+  suit: 3
+  rank: 11
   trick:
   round: playing_round
-  player: player2
+  player_id: 2
 
 jack_of_diamonds:
-  suit: "diamonds"
-  rank: "jack"
+  suit: 2
+  rank: 11
   trick:
   round: playing_round
-  player: player2
+  player_id: 2
 
 jack_of_clubs:
-  suit: "clubs"
-  rank: "jack"
+  suit: 1
+  rank: 11
   trick:
   round: playing_round
-  player: player2
+  player_id: 2
 
 jack_of_spades:
-  suit: "spades"
-  rank: "jack"
+  suit: 0
+  rank: 11
   trick:
   round: playing_round
-  player: player2
+  player_id: 2
 
 queen_of_hearts:
-  suit: "hearts"
-  rank: "queen"
+  suit: 3
+  rank: 12
   trick:
   round: playing_round
-  player: player1
+  player_id: 1
 
 queen_of_diamonds:
-  suit: "diamonds"
-  rank: "queen"
+  suit: 2
+  rank: 12
   trick:
   round: playing_round
-  player: player1
+  player_id: 1
 
 queen_of_clubs:
-  suit: "clubs"
-  rank: "queen"
+  suit: 1
+  rank: 12
   trick:
   round: playing_round
-  player: player1
+  player_id: 1
 
 queen_of_spades:
-  suit: "spades"
-  rank: "12"
+  suit: 0
+  rank: 12
   trick:
   round: playing_round
-  player: player1
+  player_id: 1
 
 king_of_hearts:
-  suit: "hearts"
-  rank: "king"
+  suit: 3
+  rank: 13
   trick:
   round: playing_round
-  player: player1
+  player_id: 1
 
 king_of_diamonds:
-  suit: "diamonds"
-  rank: "king"
+  suit: 2
+  rank: 13
   trick:
   round: playing_round
-  player: player1
+  player_id: 1
 
 king_of_clubs:
-  suit: "clubs"
-  rank: "king"
+  suit: 1
+  rank: 13
   trick:
   round: playing_round
-  player: player1
+  player_id: 1
 
 king_of_spades:
-  suit: "spades"
-  rank: "king"
+  suit: 0
+  rank: 13
   trick:
   round: playing_round
-  player: player1
+  player_id: 1
 
 ace_of_hearts:
-  suit: "hearts"
-  rank: "ace"
+  suit: 3
+  rank: 14
   trick:
   round: playing_round
-  player: player1
+  player_id: 1
 
 ace_of_diamonds:
-  suit: "diamonds"
-  rank: "ace"
+  suit: 2
+  rank: 14
   trick:
   round: playing_round
-  player: player1
+  player_id: 1
 
 ace_of_clubs:
-  suit: "clubs"
-  rank: "ace"
+  suit: 1
+  rank: 14
   trick:
   round: playing_round
   player:
 
 ace_of_spades:
-  suit: "spades"
-  rank: "ace"
+  suit: 0
+  rank: 14
   trick:
   round: playing_round
   player:
 
 joker:
-  suit: "no_suit"
-  rank: "joker"
+  suit: 4
+  rank: 15
   trick:
   round: playing_round
   player:
