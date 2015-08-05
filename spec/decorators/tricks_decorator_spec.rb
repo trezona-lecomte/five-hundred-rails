@@ -32,7 +32,6 @@ RSpec.describe TricksDecorator, type: :decorator do
     context "when multiple cards have been played" do
       before do
         PlayCard.new(round, card1.player, card1)
-        binding.pry
         PlayCard.new(round, card2.player, card2)
       end
 
