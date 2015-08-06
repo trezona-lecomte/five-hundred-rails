@@ -1,5 +1,5 @@
 class SubmitBid
-  attr_reader :bid
+  attr_reader :bid, :errors
 
   def initialize(round, player, number_of_tricks, suit)
     @round = round
@@ -7,6 +7,7 @@ class SubmitBid
     @number_of_tricks = number_of_tricks
     @suit = suit
     @bid = nil
+    @errors = []
   end
 
   def call
@@ -21,10 +22,6 @@ class SubmitBid
 
   def validate_bid_can_be_placed
     # TODO: need to handle when bidding has finished
-    if player_has_already_passed?
-      add_error("you can't bid because you've already passed during this round")
-    end
-
     unless players_turn?
       add_error("it's not your turn to bid")
     end
@@ -34,16 +31,15 @@ class SubmitBid
     end
   end
 
-  def player_has_already_passed?
-    @round.passes.any? { |pass| pass.player == @player }
-  end
-
   def players_turn?
+    find_next_bidder = NextBidder.new(@round)
+    find_next_bidder.call
 
+    @player == find_next_bidder.next_bidder
   end
 
   def bidding_has_finished?
-    false
+    !@player
   end
 
   def submit_bid
