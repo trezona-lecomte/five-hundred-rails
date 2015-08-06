@@ -9,6 +9,12 @@ json.rounds @game.rounds do |round|
 
   json.(round, :id)
 
+  if round.winning_bid
+    json.winning_bid(round.winning_bid, :id, :player_id, :number_of_tricks, :suit)
+  else
+    json.winning_bid(nil)
+  end
+
   json.bids round.bids do |bid|
     json.(bid, :id, :player_id, :number_of_tricks, :suit)
   end
