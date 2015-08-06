@@ -2,7 +2,7 @@ class NextPlayer
   attr_reader :round, :errors, :next_player
 
   def initialize(round)
-    @round = round
+    @round = RoundsDecorator.new(round)
     @errors = []
     @players = @round.game.players
     @next_player = nil
@@ -23,7 +23,6 @@ class NextPlayer
   private
 
   def set_next_player
-#    binding.pry
     current_trick = @round.tricks.last
 
     if first_trick?

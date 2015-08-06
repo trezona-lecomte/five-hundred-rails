@@ -6,6 +6,8 @@ json.players @game.players do |player|
 end
 
 json.rounds @game.rounds do |round|
+  round = RoundsDecorator.new(round)
+
   json.(round, :id)
 
   json.tricks round.tricks do |trick|

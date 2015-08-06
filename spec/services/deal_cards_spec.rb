@@ -1,12 +1,13 @@
 require "rails_helper"
 
 RSpec.describe DealCards, type: :service do
-  let(:game) { Game.create! }
-  let(:round) { game.rounds.create! }
-  let(:deck) { BuildDeck.new.call }
+  let(:game)       { Game.create! }
+  let(:base_round) { game.rounds.create! }
+  let(:round)      { RoundsDecorator.new(base_round) }
+  let(:deck)       { BuildDeck.new.call }
   let(:fresh_deck) { BuildDeck.new.call }
-  let(:deal_cards) { DealCards.new(game, round, deck) }
-  let(:players) { game.players }
+  let(:deal_cards) { DealCards.new(game, base_round, deck) }
+  let(:players)    { game.players }
 
   before { 4.times { JoinGame.new(game, Faker::Internet.user_name).call } }
 
@@ -37,7 +38,7 @@ RSpec.describe DealCards, type: :service do
       it "deals 3 cards into the kitty" do
         expect(players).to_not include(round.kitty[0])
 
-        expect(round.kitty.values[0].count).to eq(3)
+        expect(round.kitty.count).to eq(3)
       end
     end
   end

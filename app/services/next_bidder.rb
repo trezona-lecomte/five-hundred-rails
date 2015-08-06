@@ -2,7 +2,7 @@ class NextBidder
   attr_reader :next_bidder, :messages
 
   def initialize(round)
-    @round = round
+    @round = RoundsDecorator.new(round)
     @messages = []
     @players = @round.game.players
     @next_bidder = nil

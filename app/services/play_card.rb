@@ -2,7 +2,7 @@ class PlayCard
   attr_reader :round, :card, :errors
 
   def initialize(round, player, card)
-    @round = round
+    @round = RoundsDecorator.new(round)
     @player = player
     @card = card
     @trick = @round.tricks.last
