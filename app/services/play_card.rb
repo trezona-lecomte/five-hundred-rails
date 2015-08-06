@@ -5,8 +5,8 @@ class PlayCard
     @round = round
     @player = player
     @card = card
-    @errors = []
     @trick = @round.tricks.last
+    @errors = []
   end
 
   def call
@@ -17,7 +17,7 @@ class PlayCard
 
       validate_card_can_be_played
 
-      play_card unless errors.present?
+      play_card unless @errors.present?
     end
 
     success?
@@ -30,13 +30,21 @@ class PlayCard
       add_error("it's not your turn to play")
     end
 
-    if card_already_played?
-      add_error("you have already played this card")
+    unless bidding_finished?
+      add_error("bidding hasn't yet finished for this round")
     end
 
-    unless player_owns_card?
+    if card_already_played?
+      add_error("you have already played this card")
+    elsif !player_owns_card?
       add_error("you don't have this card in your hand")
     end
+  end
+
+  def bidding_finished?
+    find_next_bidder = NextBidder.new(@round)
+    find_next_bidder.call
+    find_next_bidder.messages.include? "bidding for this round is finished"
   end
 
   def players_turn?

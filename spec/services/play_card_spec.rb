@@ -4,7 +4,6 @@ RSpec.describe PlayCard, type: :service do
   fixtures :all
   let(:game)      { games(:playing_game) }
   let(:round)     { rounds(:playing_round) }
-  # TODO: we're assuming (for now) that player 2 won the bidding:
   let(:player)    { players(:player2) }
   let(:card)      { cards(:jack_of_hearts) }
   let(:play_card) { PlayCard.new(round, player, card) }
