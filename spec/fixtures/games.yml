@@ -1,3 +1,11 @@
+game_1:
+  id: 1
+  created_at: <%= Time.now.to_s(:db) %>
+
+game_2:
+  id: 2
+  created_at: <%= Time.now.to_s(:db) %>
+
 bidding_game:
   created_at: <%= Time.now.to_s(:db) %>
 
