@@ -3,30 +3,30 @@ require "rails_helper"
 RSpec.describe GamesController, type: :controller do
   let(:valid_session) { {} }
   let(:game) { Game.create! }
-  render_views
+  #render_views
 
-  describe "GET #index" do
-    it "assigns all games as @games" do
-      game = Game.create!
-      get :index, valid_session, format: :json
-      expect(assigns(:games)).to eq([game])
-    end
-  end
+  # describe "GET #index" do
+  #   it "assigns all games as @games" do
+  #     game = Game.create!
+  #     get :index, valid_session, format: :json
+  #     expect(assigns(:games)).to eq([game])
+  #   end
+  # end
 
-  describe "GET #show" do
-    it "assigns the requested game as @game" do
-      game = Game.create!
-      get :show, { id: game.to_param }, valid_session
-      expect(assigns(:game)).to eq(game)
-    end
+  # describe "GET #show" do
+  #   it "assigns the requested game as @game" do
+  #     game = Game.create!
+  #     get :show, { id: game.to_param }, valid_session
+  #     expect(assigns(:game)).to eq(game)
+  #   end
 
-    context "when the game can't be found" do
-      it "responds with 404 Not Found" do
-        get :show, { id: 0 }
-        expect(response).to have_http_status(404)
-      end
-    end
-  end
+  #   context "when the game can't be found" do
+  #     it "responds with 404 Not Found" do
+  #       get :show, { id: 0 }
+  #       expect(response).to have_http_status(404)
+  #     end
+  #   end
+  # end
 
   describe "POST #create" do
     context "with valid params" do
@@ -38,10 +38,10 @@ RSpec.describe GamesController, type: :controller do
         }.to change(Game, :count).by(1)
       end
 
-      it "assigns a newly created game as @game" do
-        expect(assigns(:game)).to be_a(Game)
-        expect(assigns(:game)).to be_persisted
-      end
+      # it "assigns a newly created game as @game" do
+      #   expect(assigns(:game)).to be_a(Game)
+      #   expect(assigns(:game)).to be_persisted
+      # end
 
       it "responds with 201 Created" do
         expect(response).to have_http_status(201)
