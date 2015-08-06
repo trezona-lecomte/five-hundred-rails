@@ -7,6 +7,10 @@ end
 json.rounds @game.rounds do |round|
   json.(round, :id)
 
+  json.bids round.bids do |bid|
+    json.(bid, :id, :player_id, :number_of_tricks, :suit)
+  end
+
   json.tricks round.tricks do |trick|
     json.(trick, :id)
   end
