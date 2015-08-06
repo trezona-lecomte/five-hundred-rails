@@ -1,9 +1,9 @@
 class NextBidder
-  attr_reader :next_bidder, :errors
+  attr_reader :next_bidder, :messages
 
   def initialize(round)
     @round = round
-    @errors = []
+    @messages = []
     @players = @round.game.players
     @next_bidder = nil
   end
@@ -14,7 +14,7 @@ class NextBidder
     end
 
     unless @next_bidder
-      add_error("bidding is over")
+      add_message("bidding for this round is finished")
     end
   end
 
@@ -26,18 +26,18 @@ class NextBidder
     until @next_bidder || passed_players_offset > 3
       incremented_index = next_bidder_index(passed_players_offset)
 
-      @next_bidder = fetch_next_bidder(incremented_index)
+      bidder = fetch_next_bidder(incremented_index)
 
-      if bidder_has_already_passed?
-        @next_bidder = nil
+      unless bidder_has_already_passed?(bidder)
+        @next_bidder = bidder
       end
 
       passed_players_offset += 1
     end
   end
 
-  def bidder_has_already_passed?
-    @round.passes.any? { |pass| pass.player == @next_bidder }
+  def bidder_has_already_passed?(bidder)
+    @round.passes.any? { |pass| pass.player == bidder }
   end
 
   def next_bidder_index(offset)
@@ -48,7 +48,7 @@ class NextBidder
     index < @players.length ? @players[index] : @players[0]
   end
 
-  def add_error(message)
-    @errors << message
+  def add_message(message)
+    @messages << message
   end
 end

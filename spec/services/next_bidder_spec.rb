@@ -87,7 +87,7 @@ RSpec.describe NextBidder, type: :service do
         submit_bids(round, 1, 4)   # player 1 bids
         submit_passes(round, 1, 5) # player 2 passes
         submit_passes(round, 1, 7) # player 4 passes
-        submit_passes(round, 1, 8) # player 1 passes
+        submit_passes(round, 1, 8) # player 1 passes & wins the bidding
         find_next_bidder.call
       end
 
@@ -95,8 +95,8 @@ RSpec.describe NextBidder, type: :service do
         expect(find_next_bidder.next_bidder).to be_nil
       end
 
-      it "sets a 'bidding is over' error" do
-        expect(find_next_bidder.errors).to include("bidding is over")
+      it "sets a 'bidding is over' message" do
+        expect(find_next_bidder.messages).to include("bidding for this round is finished")
       end
     end
   end
