@@ -14,4 +14,12 @@ class RoundsDecorator < SimpleDelegator
   def winning_bid
     bids.includes(:player).order(number_of_tricks: :desc, suit: :desc).first
   end
+
+  def bidding?
+    bids.includes(:player).group_by { |bid| bid.player }.count < game.players.count
+  end
+
+  def playing?
+    !bidding? && tricks.count < 10 && tricks.last.cards.count < 4
+  end
 end
