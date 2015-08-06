@@ -10,34 +10,54 @@ class NextPlayer
 
   def call
     @round.with_lock do
-      if @round.tricks.one?
-        active_trick = @round.tricks.first
-
-        if active_trick.cards.none?           # winning bidder
-          @next_player = @players.first(2).last
-        else
-          @next_player = next_player_based_on_cards_played(active_trick)
-        end
-      else
-        active_trick = @round.tricks.last
-
-        if active_trick.cards.none?           # winner of last trick
-          index_of_active_trick = @round.tricks.index(active_trick)
-          previous_trick = @round.tricks[index_of_active_trick - 1]
-          previous_trick = TricksDecorator.new(previous_trick)
-
-          @next_player = previous_trick.winning_card.player
-        else
-          @next_player = next_player_based_on_cards_played(active_trick)
-        end
-      end
+      set_next_player
     end
+
+    unless @next_player
+      add_error("cards can't currently be played in this round")
+    end
+
+    success?
   end
 
   private
 
-  def next_player_based_on_cards_played(active_trick)
-    last_player = active_trick.cards.order(updated_at: :desc)[0].player
+  def set_next_player
+#    binding.pry
+    current_trick = @round.tricks.last
+
+    if first_trick?
+      set_player_for_first_trick(current_trick)
+    else
+      set_player_for_subsequent_trick(current_trick)
+    end
+  end
+
+  def first_trick?
+    @round.tricks.one?
+  end
+
+  def set_player_for_first_trick(current_trick)
+    if current_trick.cards.none?
+      @next_player = @round.winning_bid.player
+    else
+      @next_player = next_player_based_on_cards_played(current_trick)
+    end
+  end
+
+  def set_player_for_subsequent_trick(current_trick)
+    if current_trick.cards.none?
+      tricks = @round.tricks
+      previous_trick = TricksDecorator.new(tricks[tricks.index(current_trick) - 1])
+
+      @next_player = previous_trick.winning_card.player
+    else
+      @next_player = next_player_based_on_cards_played(current_trick)
+    end
+  end
+
+  def next_player_based_on_cards_played(current_trick)
+    last_player = current_trick.cards.order(updated_at: :desc)[0].player
     next_player_index = @players.index(last_player) + 1
 
     if next_player_index < @players.length
@@ -45,5 +65,13 @@ class NextPlayer
     else
       @players[0]
     end
+  end
+
+  def add_error(message)
+    @errors << message
+  end
+
+  def success?
+    errors.empty?
   end
 end
