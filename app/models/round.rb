@@ -17,4 +17,8 @@ class Round < ActiveRecord::Base
   def passes
     bids.includes(:player).where(number_of_tricks: 0)
   end
+
+  def winning_bid
+    bids.includes(:player).order(number_of_tricks: :desc, suit: :desc).first
+  end
 end
