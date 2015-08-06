@@ -32,15 +32,20 @@ module.exports = React.createClass({
   },
   renderRounds: function() {
     var gameId = this.props.params.id;
+    var players = this.state.players;
     return (
       <div id="rounds">
         {this.state.rounds.map(function(round) {
           return (
             <div id="round">
             <Round key={round.id}
+                   id={round.id}
+                   players={players}
+                   stage={round.stage}
+                   winningBid={round.winning_bid}
+                   bids={round.bids}
                    tricks={round.tricks}
                    hands={round.hands}
-                   id={round.id}
                    gameId={gameId}/>
             </div>
           );

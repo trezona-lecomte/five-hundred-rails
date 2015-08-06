@@ -1,55 +1,67 @@
-var React = require('react');
-var Trick = require('./trick');
-var Hand = require('./hand');
+var React        = require('react');
+var Bid          = require('./bid');
+var Trick        = require('./trick');
+var Hand         = require('./hand');
+var BiddingRound = require('./bidding_round');
+var PlayingRound = require('./playing_round');
 
 module.exports = React.createClass({
   getDefaultProps: function() {
     return {
       id: null,
+      stage: null,
+      gameId: null,
+      players: [],
+      bids: [],
       tricks: [],
-      hands: []
+      hands: [],
     }
   },
   render: function() {
+    var roundToRender;
+
+    if (this.props.stage === "bidding") {
+      roundToRender = this.renderBiddingRound();
+    } else if (this.props.stage === "playing") {
+      roundToRender = this.renderPlayingRound();
+    };
     return (
       <div>
-          <h2>Round {this.props.id}</h2>
-          {this.renderTricks()}
-          {this.renderHands()}
+        <h2>Round {this.props.id}: {this.props.stage}</h2>
+        {roundToRender}
       </div>
     );
   },
-  renderTricks: function() {
-    var playedCards = this.playedCards(this.props.hands);
-    var tricks = this.props.tricks;
-    return tricks.map(function(trick) {
+  renderBiddingRound: function() {
+    return (
+      <BiddingRound key={this.props.id}
+                    players={this.props.players}
+                    bids={this.props.bids}
+                    hands={this.props.hands}
+                    gameId={this.props.gameId} />
+    );
+  },
+  renderPlayingRound: function() {
+    return (
+      <PlayingRound key={this.props.id}
+                    players={this.props.players}
+                    bids={this.props.bids}
+                    winningBid={this.props.winningBid}
+                    tricks={this.props.tricks}
+                    hands={this.props.hands}
+                    gameId={this.props.gameId} />
+    );
+  },
+  renderBids: function() {
+    return this.props.bids.map(function(bid) {
       return (
-        <Trick key={trick.id} id={trick.id} num={tricks.indexOf(trick) + 1} allPlayedCards={playedCards} />
+        <Bid key={bid.id}
+             id={bid.id}
+             playerId={bid.player_id}
+             numberOfTricks={bid.number_of_tricks}
+             suit={bid.suit} />
       );
     });
   },
-  renderHands: function() {
-    var gameId = this.props.gameId;
-    var roundId = this.props.id;
-    return this.props.hands.map(function(hand) {
-      return (
-        <Hand key={hand.id}
-              cards={hand.cards}
-              playerId={hand.player.id}
-              gameId={gameId}
-              roundId={roundId}/>
-      );
-    });
-  },
-  playedCards: function(hands) {
-    cards = [];
-    hands.map(function(hand) {
-      hand.cards.filter(function(card) {
-        if (card.trick_id) {
-          cards.push(card);
-        }
-      });
-    });
-    return cards;
-  }
+
 });
