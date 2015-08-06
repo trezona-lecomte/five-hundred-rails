@@ -1,0 +1,53 @@
+first_bid:
+  round: playing_round
+  player_id: 1
+  number_of_tricks: 6
+  suit: 0
+
+second_bid:
+  round: playing_round
+  player_id: 2
+  number_of_tricks: 6
+  suit: 1
+
+third_bid:
+  round: playing_round
+  player_id: 3
+  number_of_tricks: 7
+  suit: 0
+
+fourth_bid:
+  round: playing_round
+  player_id: 4
+  number_of_tricks: 7
+  suit: 1
+
+fifth_bid:
+  round: playing_round
+  player_id: 1
+  number_of_tricks: 0
+  suit: 0
+
+sixth_bid:
+  round: playing_round
+  player_id: 2
+  number_of_tricks: 8
+  suit: 0
+
+seventh_bid:
+  round: playing_round
+  player_id: 3
+  number_of_tricks: 0
+  suit: 0
+
+eighth_bid:
+  round: playing_round
+  player_id: 4
+  number_of_tricks: 0
+  suit: 0
+
+ninth_bid:
+  round: playing_round
+  player_id: 2
+  number_of_tricks: 0
+  suit: 0
