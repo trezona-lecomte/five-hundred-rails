@@ -1,29 +1,16 @@
-var React = require('react');
-var Bid   = require('./bid');
+var React   = require('react');
+var BidList = require('./bid-list');
 
 module.exports = React.createClass({
   getDefaultProps: function() {
     return {
+      roundId: null,
       bids: []
     }
   },
   render: function() {
     return (
-      <div>
-        <h3>Bids:</h3>
-        {this.renderBids}
-      </div>
+      <BidList roundId={this.props.roundId}/>
     );
-  },
-  renderBids: function() {
-    return this.props.bids.map(function(bid) {
-      return (
-        <Bid key={bid.id}
-             id={bid.id}
-             playerId={bid.player_id}
-             numberOfTricks={bid.number_of_tricks}
-             suit={bid.suit} />
-      );
-    });
   }
 });

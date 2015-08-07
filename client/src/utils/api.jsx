@@ -12,6 +12,20 @@ module.exports = {
       return response.json()
     });
   },
+  post: function(url, body) {
+    return fetch(rootUrl + url, {
+      method: 'post',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: body
+    })
+    .then(function(response){
+      return response.json()
+    });
+  },
+  // TODO: change this to PATCH
   put: function(url, body) {
     return fetch(rootUrl + url, {
       method: 'put',
