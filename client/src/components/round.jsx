@@ -1,5 +1,4 @@
 var React        = require('react');
-var Bid          = require('./bid');
 var Trick        = require('./trick');
 var Hand         = require('./hand');
 var BiddingRound = require('./bidding_round');
@@ -52,16 +51,4 @@ module.exports = React.createClass({
                     gameId={this.props.gameId} />
     );
   },
-  renderBids: function() {
-    return this.props.bids.map(function(bid) {
-      return (
-        <Bid key={bid.id}
-             id={bid.id}
-             playerId={bid.player_id}
-             numberOfTricks={bid.number_of_tricks}
-             suit={bid.suit} />
-      );
-    });
-  },
-
 });

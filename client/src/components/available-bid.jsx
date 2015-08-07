@@ -12,7 +12,7 @@ module.exports = React.createClass({
     }
   },
   handleClick: function() {
-    Actions.submitBid(this.props.roundId,
+    Actions.placeBid(this.props.roundId,
                       this.props.playerId,
                       this.props.numberOfTricks,
                       this.props.suit);
