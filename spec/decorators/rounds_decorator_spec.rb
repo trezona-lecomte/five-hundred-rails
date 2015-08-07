@@ -61,4 +61,20 @@ RSpec.describe RoundsDecorator, type: :decorator do
       expect(winning_bid).to eq(expected_bid)
     end
   end
+
+  describe "#available_bids" do
+    context "when there haven't been any bids" do
+      let(:round) { rounds(:bidding_round) }
+
+      it "returns a list of all possible bids" do
+        expect(decorated_round.available_bids.count).to eq(26)
+      end
+    end
+
+    context "when the highest bid is 8 spades" do
+      it "returns a list of all bids higher than 8 spades, as well as a pass" do
+        expect(decorated_round.available_bids.count).to eq(15)
+      end
+    end
+  end
 end
