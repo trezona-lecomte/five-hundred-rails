@@ -10,7 +10,9 @@ module.exports = React.createClass({
     Reflux.listenTo(GamePreviewStore, 'onChange')
   ],
   getInitialState: function() {
-    return {gamePreviews: []}
+    return {
+      gamePreviews: []
+    }
   },
   componentWillMount: function() {
     Actions.getGamePreviews();
@@ -33,6 +35,8 @@ module.exports = React.createClass({
     });
   },
   onChange: function(event, gamePreviews) {
-    this.setState({gamePreviews: gamePreviews})
+    this.setState({
+      gamePreviews: gamePreviews
+    })
   }
 });

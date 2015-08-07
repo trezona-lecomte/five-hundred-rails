@@ -12,7 +12,6 @@ module.exports = React.createClass({
     }
   },
   handleClick: function() {
-
     Actions.playCard(this.props.gameId,
                      this.props.roundId,
                      this.props.playerId,

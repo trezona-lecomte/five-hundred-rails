@@ -38,7 +38,7 @@ module.exports = React.createClass({
                     players={this.props.players}
                     bids={this.props.bids}
                     hands={this.props.hands}
-                    gameId={this.props.gameId} />
+                    roundId={this.props.id} />
     );
   },
   renderPlayingRound: function() {

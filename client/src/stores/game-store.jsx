@@ -12,12 +12,12 @@ module.exports = Reflux.createStore({
     }.bind(this));
   },
   playCard: function(gameId, roundId, playerId, cardId) {
-    console.log('playing card: ' + cardId)
     var body = JSON.stringify({
         round_id: roundId,
         player_id: playerId,
         card_id: cardId
     });
+    // TODO: change this to PATCH
     return Api.put('games/' + gameId, body)
     .then(function(json) {
       this.game = json;
