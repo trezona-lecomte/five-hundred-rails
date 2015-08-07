@@ -16,7 +16,8 @@ class RoundsDecorator < SimpleDelegator
   end
 
   def bidding?
-    bids.includes(:player).group_by { |bid| bid.player }.count < game.players.count
+    # TODO: need to deal with the situation where everyone passes
+    passes.group_by { |pass| pass.player }.count < (game.players.count - 1)
   end
 
   def playing?
