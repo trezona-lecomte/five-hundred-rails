@@ -1,5 +1,4 @@
 var React = require('react');
-var Bid   = require('./bid');
 var Trick = require('./trick');
 var Hand  = require('./hand');
 
