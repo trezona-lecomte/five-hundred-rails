@@ -1,8 +1,8 @@
 # Users:
-user1 = User.create!(email: "user1@example.com", password: "password")
-user2 = User.create!(email: "user2@example.com", password: "password")
-user3 = User.create!(email: "user3@example.com", password: "password")
-user4 = User.create!(email: "user4@example.com", password: "password")
+user1 = User.create!(username: "user1", email: "user1@example.com", password: "password")
+user2 = User.create!(username: "user2", email: "user2@example.com", password: "password")
+user3 = User.create!(username: "user3", email: "user3@example.com", password: "password")
+user4 = User.create!(username: "user4", email: "user4@example.com", password: "password")
 
 # game 1:
 game1 = Game.create!
