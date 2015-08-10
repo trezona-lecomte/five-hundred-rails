@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150805071700) do
+ActiveRecord::Schema.define(version: 20150810074417) do
 
   create_table "bids", force: :cascade do |t|
     t.integer  "round_id",         limit: 4
@@ -49,9 +49,11 @@ ActiveRecord::Schema.define(version: 20150805071700) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.integer  "game_id",    limit: 4,   null: false
+    t.integer  "user_id",    limit: 4
   end
 
   add_index "players", ["game_id"], name: "index_players_on_game_id", using: :btree
+  add_index "players", ["user_id"], name: "index_players_on_user_id", using: :btree
 
   create_table "rounds", force: :cascade do |t|
     t.datetime "created_at",           null: false
@@ -69,12 +71,21 @@ ActiveRecord::Schema.define(version: 20150805071700) do
 
   add_index "tricks", ["round_id"], name: "index_tricks_on_round_id", using: :btree
 
+  create_table "users", force: :cascade do |t|
+    t.string   "email",      limit: 255
+    t.string   "password",   limit: 255
+    t.string   "auth_token", limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
   add_foreign_key "bids", "players"
   add_foreign_key "bids", "rounds"
   add_foreign_key "cards", "players"
   add_foreign_key "cards", "rounds"
   add_foreign_key "cards", "tricks"
   add_foreign_key "players", "games"
+  add_foreign_key "players", "users"
   add_foreign_key "rounds", "games"
   add_foreign_key "tricks", "rounds"
 end
