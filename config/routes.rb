@@ -4,8 +4,11 @@ Rails.application.routes.draw do
 
   resources :games, only: [:index, :show, :create, :update], shallow: true do
     resources :rounds, only: [:show] do
-      resources :bids, only: [:index, :create]
+      resources :bids, only: [:show, :create]
+      resources :cards, only: [:show, :create, :update]
     end
+
+    resources :players, only: [:show, :create]
   end
 
   get :token, controller: "application"

@@ -3,6 +3,7 @@ class ApplicationController < ActionController::API
   include ActionController::HttpAuthentication::Token::ControllerMethods
 
   before_action :allow_cross_origin_requests, if: proc { Rails.env.development? }
+  before_filter :authenticate_user_from_token, except: [:preflight, :index, :token]
 
   def preflight
     render nothing: true
@@ -25,6 +26,12 @@ class ApplicationController < ActionController::API
   end
 
   private
+
+  def authenticate_user_from_token
+    unless authenticate_with_http_token { |token, options| User.find_by(auth_token: token) }
+      render json: { error: "Bad Token" }, status: 401
+    end
+  end
 
   def allow_cross_origin_requests
     headers['Access-Control-Allow-Origin'] = '*'

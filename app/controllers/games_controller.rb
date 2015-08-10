@@ -6,6 +6,7 @@ class GamesController < ApplicationController
   end
 
   def show
+    render json: @game
     # method left blank - before_action handles setting @game
   end
 
