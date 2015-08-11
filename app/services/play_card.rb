@@ -10,20 +10,26 @@ class PlayCard
   end
 
   def call
-    @card.with_lock do
-      unless @trick && @trick.cards.count < 4
-        @trick = @round.tricks.create!
-      end
+    @round.with_lock do
+      start_new_trick unless trick_already_in_progress
 
       validate_card_can_be_played
 
-      play_card unless @errors.present?
+      play_card if @errors.none?
     end
 
     success?
   end
 
   private
+
+  def trick_already_in_progress
+    @trick && @trick.cards.count < 4
+  end
+
+  def start_new_trick
+    @trick = @round.tricks.create!
+  end
 
   def validate_card_can_be_played
     unless players_turn?
@@ -36,6 +42,7 @@ class PlayCard
 
     if card_already_played?
       add_error("you have already played this card")
+
     elsif !player_owns_card?
       add_error("you don't have this card in your hand")
     end
@@ -64,6 +71,7 @@ class PlayCard
 
   def play_card
     @card.trick = @trick
+    @card.position_in_trick = @trick.cards.length
 
     unless @card.save
       add_error("you can't play this card right now")
