@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::API
   before_action :allow_cross_origin_requests, if: proc { Rails.env.development? }
-  before_action :authenticate_user_from_token!
+  before_action :authenticate_user_from_token!, except: [:preflight]
 
   respond_to :json
 
