@@ -1,6 +1,7 @@
 require "rails_helper"
 
 RSpec.describe DealCards, type: :service do
+  fixtures :all
   let(:game)       { Game.create! }
   let(:base_round) { game.rounds.create! }
   let(:round)      { RoundsDecorator.new(base_round) }
@@ -9,7 +10,7 @@ RSpec.describe DealCards, type: :service do
   let(:deal_cards) { DealCards.new(game, base_round, deck) }
   let(:players)    { game.players }
 
-  before { 4.times { JoinGame.new(game, Faker::Internet.user_name).call } }
+  before { 4.times { |n| JoinGame.new(game, users("user#{n+1}")).call } }
 
   describe "#call" do
     before { deal_cards.call }

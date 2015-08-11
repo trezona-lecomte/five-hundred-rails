@@ -1,0 +1,24 @@
+--- !omap
+- user1:
+    id: 1
+    email: "user1@example.com"
+    username: "user1"
+    encrypted_password: <%= User.new.send(:password_digest, "password") %>
+
+- user2:
+    id: 2
+    email: "user2@example.com"
+    username: "user2"
+    encrypted_password: <%= User.new.send(:password_digest, "password") %>
+
+- user3:
+    id: 3
+    email: "user3@example.com"
+    username: "user3"
+    encrypted_password: <%= User.new.send(:password_digest, "password") %>
+
+- user4:
+    id: 4
+    email: "user4@example.com"
+    username: "user4"
+    encrypted_password: <%= User.new.send(:password_digest, "password") %>

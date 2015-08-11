@@ -14,4 +14,5 @@ group :development, :test do
   gem 'pry-rails'
   gem 'faker'
   gem 'rspec-rails'
+  gem 'codeclimate-test-reporter'
 end
