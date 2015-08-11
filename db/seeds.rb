@@ -1,10 +1,15 @@
+user1 = User.create!(email: "user1@example.com", username: "user1", password: "password")
+user2 = User.create!(email: "user2@example.com", username: "user2", password: "password")
+user3 = User.create!(email: "user3@example.com", username: "user3", password: "password")
+user4 = User.create!(email: "user4@example.com", username: "user4", password: "password")
+
 # game 1:
 game1 = Game.create!
 
-JoinGame.new(game1, Faker::Internet.user_name).call
-JoinGame.new(game1, Faker::Internet.user_name).call
-JoinGame.new(game1, Faker::Internet.user_name).call
-JoinGame.new(game1, Faker::Internet.user_name).call
+JoinGame.new(game1, user1).call
+JoinGame.new(game1, user2).call
+JoinGame.new(game1, user3).call
+JoinGame.new(game1, user4).call
 
 start_round = StartRound.new(game1)
 if start_round.call
@@ -19,13 +24,13 @@ DealCards.new(game1, round, deck).call
 # game 2:
 game2 = Game.create!
 
-JoinGame.new(game2, Faker::Internet.user_name).call
+JoinGame.new(game2, user1).call
 p1 = game2.players.last
-JoinGame.new(game2, Faker::Internet.user_name).call
+JoinGame.new(game2, user2).call
 p2 = game2.players.last
-JoinGame.new(game2, Faker::Internet.user_name).call
+JoinGame.new(game2, user3).call
 p3 = game2.players.last
-JoinGame.new(game2, Faker::Internet.user_name).call
+JoinGame.new(game2, user4).call
 p4 = game2.players.last
 
 start_round = StartRound.new(game2)
@@ -48,7 +53,7 @@ SubmitBid.new(round, p3, 0, 0).call # p3 passes
 SubmitBid.new(round, p4, 0, 0).call # p4 passes & wins the bidding
 
 # playing:
-#PlayCard.new(round, p1, p1.cards.sample).call
-#PlayCard.new(round, p2, p2.cards.sample).call
-#PlayCard.new(round, p3, p3.cards.sample).call
-#PlayCard.new(round, p4, p4.cards.sample).call
+PlayCard.new(round, p4, p4.cards.sample).call
+PlayCard.new(round, p1, p1.cards.sample).call
+PlayCard.new(round, p2, p2.cards.sample).call
+PlayCard.new(round, p3, p3.cards.sample).call
