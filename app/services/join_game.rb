@@ -1,34 +1,41 @@
 class JoinGame
-  def initialize(game, handle)
+  attr_reader :errors
+
+  def initialize(game, user)
     @game = game
-    @handle = handle
+    @user = user
   end
 
   def call
     @game.with_lock do
-      join_game if game_can_be_joined
-    end
+      validate_game_can_be_joined
 
-    success?
+      unless errors.present?
+        join_game
+      end
+    end
   end
 
   private
 
-  def game_can_be_joined
-    return true if @game.players.count < Game::MAX_PLAYERS
-
-    @game.errors.add(:players, "can't be more than #{Game::MAX_PLAYERS}")
-
-    false
+  def validate_game_can_be_joined
+    if @game.players.count < Game::MAX_PLAYERS
+      return true
+    else
+      add_error("no more than #{Game::MAX_PLAYERS} can join this game")
+      false
+    end
   end
 
   def join_game
-    @player = @game.players.new(handle: @handle)
+    @player = @game.players.new(user: @user)
 
-    @player.save
+    unless @player.save
+      add_error("user is unable to join this game: " + @player.errors)
+    end
   end
 
-  def success?
-    @game.errors.empty?
+  def add_error(message)
+    @errors << message
   end
 end
