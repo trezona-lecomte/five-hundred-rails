@@ -17,7 +17,7 @@ class SessionsController < ApplicationController
 
   def invalid_login_attempt
     warden.custom_failure!
-    render json: {error: 'sessions_controller.invalid_login_attempt'}, status: :unprocessable_entity
+    render json: {error: 'invalid login attempt'}, status: :unprocessable_entity
   end
 
 end
