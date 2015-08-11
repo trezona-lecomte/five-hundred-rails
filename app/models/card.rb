@@ -9,4 +9,5 @@ class Card < ActiveRecord::Base
   #enum suit: %w(spades clubs diamonds hearts no_suit)
 
   validates :round, presence: true
+  validates :rank, :suit, presence: true
 end
