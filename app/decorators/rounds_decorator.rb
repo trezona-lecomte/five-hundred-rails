@@ -21,7 +21,7 @@ class RoundsDecorator < SimpleDelegator
   end
 
   def playing?
-    !bidding? && tricks.count < 10 && tricks.last.cards.count < 4
+    !bidding? && active_trick
   end
 
   def available_bids
@@ -30,6 +30,10 @@ class RoundsDecorator < SimpleDelegator
     else
       pass_bid + non_pass_bids
     end
+  end
+
+  def active_trick
+    tricks.includes(:cards).detect { |trick| trick.cards.count < 4 }
   end
 
   private
