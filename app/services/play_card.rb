@@ -1,21 +1,23 @@
 class PlayCard
   attr_reader :round, :card, :errors
 
-  def initialize(round, player, card)
-    @round = RoundsDecorator.new(round)
+  def initialize(trick, player, card)
+    @trick = trick
+    @round = RoundsDecorator.new(trick.round)
     @player = player
     @card = card
-    @trick = @round.tricks.last
     @errors = []
   end
 
   def call
     @round.with_lock do
-      start_new_trick unless trick_already_in_progress
+      if valid_input?
+        validate_card_can_be_played
 
-      validate_card_can_be_played
-
-      play_card if @errors.none?
+        play_card if @errors.none?
+      else
+        add_error("couldn't play this card")
+      end
     end
 
     success?
@@ -23,35 +25,30 @@ class PlayCard
 
   private
 
-  def trick_already_in_progress
-    @trick && @trick.cards.count < 4
-  end
-
-  def start_new_trick
-    @trick = @round.tricks.create!
+  def valid_input?
+    @trick && @round && @player && @card
   end
 
   def validate_card_can_be_played
-    unless players_turn?
-      add_error("it's not your turn to play")
-    end
-
-    unless bidding_finished?
-      add_error("bidding hasn't yet finished for this round")
-    end
-
-    if card_already_played?
-      add_error("you have already played this card")
-
-    elsif !player_owns_card?
+    if !player_owns_card?
       add_error("you don't have this card in your hand")
+    elsif !round_in_playing_stage?
+      add_error("bidding hasn't yet finished for this round")
+    elsif card_already_played?
+      add_error("you have already played this card")
+    elsif !trick_active?
+      add_error("this trick is finished")
+    elsif !players_turn?
+      add_error("it's not your turn to play")
     end
   end
 
-  def bidding_finished?
-    find_next_bidder = NextBidder.new(@round)
-    find_next_bidder.call
-    find_next_bidder.messages.include? "bidding for this round is finished"
+  def trick_active?
+    @trick == @round.active_trick && @trick.cards.count < 4
+  end
+
+  def round_in_playing_stage?
+    @round.playing?
   end
 
   def players_turn?
@@ -71,7 +68,7 @@ class PlayCard
 
   def play_card
     @card.trick = @trick
-    @card.position_in_trick = @trick.cards.length
+    @card.position_in_trick = @trick.cards.count
 
     unless @card.save
       add_error("you can't play this card right now")
