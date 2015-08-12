@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
   devise :database_authenticatable, :recoverable, :validatable
 
+  has_many :players
+
   after_create :update_access_token!
 
   validates :username, presence: true
