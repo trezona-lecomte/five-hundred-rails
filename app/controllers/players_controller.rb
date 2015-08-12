@@ -6,6 +6,16 @@ class PlayersController < ApplicationController
     render json: @players
   end
 
+  def show
+    @player = Player.find(params[:id])
+
+    if @player.user == current_user
+      render json: @player
+    else
+      render json: { error: "you are not authorized to view this player" }
+    end
+  end
+
   def create
     @game = Game.find(player_params[:game_id])
 
