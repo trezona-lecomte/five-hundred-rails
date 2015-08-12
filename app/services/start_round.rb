@@ -11,8 +11,6 @@ class StartRound
     @game.with_lock do
       start_round if round_can_be_started
     end
-
-    success?
   end
 
   private
@@ -23,20 +21,10 @@ class StartRound
   end
 
   def start_round
-    @round = @game.rounds.new
+    @round = @game.rounds.create!
 
-    first_trick = @round.tricks.new
-
-    unless @round.save && first_trick.save
-      add_error("failed to start the round")
+    Round::NUMBER_OF_TRICKS.times do |n|
+      @round.tricks.create!(number_in_round: n)
     end
-  end
-
-  def success?
-    @errors.empty?
-  end
-
-  def add_error(message)
-    @errors << message
   end
 end
