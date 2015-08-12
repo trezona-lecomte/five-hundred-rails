@@ -1,14 +1,14 @@
 class RoundsController < ApplicationController
-  before_action :set_round, only: [:show]
-
-  def show
-    render json: @round
-  end
+  before_action :set_round, only: [:show, :update]
 
   def index
     @rounds = Round.all
 
     render json: @rounds
+  end
+
+  def show
+    render json: @round
   end
 
   def create
@@ -25,19 +25,27 @@ class RoundsController < ApplicationController
     end
   end
 
-  def show
-    @round = Round.find(params[:id])
+  def update
+    player = @round.game.players.find_by(user: current_user)
+    trick = Trick.find(round_params[:cards][0][:trick_id])
+    card  = Card.find(round_params[:cards][0][:id])
 
-    render json: @round
+    play_card = PlayCard.new(trick, player, card)
+
+    if play_card.call
+      render json: play_card.round, serializer: RoundSerializer, status: 200, locals: { errors: [] }
+    else
+      render json: { errors: play_card.errors }, status: 422
+    end
   end
 
   private
 
   def set_round
-    @round = Round.find(params[:id])
+    @round = RoundsDecorator.new(Round.find(params[:id]))
   end
 
   def round_params
-    params.permit(:game_id)
+    params.require(:round).permit(cards: [:id, :trick_id])
   end
 end
