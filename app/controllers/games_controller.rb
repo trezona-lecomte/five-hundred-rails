@@ -30,25 +30,6 @@ class GamesController < ApplicationController
     end
   end
 
-  def update
-    round = Round.find(game_params[:round_id])
-    player = Player.find(game_params[:player_id])
-    card = Card.find(game_params[:card_id])
-
-    play_card = PlayCard.new(round, player, card)
-
-    if play_card.call
-      render :update, status: 200, locals: {errors: []}
-    else
-      render :update, status: 422, locals: {errors: play_card.errors}
-    end
-  end
-  # def destroy
-  #   @game.destroy
-
-  #   head :no_content
-  # end
-
   private
 
   def set_game
