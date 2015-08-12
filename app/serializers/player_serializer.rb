@@ -1,9 +1,6 @@
 class PlayerSerializer < ActiveModel::Serializer
-  attributes :id, :path
+  attributes :id
 
   has_one :user
-
-  def path
-    player_path(object)
-  end
+  has_many :cards
 end
