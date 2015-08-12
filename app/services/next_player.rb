@@ -3,6 +3,7 @@ class NextPlayer
 
   def initialize(round)
     @round = RoundsDecorator.new(round)
+    @cards = @round.cards
     @errors = []
     @players = @round.game.players
     @next_player = nil
@@ -23,8 +24,7 @@ class NextPlayer
   private
 
   def set_next_player
-    current_trick = @round.tricks.last
-
+    current_trick = TricksDecorator.new(@round.active_trick)
     if first_trick?
       set_player_for_first_trick(current_trick)
     else
@@ -33,11 +33,11 @@ class NextPlayer
   end
 
   def first_trick?
-    @round.tricks.one?
+    @cards.select { |card| card.trick }.length < 4
   end
 
   def set_player_for_first_trick(current_trick)
-    if current_trick.cards.none?
+    if has_no_cards?(current_trick)
       @next_player = @round.winning_bid.player
     else
       @next_player = next_player_based_on_cards_played(current_trick)
@@ -45,9 +45,9 @@ class NextPlayer
   end
 
   def set_player_for_subsequent_trick(current_trick)
-    if current_trick.cards.none?
-      tricks = @round.tricks
-      previous_trick = TricksDecorator.new(tricks[tricks.index(current_trick) - 1])
+    if has_no_cards?(current_trick)
+      previous_trick_number = current_trick.number_in_round - 1
+      previous_trick = TricksDecorator.new(@round.tricks.find_by(number_in_round: previous_trick_number))
 
       @next_player = previous_trick.winning_card.player
     else
@@ -55,8 +55,12 @@ class NextPlayer
     end
   end
 
+  def has_no_cards?(trick)
+    @cards.where(trick: trick).none?
+  end
+
   def next_player_based_on_cards_played(current_trick)
-    last_player = current_trick.cards.order(updated_at: :desc)[0].player
+    last_player = current_trick.last_played_card.player
     next_player_index = @players.index(last_player) + 1
 
     if next_player_index < @players.length
