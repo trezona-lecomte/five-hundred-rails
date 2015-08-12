@@ -52,8 +52,16 @@ SubmitBid.new(round, p2, 0, 0).call # p2 passes
 SubmitBid.new(round, p3, 0, 0).call # p3 passes
 SubmitBid.new(round, p4, 0, 0).call # p4 passes & wins the bidding
 
+trick = RoundsDecorator.new(round).active_trick
+
+pc4 = PlayCard.new(trick, p4, p4.cards.sample)
+pc1 = PlayCard.new(trick, p1, p1.cards.sample)
+pc2 = PlayCard.new(trick, p2, p2.cards.sample)
+pc3 = PlayCard.new(trick, p3, p3.cards.sample)
+
+binding.pry
 # playing:
-PlayCard.new(round, p4, p4.cards.sample).call
-PlayCard.new(round, p1, p1.cards.sample).call
-PlayCard.new(round, p2, p2.cards.sample).call
-PlayCard.new(round, p3, p3.cards.sample).call
+pc4.call
+pc1.call
+pc2.call
+pc3.call

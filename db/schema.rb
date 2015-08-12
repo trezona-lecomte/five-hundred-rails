@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150811092859) do
+ActiveRecord::Schema.define(version: 20150812042937) do
 
   create_table "bids", force: :cascade do |t|
     t.integer  "round_id",         limit: 4
@@ -65,9 +65,10 @@ ActiveRecord::Schema.define(version: 20150811092859) do
   add_index "rounds", ["game_id"], name: "index_rounds_on_game_id", using: :btree
 
   create_table "tricks", force: :cascade do |t|
-    t.integer  "round_id",   limit: 4, null: false
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.integer  "round_id",        limit: 4, null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.integer  "number_in_round", limit: 4
   end
 
   add_index "tricks", ["round_id"], name: "index_tricks_on_round_id", using: :btree
