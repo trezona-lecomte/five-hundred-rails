@@ -6,6 +6,8 @@ gem 'mysql2'
 gem 'jbuilder'
 gem 'active_model_serializers', '~> 0.8.3'
 gem 'devise'
+gem 'rack-cors', require: 'rack/cors'
+#gem 'unicorn-rails'
 
 group :development, :test do
   gem 'spring'
