@@ -91,6 +91,7 @@ GEM
       pry (~> 0.10)
     pry-rails (0.3.4)
       pry (>= 0.9.10)
+    puma (2.12.3)
     rack (1.6.4)
     rack-cors (0.4.0)
     rack-test (0.6.3)
@@ -179,6 +180,7 @@ DEPENDENCIES
   mysql2
   pry-byebug
   pry-rails
+  puma
   rack-cors
   rails (= 4.2.1)
   rails-api
