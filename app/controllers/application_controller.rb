@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::API
+  protect_from_forgery with: :null_session
+
   before_action :authenticate_user_from_token!, except: [:preflight]
 
   respond_to :json

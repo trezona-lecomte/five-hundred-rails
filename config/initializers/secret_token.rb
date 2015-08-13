@@ -16,4 +16,8 @@
 # Using secret_token for rails3 compatibility. Change to secret_key_base
 # to avoid deprecation warning.
 # Can be safely removed in a rails3 api-only application.
-FiveHundredRails::Application.config.secret_token = '7509f8db7acbcfaabbc789fe263bf91c9e4e96cf2e5033fb07c890099d20dc89392febe1b61aca9dfc047d9b58c75fdf9a944b07e18eac564a0cd715c84d023f'
+FiveHundredRails::Application.config.secret_token = if Rails.env.development? or Rails.env.test?
+  ('x' * 30)
+else
+  ENV['SECRET_KEY_BASE']
+end
