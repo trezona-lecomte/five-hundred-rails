@@ -13,13 +13,16 @@
 
 ActiveRecord::Schema.define(version: 20150813045729) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "bids", force: :cascade do |t|
-    t.integer  "round_id",         limit: 4
-    t.integer  "player_id",        limit: 4
-    t.integer  "number_of_tricks", limit: 4
-    t.integer  "suit",             limit: 4
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.integer  "round_id"
+    t.integer  "player_id"
+    t.integer  "number_of_tricks"
+    t.integer  "suit"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
   add_index "bids", ["player_id"], name: "index_bids_on_player_id", using: :btree
@@ -27,14 +30,14 @@ ActiveRecord::Schema.define(version: 20150813045729) do
   add_index "bids", ["round_id"], name: "index_bids_on_round_id", using: :btree
 
   create_table "cards", force: :cascade do |t|
-    t.integer  "suit",              limit: 4
-    t.integer  "rank",              limit: 4
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
-    t.integer  "trick_id",          limit: 4
-    t.integer  "round_id",          limit: 4, null: false
-    t.integer  "player_id",         limit: 4
-    t.integer  "position_in_trick", limit: 4
+    t.integer  "suit"
+    t.integer  "rank"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.integer  "trick_id"
+    t.integer  "round_id",          null: false
+    t.integer  "player_id"
+    t.integer  "position_in_trick"
   end
 
   add_index "cards", ["player_id"], name: "index_cards_on_player_id", using: :btree
@@ -48,12 +51,12 @@ ActiveRecord::Schema.define(version: 20150813045729) do
   end
 
   create_table "players", force: :cascade do |t|
-    t.string   "handle",           limit: 255
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
-    t.integer  "game_id",          limit: 4,   null: false
-    t.integer  "user_id",          limit: 4
-    t.integer  "position_in_game", limit: 4
+    t.string   "handle"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.integer  "game_id",          null: false
+    t.integer  "user_id"
+    t.integer  "position_in_game"
   end
 
   add_index "players", ["game_id", "user_id"], name: "index_players_on_game_id_and_user_id", using: :btree
@@ -61,39 +64,39 @@ ActiveRecord::Schema.define(version: 20150813045729) do
   add_index "players", ["user_id"], name: "index_players_on_user_id", using: :btree
 
   create_table "rounds", force: :cascade do |t|
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
-    t.integer  "game_id",        limit: 4, null: false
-    t.integer  "number_in_game", limit: 4
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.integer  "game_id",        null: false
+    t.integer  "number_in_game"
   end
 
   add_index "rounds", ["game_id"], name: "index_rounds_on_game_id", using: :btree
 
   create_table "tricks", force: :cascade do |t|
-    t.integer  "round_id",        limit: 4, null: false
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
-    t.integer  "number_in_round", limit: 4
+    t.integer  "round_id",        null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.integer  "number_in_round"
   end
 
   add_index "tricks", ["round_id", "number_in_round"], name: "index_tricks_on_round_id_and_number_in_round", using: :btree
   add_index "tricks", ["round_id"], name: "index_tricks_on_round_id", using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                  limit: 255, default: "", null: false
-    t.string   "encrypted_password",     limit: 255, default: "", null: false
-    t.string   "reset_password_token",   limit: 255
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
+    t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          limit: 4,   default: 0,  null: false
+    t.integer  "sign_in_count",          default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip",     limit: 255
-    t.string   "last_sign_in_ip",        limit: 255
-    t.datetime "created_at",                                      null: false
-    t.datetime "updated_at",                                      null: false
-    t.string   "access_token",           limit: 255
-    t.string   "username",               limit: 255
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+    t.string   "access_token"
+    t.string   "username"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

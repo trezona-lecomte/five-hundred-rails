@@ -1,21 +1,23 @@
-default: &default
-  adapter: mysql2
-  encoding: utf8
-  pool: 5
-  username: root
-  password:
-  socket: /tmp/mysql.sock
-
 development:
-  <<: *default
-  database: test-mysql_development
+  adapter: postgresql
+  encoding: utf8
+  database: five_hundred_development
+  pool: 5
+  username:
+  password:
 
-test:
-  <<: *default
-  database: test-mysql_test
+test: &TEST
+  adapter: postgresql
+  encoding: utf8
+  database: five_hundred_test
+  pool: 5
+  username:
+  password:
 
 production:
-  <<: *default
-  database: test-mysql_production
-  username: test-mysql
-  password: <%= ENV['TEST-MYSQL_DATABASE_PASSWORD'] %>
+  adapter: postgresql
+  encoding: utf8
+  database: five_hundred_production
+  pool: 5
+  username:
+  password:
