@@ -16,15 +16,15 @@ RSpec.describe TricksDecorator, type: :decorator do
     end
 
     context "when a single card has been played" do
-      before { PlayCard.new(round, player, card).call }
+      before { PlayCard.new(base_trick, player, card).call }
 
       it { is_expected.to eq(card) }
     end
 
     context "when multiple cards have been played" do
       before do
-        PlayCard.new(round, player, card).call
-        PlayCard.new(round, players(:player3), cards(:nine_of_hearts)).call
+        PlayCard.new(base_trick, player, card).call
+        PlayCard.new(base_trick, players(:player3), cards(:nine_of_hearts)).call
       end
 
       it { is_expected.to eq(card) }
