@@ -1,2 +1,39 @@
-first_playing_trick:
+trick_1:
   round: playing_round
+  number_in_round: 1
+
+trick_2:
+  round: playing_round
+  number_in_round: 2
+
+trick_3:
+  round: playing_round
+  number_in_round: 3
+
+trick_4:
+  round: playing_round
+  number_in_round: 4
+
+trick_5:
+  round: playing_round
+  number_in_round: 5
+
+trick_6:
+  round: playing_round
+  number_in_round: 6
+
+trick_7:
+  round: playing_round
+  number_in_round: 7
+
+trick_8:
+  round: playing_round
+  number_in_round: 8
+
+trick_9:
+  round: playing_round
+  number_in_round: 9
+
+trick_10:
+  round: playing_round
+  number_in_round: 10

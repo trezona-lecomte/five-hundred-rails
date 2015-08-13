@@ -41,6 +41,35 @@ RSpec.describe RoundsDecorator, type: :decorator do
 
   end
 
+  describe "#active_trick" do
+    subject { decorated_round.active_trick }
+
+    context "when the round isn't yet in the playing stage" do
+      let(:round) { rounds(:bidding_round) }
+
+      it { is_expected.to be_nil }
+    end
+
+    context "when the round is in the playing stage" do
+      let(:round) { rounds(:playing_round) }
+
+      context "when it is the first trick" do
+        it { is_expected.to eq(round.tricks.order(number_in_round: :asc).first) }
+      end
+
+      context "when it is a subsequent trick" do
+        before do
+          decorated_round.active_trick.cards << cards(:jack_of_hearts)
+          decorated_round.active_trick.cards << cards(:ten_of_hearts)
+          decorated_round.active_trick.cards << cards(:nine_of_hearts)
+          decorated_round.active_trick.cards << cards(:eight_of_hearts)
+        end
+
+        it { is_expected.to eq(round.tricks.order(number_in_round: :asc).first(2).last) }
+      end
+    end
+  end
+
   describe "#kitty" do
     let(:kitty) { decorated_round.kitty }
 

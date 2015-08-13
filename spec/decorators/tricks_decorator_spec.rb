@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe TricksDecorator, type: :decorator do
   fixtures :all
   let(:round)      { rounds(:playing_round) }
-  let(:base_trick) { round.tricks.first }
+  let(:base_trick) { round.tricks.order(number_in_round: :asc).first }
   let(:trick)      { TricksDecorator.new(base_trick) }
   let(:player)     { players(:player2) }
   let(:card)       { cards(:jack_of_hearts) }
@@ -16,7 +16,9 @@ RSpec.describe TricksDecorator, type: :decorator do
     end
 
     context "when a single card has been played" do
-      before { PlayCard.new(base_trick, player, card).call }
+      before do
+        PlayCard.new(base_trick, player, card).call
+      end
 
       it { is_expected.to eq(card) }
     end

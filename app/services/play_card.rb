@@ -1,5 +1,5 @@
 class PlayCard
-  attr_reader :round, :card, :errors
+  attr_reader :round, :card, :errors, :trick
 
   def initialize(trick, player, card)
     @trick = trick
@@ -37,7 +37,7 @@ class PlayCard
     elsif card_already_played?
       add_error("you have already played this card")
     elsif !trick_active?
-      add_error("this trick is finished")
+      add_error("this trick is not active")
     elsif !players_turn?
       add_error("it's not your turn to play")
     end
