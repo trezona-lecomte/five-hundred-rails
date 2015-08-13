@@ -21,10 +21,10 @@ class StartRound
   end
 
   def start_round
-    @round = @game.rounds.create!
+    @round = @game.rounds.create!(number_in_game: @game.rounds.count + 1)
 
     Round::NUMBER_OF_TRICKS.times do |n|
-      @round.tricks.create!(number_in_round: n)
+      @round.tricks.create!(number_in_round: n+1)
     end
   end
 end

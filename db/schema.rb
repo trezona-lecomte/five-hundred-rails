@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150812042937) do
+ActiveRecord::Schema.define(version: 20150813045729) do
 
   create_table "bids", force: :cascade do |t|
     t.integer  "round_id",         limit: 4
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20150812042937) do
   end
 
   add_index "bids", ["player_id"], name: "index_bids_on_player_id", using: :btree
+  add_index "bids", ["round_id", "number_of_tricks"], name: "index_bids_on_round_id_and_number_of_tricks", using: :btree
   add_index "bids", ["round_id"], name: "index_bids_on_round_id", using: :btree
 
   create_table "cards", force: :cascade do |t|
@@ -38,6 +39,7 @@ ActiveRecord::Schema.define(version: 20150812042937) do
 
   add_index "cards", ["player_id"], name: "index_cards_on_player_id", using: :btree
   add_index "cards", ["round_id"], name: "index_cards_on_round_id", using: :btree
+  add_index "cards", ["trick_id", "player_id"], name: "index_cards_on_trick_id_and_player_id", using: :btree
   add_index "cards", ["trick_id"], name: "index_cards_on_trick_id", using: :btree
 
   create_table "games", force: :cascade do |t|
@@ -46,20 +48,23 @@ ActiveRecord::Schema.define(version: 20150812042937) do
   end
 
   create_table "players", force: :cascade do |t|
-    t.string   "handle",     limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-    t.integer  "game_id",    limit: 4,   null: false
-    t.integer  "user_id",    limit: 4
+    t.string   "handle",           limit: 255
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.integer  "game_id",          limit: 4,   null: false
+    t.integer  "user_id",          limit: 4
+    t.integer  "position_in_game", limit: 4
   end
 
+  add_index "players", ["game_id", "user_id"], name: "index_players_on_game_id_and_user_id", using: :btree
   add_index "players", ["game_id"], name: "index_players_on_game_id", using: :btree
   add_index "players", ["user_id"], name: "index_players_on_user_id", using: :btree
 
   create_table "rounds", force: :cascade do |t|
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
-    t.integer  "game_id",    limit: 4, null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.integer  "game_id",        limit: 4, null: false
+    t.integer  "number_in_game", limit: 4
   end
 
   add_index "rounds", ["game_id"], name: "index_rounds_on_game_id", using: :btree
@@ -71,6 +76,7 @@ ActiveRecord::Schema.define(version: 20150812042937) do
     t.integer  "number_in_round", limit: 4
   end
 
+  add_index "tricks", ["round_id", "number_in_round"], name: "index_tricks_on_round_id_and_number_in_round", using: :btree
   add_index "tricks", ["round_id"], name: "index_tricks_on_round_id", using: :btree
 
   create_table "users", force: :cascade do |t|

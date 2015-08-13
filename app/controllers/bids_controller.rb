@@ -15,9 +15,9 @@ class BidsController < ApplicationController
     @bids = @round.bids.all
 
     if submit_bid.errors.empty?
-      render :index, status: :created, locals: {errors: []}
+      render json: submit_bid.round, serializer: RoundSerializer, status: :created, locals: { errors: [] }
     else
-      render :index, status: :unprocessable_entity, locals: {errors: submit_bid.errors}
+      render json: { errors: submit_bid.errors }, status: :unprocessable_entity
     end
   end
 
@@ -28,10 +28,10 @@ class BidsController < ApplicationController
   end
 
   def set_player
-    @player = Player.find(bid_params[:player_id])
+    @player = Player.find_by(user: current_user)
   end
 
   def bid_params
-    params.permit(:round_id, :player_id, :number_of_tricks, :suit)
+    params.permit(:round_id, :number_of_tricks, :suit)
   end
 end

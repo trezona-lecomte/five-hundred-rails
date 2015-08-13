@@ -1,6 +1,6 @@
 class RoundsDecorator < SimpleDelegator
-  def hands
-    cards.includes(:player).where("player_id is not null").group_by { |card| card.player }
+  def unplayed_cards(player)
+    cards.where(player: player).where("trick_id": nil)
   end
 
   def kitty
@@ -13,6 +13,14 @@ class RoundsDecorator < SimpleDelegator
 
   def winning_bid
     bids.includes(:player).order(number_of_tricks: :desc, suit: :desc).first
+  end
+
+  def stage
+    if bidding?
+      "bidding"
+    elsif playing?
+      "playing"
+    end
   end
 
   def bidding?
@@ -33,7 +41,16 @@ class RoundsDecorator < SimpleDelegator
   end
 
   def active_trick
-    tricks.includes(:cards).detect { |trick| trick.cards.count < 4 }
+    tricks.includes(:cards).order(:number_in_round).detect { |trick| trick.cards.count < 4 }
+  end
+
+  def previous_trick
+    active_trick_number = active_trick.number_in_round
+    tricks.find_by(number_in_round: active_trick_number - 1)
+  end
+
+  def previous_trick_winner
+    TricksDecorator.new(previous_trick).winning_card.player
   end
 
   private

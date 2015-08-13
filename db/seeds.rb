@@ -59,7 +59,6 @@ pc1 = PlayCard.new(trick, p1, p1.cards.sample)
 pc2 = PlayCard.new(trick, p2, p2.cards.sample)
 pc3 = PlayCard.new(trick, p3, p3.cards.sample)
 
-binding.pry
 # playing:
 pc4.call
 pc1.call

@@ -1,5 +1,5 @@
 class SubmitBid
-  attr_reader :bid, :errors
+  attr_reader :bid, :errors, :round
 
   def initialize(round, player, number_of_tricks, suit)
     @round = round
@@ -16,12 +16,15 @@ class SubmitBid
 
       submit_bid unless errors.present?
     end
+
+    @round = RoundsDecorator.new(@round)
   end
 
   private
 
   def validate_bid_can_be_placed
     # TODO: need to handle when bidding has finished
+
     unless players_turn?
       add_error("it's not your turn to bid")
     end
@@ -43,9 +46,14 @@ class SubmitBid
   end
 
   def submit_bid
+#    binding.pry
     bid = @round.bids.new(player: @player, number_of_tricks: @number_of_tricks, suit: @suit)
 
-    bid.save
+    unless bid.save
+      bid.errors.messages.each do |msg|
+        add_error(msg)
+      end
+    end
   end
 
   def add_error(message)

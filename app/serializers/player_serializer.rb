@@ -1,5 +1,5 @@
 class PlayerSerializer < ActiveModel::Serializer
-  attributes :id
+  attributes :id, :handle
 
   has_one :user
   has_many :cards

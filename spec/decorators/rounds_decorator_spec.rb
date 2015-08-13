@@ -5,25 +5,6 @@ RSpec.describe RoundsDecorator, type: :decorator do
   let(:round) { rounds(:playing_round) }
   let(:decorated_round) { RoundsDecorator.new(round) }
 
-  describe "#hands" do
-    let(:hands) { decorated_round.hands }
-    let(:cards) { hands.values.reduce(:+) }
-
-    it "returns a hand per each player in the round" do
-      expect(hands.count).to eq(4)
-    end
-
-    it "returns 40 cards across all the hands" do
-      expect(cards.count).to eq(40)
-    end
-
-    it "returns only cards with an associated player" do
-      cards.each do |card|
-        expect(card.player).to_not be_nil
-      end
-    end
-  end
-
   describe "#kitty" do
     let(:kitty) { decorated_round.kitty }
 
@@ -34,6 +15,7 @@ RSpec.describe RoundsDecorator, type: :decorator do
     it "returns only cards without an associated player" do
       kitty.each do |card|
         expect(card.player).to be_nil
+
       end
     end
   end
