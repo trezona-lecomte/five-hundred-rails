@@ -6,13 +6,11 @@ development:
   username:
   password:
 
-test: &TEST
+test:
   adapter: postgresql
   encoding: utf8
-  database: five_hundred_test
-  pool: 5
-  username:
-  password:
+  database: travis_ci_test
+  username: postgres
 
 production:
   adapter: postgresql

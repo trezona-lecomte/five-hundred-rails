@@ -7,3 +7,6 @@ script: bundle exec rspec spec
 addons:
     code_climate:
         repo_token: a20e83b86c7d4f2d004a3431780ca4bb275c4bcd53f69a728496375904592ccd
+
+before_script:
+  - psql -c 'create database travis_ci_test;' -U postgres
