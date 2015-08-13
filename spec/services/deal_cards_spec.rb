@@ -26,16 +26,6 @@ RSpec.describe DealCards, type: :service do
         end
       end
 
-      it "deals the cards into 4 'hands'" do
-        expect(round.hands.count).to eq(4)
-
-        round.hands.each do |hand|
-          expect(players).to include(hand[0])
-
-          expect(hand[1].count).to eq(10)
-        end
-      end
-
       it "deals 3 cards into the kitty" do
         expect(players).to_not include(round.kitty[0])
 

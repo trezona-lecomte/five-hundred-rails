@@ -5,6 +5,42 @@ RSpec.describe RoundsDecorator, type: :decorator do
   let(:round) { rounds(:playing_round) }
   let(:decorated_round) { RoundsDecorator.new(round) }
 
+  describe "#bidding?" do
+    subject { decorated_round.bidding? }
+
+    context "when bidding hasn't finished yet" do
+      let(:round) { rounds(:bidding_round) }
+
+      it { is_expected.to be true }
+    end
+
+    context "when bidding has finished" do
+      it { is_expected.to be false }
+    end
+  end
+
+  describe "#playing?" do
+    subject { decorated_round.playing? }
+
+    context "when playing hasn't yet started" do
+      let(:round) { rounds(:bidding_round) }
+
+      it { is_expected.to be false }
+    end
+
+    context "when playing has begun and not yet finished" do
+      it { is_expected.to be_truthy }
+    end
+
+    context "when playing has finished" do
+
+    end
+  end
+
+  describe "#stage" do
+
+  end
+
   describe "#kitty" do
     let(:kitty) { decorated_round.kitty }
 

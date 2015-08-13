@@ -16,7 +16,7 @@ class StartRound
   private
 
   def round_can_be_started
-    # TODO: implement validations for starting round
+    # TODO: implement validations for starting round - no unfinished rounds on game?
     true
   end
 
