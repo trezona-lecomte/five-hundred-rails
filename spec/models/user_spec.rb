@@ -1,31 +1,34 @@
 require "rails_helper"
 
 RSpec.describe User, type: :model do
-  let(:username) { Faker::Internet.user_name }
-  let(:email)    { Faker::Internet.email }
-  let(:password) { Faker::Internet.password }
+  it { should validate_presence_of :username }
+  it { should validate_presence_of :email }
+  it { should validate_presence_of :password }
 
-  describe "validations" do
-    subject(:create_user) { User.create!(username: username, email: email, password: password) }
+  it { should validate_uniqueness_of :email }
+  it { should validate_length_of(:password).is_at_least(8) }
 
-    context "when given valid attributes" do
-      it { is_expected.to be_valid }
+  describe "access token" do
+    subject { user.access_token }
+
+    context "before the record has been saved" do
+      let(:user) { User.new(valid_user_attributes) }
+
+      it { is_expected.to be_nil }
     end
 
-    context "when no username is provided" do
-      let(:username) { nil }
+    context "after the record has been saved" do
+      let(:user) { User.create!(valid_user_attributes) }
 
-      it "raises a validation error" do
-        expect { create_user }.to raise_error(ActiveRecord::RecordInvalid)
-      end
+      it { is_expected.to include(user.id.to_s) }
     end
+  end
 
-    context "when no email is provided" do
-      let(:email) { nil }
-
-      it "raises a validation error" do
-        expect { create_user }.to raise_error(ActiveRecord::RecordInvalid)
-      end
-    end
+  def valid_user_attributes
+    {
+      email:    Faker::Internet.email,
+      password: Faker::Internet.password,
+      username: Faker::Internet.user_name
+    }
   end
 end

@@ -68,7 +68,7 @@ class PlayCard
 
   def play_card
     @card.trick = @trick
-    @card.position_in_trick = @trick.cards.count
+    @card.number_in_trick = @trick.cards.count
 
     unless @card.save
       add_error("you can't play this card right now")

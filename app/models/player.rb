@@ -6,4 +6,5 @@ class Player < ActiveRecord::Base
   has_many :bids,  dependent: :destroy
 
   validates :game, :user, presence: true
+  validates :user,        uniqueness: { scope: :game }
 end

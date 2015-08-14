@@ -3,9 +3,9 @@ class User < ActiveRecord::Base
 
   has_many :players
 
-  after_create :update_access_token!
-
   validates :username, presence: true
+
+  after_create :update_access_token!
 
   private
 
