@@ -32,12 +32,12 @@ ActiveRecord::Schema.define(version: 20150813045729) do
   create_table "cards", force: :cascade do |t|
     t.integer  "suit"
     t.integer  "rank"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.integer  "trick_id"
-    t.integer  "round_id",          null: false
+    t.integer  "round_id",        null: false
     t.integer  "player_id"
-    t.integer  "position_in_trick"
+    t.integer  "number_in_trick"
   end
 
   add_index "cards", ["player_id"], name: "index_cards_on_player_id", using: :btree

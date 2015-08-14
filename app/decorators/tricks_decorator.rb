@@ -1,6 +1,6 @@
 class TricksDecorator < SimpleDelegator
   def last_played_card
-    cards.max_by { |card| card.position_in_trick }
+    cards.max_by { |card| card.number_in_trick }
   end
 
   def winning_card
