@@ -27,7 +27,6 @@ ActiveRecord::Schema.define(version: 20150813045729) do
 
   add_index "bids", ["player_id"], name: "index_bids_on_player_id", using: :btree
   add_index "bids", ["round_id", "number_of_tricks"], name: "index_bids_on_round_id_and_number_of_tricks", using: :btree
-  add_index "bids", ["round_id"], name: "index_bids_on_round_id", using: :btree
 
   create_table "cards", force: :cascade do |t|
     t.integer  "suit"
@@ -41,9 +40,10 @@ ActiveRecord::Schema.define(version: 20150813045729) do
   end
 
   add_index "cards", ["player_id"], name: "index_cards_on_player_id", using: :btree
-  add_index "cards", ["round_id"], name: "index_cards_on_round_id", using: :btree
+  add_index "cards", ["round_id", "player_id"], name: "index_cards_on_round_id_and_player_id", using: :btree
+  add_index "cards", ["round_id", "rank", "suit"], name: "index_cards_on_round_id_and_rank_and_suit", unique: true, using: :btree
+  add_index "cards", ["round_id", "trick_id", "number_in_trick"], name: "index_cards_on_round_id_and_trick_id_and_number_in_trick", unique: true, using: :btree
   add_index "cards", ["trick_id", "player_id"], name: "index_cards_on_trick_id_and_player_id", using: :btree
-  add_index "cards", ["trick_id"], name: "index_cards_on_trick_id", using: :btree
 
   create_table "games", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -59,8 +59,7 @@ ActiveRecord::Schema.define(version: 20150813045729) do
     t.integer  "position_in_game"
   end
 
-  add_index "players", ["game_id", "user_id"], name: "index_players_on_game_id_and_user_id", using: :btree
-  add_index "players", ["game_id"], name: "index_players_on_game_id", using: :btree
+  add_index "players", ["game_id", "user_id"], name: "index_players_on_game_id_and_user_id", unique: true, using: :btree
   add_index "players", ["user_id"], name: "index_players_on_user_id", using: :btree
 
   create_table "rounds", force: :cascade do |t|
@@ -80,7 +79,6 @@ ActiveRecord::Schema.define(version: 20150813045729) do
   end
 
   add_index "tricks", ["round_id", "number_in_round"], name: "index_tricks_on_round_id_and_number_in_round", using: :btree
-  add_index "tricks", ["round_id"], name: "index_tricks_on_round_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
