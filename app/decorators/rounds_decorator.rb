@@ -50,7 +50,9 @@ class RoundsDecorator < SimpleDelegator
   end
 
   def previous_trick_winner
-    TricksDecorator.new(previous_trick).winning_card.player
+    if trick = previous_trick
+      TricksDecorator.new(trick).winning_card.player
+    end
   end
 
   private

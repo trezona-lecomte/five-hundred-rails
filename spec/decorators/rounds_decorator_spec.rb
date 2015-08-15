@@ -4,6 +4,7 @@ RSpec.describe RoundsDecorator, type: :decorator do
   fixtures :all
   let(:round) { rounds(:playing_round) }
   let(:decorated_round) { RoundsDecorator.new(round) }
+  let(:player) { players(:player1) }
 
   describe "#bidding?" do
     subject { decorated_round.bidding? }
@@ -33,12 +34,81 @@ RSpec.describe RoundsDecorator, type: :decorator do
     end
 
     context "when playing has finished" do
-
+      # TODO handle & test the finishing of rounds
     end
   end
 
   describe "#stage" do
+    subject { decorated_round.stage }
 
+    context "when the round is in the bidding stage" do
+      before { allow(decorated_round).to receive(:bidding?).and_return true }
+
+      it { is_expected.to eq("bidding") }
+    end
+
+    context "when the round is in the playing stage" do
+      it { is_expected.to eq("playing") }
+    end
+  end
+
+  describe "#unplayed cards" do
+    let(:player)    { players(:player2) }
+    let(:card)      { cards(:ten_of_hearts) }
+    let(:all_cards) { round.cards.where(player: player) }
+
+    subject { decorated_round.unplayed_cards(player) }
+
+    context "when a player hasn't played any cards" do
+      it { is_expected.to eq(all_cards) }
+    end
+
+    context "when a player has played a card" do
+      before { PlayCard.new(decorated_round.active_trick, player, card).call }
+
+      it { is_expected.to eq(all_cards - [card]) }
+    end
+  end
+
+  describe "#previous_trick" do
+    subject { decorated_round.previous_trick }
+
+    context "when it is the first trick" do
+      it { is_expected.to be nil }
+    end
+
+    context "when it is the second trick" do
+      before do
+        %w(2 3 4 1).each do |n|
+          player = players("player#{n}")
+          card = round.cards.where(player: player).sample
+          PlayCard.new(decorated_round.active_trick, player, card).call
+        end
+      end
+
+      it { is_expected.to eq(tricks(:trick_1)) }
+    end
+  end
+
+  describe "#previous_trick_winner" do
+    subject { decorated_round.previous_trick_winner }
+
+    context "when it is the first trick" do
+      it { is_expected.to be nil }
+    end
+
+    context "when player 1 won the first trick" do
+      before do
+        # TODO this won't work once trumps are implemented...
+        %w(2 3 4 1).each do |n|
+          player = players("player#{n}")
+          card = round.cards.where(player: player).sample
+          PlayCard.new(decorated_round.active_trick, player, card).call
+        end
+      end
+
+      it { is_expected.to eq(players(:player1)) }
+    end
   end
 
   describe "#active_trick" do
