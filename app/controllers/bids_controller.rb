@@ -2,11 +2,6 @@ class BidsController < ApplicationController
   before_action :set_round,  only: [:index, :create]
   before_action :set_player, only: [:create]
 
-  def index
-    @bids = @round.bids.all
-    render :index, status: 200, locals: {errors: []}
-  end
-
   def create
     submit_bid = SubmitBid.new(@round, @player, bid_params[:number_of_tricks], bid_params[:suit])
 
@@ -28,7 +23,7 @@ class BidsController < ApplicationController
   end
 
   def set_player
-    @player = Player.find_by(user: current_user)
+    @player = @round.game.players.find_by(user: current_user)
   end
 
   def bid_params
