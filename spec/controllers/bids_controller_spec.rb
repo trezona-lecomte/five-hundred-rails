@@ -14,14 +14,18 @@ RSpec.describe BidsController, type: :controller do
   end
 
   describe "POST #create" do
-    before { post :create, round_id: round.id, number_of_tricks: "0", suit: "hearts" }
+    subject { response }
 
-    context "when the user is valid" do
-      subject { response }
+    context "when the bid is valid" do
+      before { post :create, round_id: round.id, number_of_tricks: "6", suit: "hearts" }
 
-      it do
-        is_expected.to have_http_status(201)
-      end
+      it { is_expected.to have_http_status(201) }
+    end
+
+    context "when the bid is invalid" do
+      before { post :create, round_id: round.id, number_of_tricks: "6", suit: "farts" }
+
+      it { is_expected.to have_http_status(422) }
     end
   end
 end

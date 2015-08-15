@@ -46,13 +46,16 @@ class SubmitBid
   end
 
   def submit_bid
-#    binding.pry
-    bid = @round.bids.new(player: @player, number_of_tricks: @number_of_tricks, suit: @suit)
+    begin
+      bid = @round.bids.new(player: @player, number_of_tricks: @number_of_tricks, suit: @suit)
 
-    unless bid.save
-      bid.errors.messages.each do |msg|
-        add_error(msg)
+      unless bid.save
+        bid.errors.messages.each do |msg|
+          add_error(msg)
+        end
       end
+    rescue ArgumentError => e
+      add_error(e.message)
     end
   end
 
