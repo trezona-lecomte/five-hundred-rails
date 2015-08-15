@@ -99,12 +99,25 @@ RSpec.describe RoundsDecorator, type: :decorator do
 
     context "when player 1 won the first trick" do
       before do
-        # TODO this won't work once trumps are implemented...
-        %w(2 3 4 1).each do |n|
-          player = players("player#{n}")
-          card = round.cards.where(player: player).sample
-          PlayCard.new(decorated_round.active_trick, player, card).call
-        end
+        play_card = PlayCard.new(decorated_round.active_trick,
+                                 players(:player2),
+                                 cards(:nine_of_clubs))
+        play_card.call
+
+        play_card = PlayCard.new(decorated_round.active_trick,
+                                 players(:player3),
+                                 cards(:seven_of_clubs))
+        play_card.call
+
+        play_card = PlayCard.new(decorated_round.active_trick,
+                                 players(:player4),
+                                 cards(:five_of_clubs))
+        play_card.call
+
+        play_card = PlayCard.new(decorated_round.active_trick,
+                                 players(:player1),
+                                 cards(:king_of_clubs))
+        play_card.call
       end
 
       it { is_expected.to eq(players(:player1)) }
