@@ -1,9 +1,6 @@
 # README
 ## Five Hundred [card game](https://en.wikipedia.org/wiki/500_(card_game))
-
-[![Code Climate](https://codeclimate.com/repos/55cc55a3695680476401bf64/badges/f26e177cfd7435fe36ca/gpa.svg)](https://codeclimate.com/repos/55cc55a3695680476401bf64/feed)
-
-[![Test Coverage](https://codeclimate.com/repos/55cc55a3695680476401bf64/badges/f26e177cfd7435fe36ca/coverage.svg)](https://codeclimate.com/repos/55cc55a3695680476401bf64/coverage)
+[![Code Climate](https://codeclimate.com/repos/55cc55a3695680476401bf64/badges/f26e177cfd7435fe36ca/gpa.svg)](https://codeclimate.com/repos/55cc55a3695680476401bf64/feed) [![Test Coverage](https://codeclimate.com/repos/55cc55a3695680476401bf64/badges/f26e177cfd7435fe36ca/coverage.svg)](https://codeclimate.com/repos/55cc55a3695680476401bf64/coverage)
 
 ## Features:
 
