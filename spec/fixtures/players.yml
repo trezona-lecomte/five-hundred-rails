@@ -4,45 +4,53 @@
     handle: "player 1"
     game: playing_game
     user_id: 1
+    number_in_game: 1
 
 - player2:
     id: 2
     handle: "player 2"
     game: playing_game
     user_id: 2
+    number_in_game: 2
 
 - player3:
     id: 3
     handle: "player 3"
     game: playing_game
     user_id: 3
+    number_in_game: 3
 
 - player4:
     id: 4
     handle: "player 4"
     game: playing_game
     user_id: 4
+    number_in_game: 4
 
 - bidder1:
     id: 5
     handle: "bidder 1"
     game: bidding_game
     user_id: 1
+    number_in_game: 1
 
 - bidder2:
     id: 6
     handle: "bidder 2"
     game: bidding_game
     user_id: 2
+    number_in_game: 2
 
 - bidder3:
     id: 7
     handle: "bidder 3"
     game: bidding_game
     user_id: 3
+    number_in_game: 3
 
 - bidder4:
     id: 8
     handle: "bidder 4"
     game: bidding_game
     user_id: 4
+    number_in_game: 4

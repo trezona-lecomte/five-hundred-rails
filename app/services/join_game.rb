@@ -28,7 +28,7 @@ class JoinGame
   end
 
   def join_game
-    @player = @game.players.new(user: @user, handle: @user.username, position_in_game: @game.players.count + 1)
+    @player = @game.players.new(user: @user, handle: @user.username, number_in_game: @game.players.count + 1)
 
     unless @player.save
       add_error("user is unable to join this game: " + @player.errors)
