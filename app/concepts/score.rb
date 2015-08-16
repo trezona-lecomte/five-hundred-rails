@@ -5,17 +5,28 @@ class Score
                   Card.suits[:hearts]   => 100,
                   Card.suits[:no_suit]  => 120  }
 
-  def self.calculate_for_winners(number_of_tricks, suit)
-    BASE_SCORES[Card.suits[suit]] + tricks_score(number_of_tricks)
+  attr_reader :number_of_tricks, :suit
+
+  def initialize(number_of_tricks:, suit: Card.suits[:no_suit])
+    @number_of_tricks = number_of_tricks
+    @suit = suit
   end
 
-  def self.calculate_for_losers(number_of_tricks)
+  def for_successful_attack
+    for_attack
+  end
+
+  def for_failed_attack
+    -for_attack
+  end
+
+  def for_defense
     number_of_tricks * 10
   end
 
   private
 
-  def self.tricks_score(number_of_tricks)
-    (number_of_tricks - 6) * 100
+  def for_attack
+    BASE_SCORES[Card.suits[suit]] + ((number_of_tricks - 6) * 100)
   end
 end
