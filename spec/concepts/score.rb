@@ -39,8 +39,8 @@ RSpec.describe Score, type: :concept do
     },
   }
 
-  describe "#calculate" do
-    subject { Score.calculate(number_of_tricks, suit) }
+  describe "#calculate_for_winners" do
+    subject { Score.calculate_for_winners(number_of_tricks, suit) }
 
     (6..10).to_a.product(Card.suits.keys).each do |n, s|
       context "for #{n} #{s}" do
@@ -48,6 +48,18 @@ RSpec.describe Score, type: :concept do
         let(:suit)             { s }
 
         it { is_expected.to eq(SCORES[Card.suits[s]][n]) }
+      end
+    end
+  end
+
+  describe "#calculate_for_losers" do
+    subject { Score.calculate_for_losers(number_of_tricks) }
+
+    (1..10).to_a.each do |n|
+      context "for #{n} tricks" do
+        let(:number_of_tricks) { n }
+
+        it { is_expected.to eq(n * 10) }
       end
     end
   end
