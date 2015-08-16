@@ -18,7 +18,13 @@ class RoundSerializer < ActiveModel::Serializer
   end
 
   def stage
-    object.stage
+    if object.bidding?
+      "bidding"
+    elsif object.finished?
+      "finished"
+    else
+      "playing"
+    end
   end
 
   def winning_bid
@@ -26,7 +32,7 @@ class RoundSerializer < ActiveModel::Serializer
   end
 
   def available_bids
-    object.bidding? ? object.available_bids : []
+    object.available_bids
   end
 
   def cards
@@ -35,11 +41,11 @@ class RoundSerializer < ActiveModel::Serializer
   end
 
   def active_trick
-    object.playing? ? object.active_trick : nil
+    object.active_trick
   end
 
   def previous_trick_winner
-    object.playing? && object.tricks.order(number_in_round: :asc).first.cards.present? ? object.previous_trick_winner : nil
+    object.previous_trick_winner
   end
 
   def players

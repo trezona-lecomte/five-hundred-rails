@@ -1,10 +1,46 @@
 class RoundsDecorator < SimpleDelegator
-  def unplayed_cards(player)
-    cards.where(player: player).where("trick_id": nil)
+  def bidding?
+    # TODO: need to deal with the situation where everyone passes
+    passes.group_by { |pass| pass.player }.count < (game.players.count - 1)
   end
 
-  def kitty
-    cards.includes(:player).where("player_id is null")
+  def playing?
+    active_trick
+  end
+
+  def finished?
+    !active_trick
+  end
+
+  def active_trick
+    unless bidding?
+      tricks.includes(:cards).order(:number_in_round).detect { |trick| trick.cards.count < 4 }
+    end
+  end
+
+  def previous_trick_winner
+    trick = previous_trick
+    if trick && trick.cards.present? && playing?
+        TricksDecorator.new(trick).winning_card.player
+    end
+  end
+
+  def previous_trick
+    if current_trick = active_trick
+      tricks.find_by(number_in_round: current_trick.number_in_round - 1)
+    end
+  end
+
+  def available_bids
+    if bidding?
+      if winning_bid
+        pass_bid + bids_above_highest_bid(non_pass_bids, winning_bid)
+      else
+        pass_bid + non_pass_bids
+      end
+    else
+      []
+    end
   end
 
   def passes
@@ -15,44 +51,12 @@ class RoundsDecorator < SimpleDelegator
     bids.includes(:player).order(number_of_tricks: :desc, suit: :desc).first
   end
 
-  def stage
-    if bidding?
-      "bidding"
-    elsif playing?
-      "playing"
-    end
+  def kitty
+    cards.includes(:player).where("player_id is null")
   end
 
-  def bidding?
-    # TODO: need to deal with the situation where everyone passes
-    passes.group_by { |pass| pass.player }.count < (game.players.count - 1)
-  end
-
-  def playing?
-    !bidding? && active_trick
-  end
-
-  def available_bids
-    if winning_bid
-      pass_bid + bids_above_highest_bid(non_pass_bids, winning_bid)
-    else
-      pass_bid + non_pass_bids
-    end
-  end
-
-  def active_trick
-    tricks.includes(:cards).order(:number_in_round).detect { |trick| trick.cards.count < 4 }
-  end
-
-  def previous_trick
-    active_trick_number = active_trick.number_in_round
-    tricks.find_by(number_in_round: active_trick_number - 1)
-  end
-
-  def previous_trick_winner
-    if trick = previous_trick
-      TricksDecorator.new(trick).winning_card.player
-    end
+  def unplayed_cards(player)
+    cards.where(player: player).where("trick_id": nil)
   end
 
   private
