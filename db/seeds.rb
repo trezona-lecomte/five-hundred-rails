@@ -64,3 +64,48 @@ pc4.call
 pc1.call
 pc2.call
 pc3.call
+
+
+# Finished game:
+game3 = Game.create!
+
+JoinGame.new(game3, user1).call
+p1 = game3.players.last
+JoinGame.new(game3, user2).call
+p2 = game3.players.last
+JoinGame.new(game3, user3).call
+p3 = game3.players.last
+JoinGame.new(game3, user4).call
+p4 = game3.players.last
+
+start_round = StartRound.new(game3)
+start_round.call
+round = start_round.round
+
+deck = BuildDeck.new.call
+
+DealCards.new(game3, round, deck).call
+
+# bidding:
+SubmitBid.new(round, p1, 6, 0).call # p1 bids 7 hearts
+SubmitBid.new(round, p2, 0, 0).call # p2 passes
+SubmitBid.new(round, p3, 0, 0).call # p3 passes
+SubmitBid.new(round, p4, 0, 0).call # p4 passes so player 1 wins the bidding
+
+
+10.times do |_|
+  trick = RoundsDecorator.new(round).active_trick
+
+  #playing:
+  pc1 = PlayCard.new(trick, p1, p1.cards.where(trick: nil).sample)
+  pc2 = PlayCard.new(trick, p2, p2.cards.where(trick: nil).sample)
+  pc3 = PlayCard.new(trick, p3, p3.cards.where(trick: nil).sample)
+  pc4 = PlayCard.new(trick, p4, p4.cards.where(trick: nil).sample)
+
+  pc1.call
+  pc2.call
+  pc3.call
+  pc4.call
+
+#  binding.pry if pc1.errors.present? || pc2.errors.present? || pc3.errors.present? || pc4.errors.present?
+end

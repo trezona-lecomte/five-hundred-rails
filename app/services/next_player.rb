@@ -18,63 +18,44 @@ class NextPlayer
       add_error("cards can't currently be played in this round")
     end
 
-    success?
+    errors.none?
   end
 
   private
 
   def set_next_player
-    current_trick = TricksDecorator.new(@round.active_trick)
-    if first_trick?
-      set_player_for_first_trick(current_trick)
-    else
-      set_player_for_subsequent_trick(current_trick)
-    end
-  end
-
-  def first_trick?
-    @cards.select { |card| card.trick }.length < 4
-  end
-
-  def set_player_for_first_trick(current_trick)
-    if has_no_cards?(current_trick)
-      @next_player = @round.winning_bid.player
-    else
+    # TODO move methods from tricks decorator to be scopes on card
+    current_trick = round.active_trick
+    if current_trick.cards.present?
       @next_player = next_player_based_on_cards_played(current_trick)
-    end
-  end
-
-  def set_player_for_subsequent_trick(current_trick)
-    if has_no_cards?(current_trick)
-      previous_trick_number = current_trick.number_in_round - 1
-      previous_trick = TricksDecorator.new(@round.tricks.find_by(number_in_round: previous_trick_number))
-
-      @next_player = previous_trick.winning_card.player
+    elsif first_trick?(current_trick)
+      set_player_for_first_trick
     else
-      @next_player = next_player_based_on_cards_played(current_trick)
+      set_player_for_subsequent_trick
     end
   end
 
-  def has_no_cards?(trick)
-    @cards.where(trick: trick).none?
+  def first_trick?(trick)
+    trick.number_in_round == 1
+  end
+
+  def set_player_for_first_trick
+    @next_player = round.winning_bid.player
+  end
+
+  def set_player_for_subsequent_trick
+    @next_player = round.previous_trick_winner
   end
 
   def next_player_based_on_cards_played(current_trick)
-    last_player = current_trick.last_played_card.player
-    next_player_index = @players.index(last_player) + 1
+    last_player_number = current_trick.cards.last_played.player.number_in_game
 
-    if next_player_index < @players.length
-      @players[next_player_index]
-    else
-      @players[0]
-    end
+    next_player_number = last_player_number < 4 ? last_player_number + 1 : 1
+
+    @players.find_by(number_in_game: next_player_number)
   end
 
   def add_error(message)
     @errors << message
-  end
-
-  def success?
-    errors.empty?
   end
 end

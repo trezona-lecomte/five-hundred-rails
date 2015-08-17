@@ -19,15 +19,16 @@ class PlayCard
         add_error("couldn't play this card")
       end
 
-      if round.finished?
+      # TODO move to controller
+      if @round.finished?
         score_round = ScoreRound.new(round)
         unless score_round.call
-          errors << score_round.errors
+          @errors << score_round.errors
         end
       end
     end
 
-    errors.none?
+    @errors.none?
   end
 
   private
@@ -37,12 +38,10 @@ class PlayCard
   end
 
   def validate_card_can_be_played
-    if !player_owns_card?
+    if !card_in_hand?
       add_error("you don't have this card in your hand")
-    elsif !round_in_playing_stage?
-      add_error("bidding hasn't yet finished for this round")
-    elsif card_already_played?
-      add_error("you have already played this card")
+    elsif !round.playing?
+      add_error("cards can't be played on this round")
     elsif !trick_active?
       add_error("this trick is not active")
     elsif !players_turn?
@@ -50,34 +49,26 @@ class PlayCard
     end
   end
 
-  def trick_active?
-    @trick == @round.active_trick && @trick.cards.count < 4
+  def card_in_hand?
+    (card.player == @player) && card.trick.blank?
   end
 
-  def round_in_playing_stage?
-    @round.playing?
+  def trick_active?
+    @trick == round.active_trick && @trick.cards.count < 4
   end
 
   def players_turn?
-    find_next_player = NextPlayer.new(@round)
+    find_next_player = NextPlayer.new(round)
     find_next_player.call
 
     @player == find_next_player.next_player
-  end
-
-  def card_already_played?
-    @card.trick.present?
-  end
-
-  def player_owns_card?
-    @card.player == @player
   end
 
   def play_card
     @card.trick = @trick
     @card.number_in_trick = @trick.cards.count
 
-    unless @card.save
+    unless card.save
       add_error("you can't play this card right now")
     end
   end

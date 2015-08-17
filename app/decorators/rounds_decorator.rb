@@ -21,9 +21,9 @@ class RoundsDecorator < SimpleDelegator
   def previous_trick_winner
     trick = previous_trick
     if finished?
-      TricksDecorator.new(tricks.order(number_in_round: :asc).last).winning_card.player
+      tricks.order(number_in_round: :asc).last.cards.winning.player
     elsif trick && trick.cards.present? && playing?
-      TricksDecorator.new(trick).winning_card.player
+      trick.cards.highest.player
     end
   end
 

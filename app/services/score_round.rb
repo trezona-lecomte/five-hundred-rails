@@ -5,7 +5,7 @@ class ScoreRound
     @round   = RoundsDecorator.new(round)
     @game    = round.game
     @players = game.players
-    @tricks  = round.tricks.map { |trick| TricksDecorator.new(trick) }
+    @tricks  = round.tricks
     @errors  = []
   end
 
@@ -61,8 +61,8 @@ class ScoreRound
     attacker_tricks.count >= attempted_number_of_tricks
   end
 
-  def tricks_for(players)
-    tricks.select { |trick| players.include?(trick.winning_card.player) }
+  def tricks_for(team_members)
+    tricks.select { |trick| team_members.include?(trick.cards.highest.player) }
   end
 
   def attacking_players

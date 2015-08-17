@@ -19,8 +19,8 @@ RSpec.describe ScoreRound, type: :service do
             expect(round.odd_team_score).to eq(200)
           end
 
-          it "sets the even team score to 20" do
-            expect(round.even_team_score).to eq(20)
+          it "sets the even team score to 0" do
+            expect(round.even_team_score).to eq(0)
           end
         end
 

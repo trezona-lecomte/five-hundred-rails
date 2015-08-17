@@ -40,10 +40,13 @@ RSpec.describe PlayCard, type: :service do
 
       context "when cards have been played" do
         before do
-          PlayCard.new(trick, players(:player2), cards(:nine_of_clubs)).call
-          PlayCard.new(trick, players(:player3), cards(:seven_of_clubs)).call
+          pc = PlayCard.new(trick, players(:player2), cards(:nine_of_clubs))
+          pc.call
+          pc = PlayCard.new(trick, players(:player3), cards(:seven_of_clubs))
+          pc.call
 
           play_card.call
+
         end
 
         context "when the correct player attempts to play" do
