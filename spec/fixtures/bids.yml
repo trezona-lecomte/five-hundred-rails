@@ -51,3 +51,29 @@ ninth_bid:
   player_id: 2
   number_of_tricks: 0
   suit: 0
+
+# Finished round bids:
+
+finished_round_winning_bid:
+  round: finished_round
+  player_id: 1
+  number_of_tricks: 7
+  suit: 3
+
+finished_round_second_bid:
+  round: finished_round
+  player_id: 2
+  number_of_tricks: 0
+  suit: 1
+
+finished_round_third_bid:
+  round: finished_round
+  player_id: 3
+  number_of_tricks: 0
+  suit: 0
+
+finished_round_fourth_bid:
+  round: finished_round
+  player_id: 4
+  number_of_tricks: 0
+  suit: 1

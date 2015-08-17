@@ -37,3 +37,45 @@ trick_9:
 trick_10:
   round: playing_round
   number_in_round: 10
+
+# Finished round tricks:
+
+finished_trick_1:
+  round: finished_round
+  number_in_round: 1
+
+finished_trick_2:
+  round: finished_round
+  number_in_round: 2
+
+finished_trick_3:
+  round: finished_round
+  number_in_round: 3
+
+finished_trick_4:
+  round: finished_round
+  number_in_round: 4
+
+finished_trick_5:
+  round: finished_round
+  number_in_round: 5
+
+finished_trick_6:
+  round: finished_round
+  number_in_round: 6
+
+finished_trick_7:
+  round: finished_round
+  number_in_round: 7
+
+finished_trick_8:
+  round: finished_round
+  number_in_round: 8
+
+finished_trick_9:
+  round: finished_round
+  number_in_round: 9
+
+finished_trick_10:
+  round: finished_round
+  number_in_round: 10

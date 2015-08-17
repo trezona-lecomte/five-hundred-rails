@@ -11,3 +11,6 @@ bidding_round:
 
 playing_round:
   game: playing_game
+
+finished_round:
+  game: playing_game
