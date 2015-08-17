@@ -2,9 +2,9 @@ require "rails_helper"
 
 RSpec.describe RoundsDecorator, type: :decorator do
   fixtures :all
-  let(:round) { rounds(:playing_round) }
+  let(:round)           { rounds(:playing_round) }
   let(:decorated_round) { RoundsDecorator.new(round) }
-  let(:player) { players(:player1) }
+  let(:player)          { players(:player1) }
 
   describe "#bidding?" do
     subject { decorated_round.bidding? }
@@ -84,7 +84,8 @@ RSpec.describe RoundsDecorator, type: :decorator do
         %w(2 3 4 1).each do |n|
           player = players("player#{n}")
           card = round.cards.where(player: player).sample
-          PlayCard.new(decorated_round.active_trick, player, card).call
+          pc = PlayCard.new(decorated_round.active_trick, player, card)
+          pc.call
         end
       end
 

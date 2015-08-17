@@ -13,6 +13,6 @@ class Card < ActiveRecord::Base
 
   scope :highest_to_lowest, -> { order(suit: :desc, rank: :desc) }
   scope :winning,           -> { highest_to_lowest.first }
-  scope :newest_to_oldest,  -> { order(number_in_trick: :desc) }
+  scope :newest_to_oldest,  -> { where.not(number_in_trick: nil).order(number_in_trick: :desc) }
   scope :last_played,       -> { newest_to_oldest.first }
 end
