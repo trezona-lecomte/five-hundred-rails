@@ -20,6 +20,10 @@ class ScoreRound
       else
         add_error("this round hasn't finished yet")
       end
+
+      unless game.finished?
+
+      end
     end
 
     errors.none?

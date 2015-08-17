@@ -1,5 +1,11 @@
 class RoundSerializer < ActiveModel::Serializer
-  attributes :id, :path, :number_in_game, :stage, :available_bids
+  attributes :id,
+             :path,
+             :number_in_game,
+             :stage,
+             :available_bids,
+             :odd_team_score,
+             :even_team_score
 
   has_one  :winning_bid
   has_many :bids,                  key: :placed_bids

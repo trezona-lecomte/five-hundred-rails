@@ -76,6 +76,7 @@ RSpec.describe RoundsDecorator, type: :decorator do
     subject { decorated_round.previous_trick }
 
     context "when it is the first trick" do
+      binding.pry
       it { is_expected.to be nil }
     end
 

@@ -6,7 +6,7 @@ gem 'pg'
 gem 'active_model_serializers', '~> 0.8.3'
 gem 'devise'
 gem 'rack-cors', require: 'rack/cors'
-gem 'puma'
+#gem 'puma'
 
 group :development, :test do
   gem 'spring'
