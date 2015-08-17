@@ -18,9 +18,16 @@ class PlayCard
       else
         add_error("couldn't play this card")
       end
+
+      if round.finished?
+        score_round = ScoreRound.new(round)
+        unless score_round.call
+          errors << score_round.errors
+        end
+      end
     end
 
-    success?
+    errors.none?
   end
 
   private
@@ -77,9 +84,5 @@ class PlayCard
 
   def add_error(message)
     @errors << message
-  end
-
-  def success?
-    @errors.empty?
   end
 end
