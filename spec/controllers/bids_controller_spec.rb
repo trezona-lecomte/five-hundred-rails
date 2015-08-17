@@ -13,19 +13,19 @@ RSpec.describe BidsController, type: :controller do
     allow(controller).to receive(:current_user).and_return(user)
   end
 
-  describe "POST #create" do
-    subject { response }
+  # describe "POST #create" do
+  #   subject { response }
 
-    context "when the bid is valid" do
-      before { post :create, round_id: round.id, number_of_tricks: "6", suit: "hearts" }
+  #   context "when the bid is valid" do
+  #     before { post :create, round_id: round.id, number_of_tricks: "6", suit: "hearts" }
 
-      it { is_expected.to have_http_status(201) }
-    end
+  #     it { is_expected.to have_http_status(201) }
+  #   end
 
-    context "when the bid is invalid" do
-      before { post :create, round_id: round.id, number_of_tricks: "6", suit: "farts" }
+  #   context "when the bid is invalid" do
+  #     before { post :create, round_id: round.id, number_of_tricks: "6", suit: "farts" }
 
-      it { is_expected.to have_http_status(422) }
-    end
-  end
+  #     it { is_expected.to have_http_status(422) }
+  #   end
+  # end
 end

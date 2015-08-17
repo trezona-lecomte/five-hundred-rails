@@ -23,7 +23,7 @@ class RoundsDecorator < SimpleDelegator
     if finished?
       TricksDecorator.new(tricks.order(number_in_round: :asc).last).winning_card.player
     elsif trick && trick.cards.present? && playing?
-        TricksDecorator.new(trick).winning_card.player
+      TricksDecorator.new(trick).winning_card.player
     end
   end
 

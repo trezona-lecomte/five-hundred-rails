@@ -9,10 +9,10 @@ class Game < ActiveRecord::Base
   end
 
   def odd_team_score
-    rounds.to_a.sum(&:odd_team_score)
+    rounds.where.not(odd_team_score: nil).to_a.sum(&:odd_team_score)
   end
 
   def even_team_score
-    rounds.to_a.sum(&:even_team_score)
+    rounds.where.not(even_team_score: nil).to_a.sum(&:even_team_score)
   end
 end
