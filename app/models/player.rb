@@ -7,4 +7,7 @@ class Player < ActiveRecord::Base
 
   validates :game, :user, presence: true
   validates :user,        uniqueness: { scope: :game }
+
+  # scope :odd_team, -> { where(number_in_game.odd?) }
+  # scope :even_team, -> { where(number_in_game.even?) }
 end

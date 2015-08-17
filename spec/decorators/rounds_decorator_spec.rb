@@ -170,21 +170,6 @@ RSpec.describe RoundsDecorator, type: :decorator do
     end
   end
 
-  describe "#passes" do
-    let(:passes)           { decorated_round.passes }
-    let(:number_of_passes) { round.bids.where(number_of_tricks: 0).count }
-
-    it "returns all bids in the round that are passes" do
-      expect(passes.count).to eq(4)
-    end
-
-    it "returns only bids with a 'number_of_tricks' of 0" do
-      passes.each do |pass|
-        expect(pass.number_of_tricks).to eq(0)
-      end
-    end
-  end
-
   describe "#winning_bid" do
     let(:winning_bid) { decorated_round.winning_bid }
     let(:expected_bid) { bids(:sixth_bid) }

@@ -37,7 +37,7 @@ class NextBidder
   end
 
   def bidder_has_already_passed?(bidder)
-    @round.passes.any? { |pass| pass.player == bidder }
+    @round.bids.passes.any? { |pass| pass.player == bidder }
   end
 
   def next_bidder_index(offset)

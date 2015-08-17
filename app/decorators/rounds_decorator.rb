@@ -1,7 +1,7 @@
 class RoundsDecorator < SimpleDelegator
   def bidding?
     # TODO: need to deal with the situation where everyone passes
-    passes.group_by { |pass| pass.player }.count < (game.players.count - 1)
+    bids.passes.group_by { |pass| pass.player }.count < (game.players.count - 1)
   end
 
   def playing?
@@ -43,12 +43,8 @@ class RoundsDecorator < SimpleDelegator
     end
   end
 
-  def passes
-    bids.includes(:player).where(number_of_tricks: 0)
-  end
-
   def winning_bid
-    bids.includes(:player).order(number_of_tricks: :desc, suit: :desc).first
+    bids.in_ranked_order.first
   end
 
   def kitty
