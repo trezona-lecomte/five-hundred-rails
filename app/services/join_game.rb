@@ -4,6 +4,7 @@ class JoinGame
   def initialize(game, user)
     @game = game
     @user = user
+    @errors = []
   end
 
   def call
@@ -13,6 +14,8 @@ class JoinGame
       unless errors.present?
         join_game
       end
+
+      @errors.none?
     end
   end
 
@@ -22,7 +25,7 @@ class JoinGame
     if @game.players.count < Game::MAX_PLAYERS
       return true
     else
-      add_error("no more than #{Game::MAX_PLAYERS} can join this game")
+      add_error("no more than #{Game::MAX_PLAYERS} players can join this game")
       false
     end
   end

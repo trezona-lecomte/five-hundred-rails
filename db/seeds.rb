@@ -12,14 +12,8 @@ JoinGame.new(game1, user3).call
 JoinGame.new(game1, user4).call
 
 start_round = StartRound.new(game1)
-if start_round.call
-  round = start_round.round
-end
-
-deck = BuildDeck.new.call
-
-DealCards.new(game1, round, deck).call
-
+start_round.call
+round = start_round.round
 
 # game 2:
 game2 = Game.create!
@@ -34,13 +28,8 @@ JoinGame.new(game2, user4).call
 p4 = game2.players.last
 
 start_round = StartRound.new(game2)
-if start_round.call
-  round = start_round.round
-end
-
-deck = BuildDeck.new.call
-
-DealCards.new(game2, round, deck).call
+start_round.call
+round = start_round.round
 
 # bidding:
 SubmitBid.new(round, p1, 6, 0).call # p1 bids 6 spades
@@ -65,8 +54,7 @@ pc1.call
 pc2.call
 pc3.call
 
-
-# Finished game:
+# Finished round:
 game3 = Game.create!
 
 JoinGame.new(game3, user1).call
@@ -82,19 +70,16 @@ start_round = StartRound.new(game3)
 start_round.call
 round = start_round.round
 
-deck = BuildDeck.new.call
-
-DealCards.new(game3, round, deck).call
-
 # bidding:
 SubmitBid.new(round, p1, 6, 0).call # p1 bids 7 hearts
 SubmitBid.new(round, p2, 0, 0).call # p2 passes
 SubmitBid.new(round, p3, 0, 0).call # p3 passes
 SubmitBid.new(round, p4, 0, 0).call # p4 passes so player 1 wins the bidding
 
+decorated_round = RoundsDecorator.new(round)
 
-10.times do |_|
-  trick = RoundsDecorator.new(round).active_trick
+until decorated_round.finished?
+  trick = decorated_round.active_trick
 
   #playing:
   pc1 = PlayCard.new(trick, p1, p1.cards.where(trick: nil).sample)
@@ -106,6 +91,50 @@ SubmitBid.new(round, p4, 0, 0).call # p4 passes so player 1 wins the bidding
   pc2.call
   pc3.call
   pc4.call
+end
 
-#  binding.pry if pc1.errors.present? || pc2.errors.present? || pc3.errors.present? || pc4.errors.present?
+score_round = ScoreRound.new(round)
+score_round.call
+
+start_round = StartRound.new(game3)
+start_round.call
+
+
+# Almost finished round:
+game4 = Game.create!
+
+JoinGame.new(game4, user1).call
+p1 = game4.players.last
+JoinGame.new(game4, user2).call
+p2 = game4.players.last
+JoinGame.new(game4, user3).call
+p3 = game4.players.last
+JoinGame.new(game4, user4).call
+p4 = game4.players.last
+
+start_round = StartRound.new(game4)
+start_round.call
+round = start_round.round
+
+# bidding:
+SubmitBid.new(round, p1, 6, 0).call # p1 bids 7 hearts
+SubmitBid.new(round, p2, 0, 0).call # p2 passes
+SubmitBid.new(round, p3, 0, 0).call # p3 passes
+SubmitBid.new(round, p4, 0, 0).call # p4 passes so player 1 wins the bidding
+
+decorated_round = RoundsDecorator.new(round)
+
+until decorated_round.cards.where(trick: nil).count == 4
+  trick = decorated_round.active_trick
+
+  #playing:
+  pc1 = PlayCard.new(trick, p1, p1.cards.where(trick: nil).sample)
+  pc2 = PlayCard.new(trick, p2, p2.cards.where(trick: nil).sample)
+  pc3 = PlayCard.new(trick, p3, p3.cards.where(trick: nil).sample)
+  pc4 = PlayCard.new(trick, p4, p4.cards.where(trick: nil).sample)
+
+  pc1.call unless trick.number_in_round == 10 && trick.cards.count == 3
+  pc2.call unless trick.number_in_round == 10 && trick.cards.count == 3
+  pc3.call unless trick.number_in_round == 10 && trick.cards.count == 3
+  pc4.call unless trick.number_in_round == 10 && trick.cards.count == 3
 end

@@ -12,19 +12,19 @@ class PlayersController < ApplicationController
     if @player.user == current_user
       render json: @player
     else
-      render json: { error: "you are not authorized to view this player" }
+      render json: { errors: ["you are not authorized to view this player"] }
     end
   end
 
   def create
     @game = Game.find(player_params[:game_id])
 
-    join_game = JoinGame.new(@game, player_params[:handle])
+    join_game = JoinGame.new(@game, current_user)
 
     if join_game.call
       render json: @game, status: :created
     else
-      render json: @game.errors, status: :unprocessable_entity
+      render json: { errors: [join_game.errors] }, status: :unprocessable_entity
     end
   end
   private
