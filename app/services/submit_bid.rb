@@ -23,8 +23,6 @@ class SubmitBid
   private
 
   def validate_bid_can_be_placed
-    # TODO: need to handle when bidding has finished
-
     unless players_turn?
       add_error("it's not your turn to bid")
     end

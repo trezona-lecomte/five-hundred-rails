@@ -1,16 +1,21 @@
 round_1:
   id: 1
   game: game_1
+  number_in_game: 1
 
 round_2:
   id: 2
   game: game_2
+  number_in_game: 1
 
 bidding_round:
   game: bidding_game
+  number_in_game: 1
 
 playing_round:
   game: playing_game
+  number_in_game: 1
 
 finished_round:
   game: playing_game
+  number_in_game: 2
