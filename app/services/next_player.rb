@@ -1,5 +1,5 @@
 class NextPlayer
-  attr_reader :round, :errors, :next_player
+  attr_reader :round, :errors, :next_player, :current_trick
 
   def initialize(round)
     @round = RoundsDecorator.new(round)
@@ -7,6 +7,7 @@ class NextPlayer
     @errors = []
     @players = @round.game.players
     @next_player = nil
+    @current_trick = @round.active_trick
   end
 
   def call
@@ -24,19 +25,17 @@ class NextPlayer
   private
 
   def set_next_player
-    # TODO move methods from tricks decorator to be scopes on card
-    current_trick = round.active_trick
     if current_trick.cards.present?
-      @next_player = next_player_based_on_cards_played(current_trick)
-    elsif first_trick?(current_trick)
+      set_player_based_on_cards_played
+    elsif first_trick?
       set_player_for_first_trick
     else
       set_player_for_subsequent_trick
     end
   end
 
-  def first_trick?(trick)
-    trick.number_in_round == 1
+  def first_trick?
+    current_trick.number_in_round == 1
   end
 
   def set_player_for_first_trick
@@ -47,12 +46,13 @@ class NextPlayer
     @next_player = round.previous_trick_winner
   end
 
-  def next_player_based_on_cards_played(current_trick)
+  def set_player_based_on_cards_played
     last_player_number = current_trick.cards.last_played.player.number_in_game
 
+    # Either increment from the last player, or wrap to player 1 if it was player 4:
     next_player_number = last_player_number < 4 ? last_player_number + 1 : 1
 
-    @players.find_by(number_in_game: next_player_number)
+    @next_player = @players.find_by(number_in_game: next_player_number)
   end
 
   def add_error(message)
