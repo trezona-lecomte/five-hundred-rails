@@ -5,7 +5,6 @@ class DealCards
     @round = round
     @game = round.game
     @deck = deck
-    @errors = []
   end
 
   def call
@@ -19,8 +18,7 @@ class DealCards
   private
 
   def cards_can_be_dealt
-    # TODO: implement actual validations for when cards can be dealt
-    true
+    @round.cards.count == 0
   end
 
   def deal_cards
