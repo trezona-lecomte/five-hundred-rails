@@ -9,7 +9,7 @@ class RoundsDecorator < SimpleDelegator
   end
 
   def finished?
-    !active_trick
+    !bidding? && tricks.present? && !active_trick
   end
 
   def active_trick
@@ -21,7 +21,7 @@ class RoundsDecorator < SimpleDelegator
   def previous_trick_winner
     trick = previous_trick
     if finished?
-      tricks.order(number_in_round: :asc).last.cards.winning.player
+      tricks.order(number_in_round: :asc).last.cards.highest.player
     elsif trick && trick.cards.present? && playing?
       trick.cards.highest.player
     end

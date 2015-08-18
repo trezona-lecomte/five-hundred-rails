@@ -7,7 +7,7 @@ RSpec.describe DealCards, type: :service do
   let(:round)      { RoundsDecorator.new(base_round) }
   let(:deck)       { BuildDeck.new.call }
   let(:fresh_deck) { BuildDeck.new.call }
-  let(:deal_cards) { DealCards.new(game, base_round, deck) }
+  let(:deal_cards) { DealCards.new(base_round, deck) }
   let(:players)    { game.players }
 
   before { 4.times { |n| JoinGame.new(game, users("user#{n+1}")).call } }

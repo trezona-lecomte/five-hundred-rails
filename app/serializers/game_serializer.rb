@@ -5,6 +5,7 @@ class GameSerializer < ActiveModel::Serializer
              :odd_team_score,
              :even_team_score
 
+  has_one  :active_round, serializer: RoundPreviewSerializer
   has_many :players
   has_many :rounds, serializer: RoundPreviewSerializer
 
@@ -17,6 +18,14 @@ class GameSerializer < ActiveModel::Serializer
       "finished"
     else
       "in progress"
+    end
+  end
+
+  def active_round
+    if object.finished?
+      nil
+    else
+      object.rounds.max_by { |round| round.number_in_game }
     end
   end
 end

@@ -18,14 +18,6 @@ class PlayCard
       else
         add_error("couldn't play this card")
       end
-
-      # TODO move to controller
-      if @round.finished?
-        score_round = ScoreRound.new(round)
-        unless score_round.call
-          @errors << score_round.errors
-        end
-      end
     end
 
     @errors.none?

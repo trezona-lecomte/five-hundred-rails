@@ -1,9 +1,9 @@
 class DealCards
   attr_reader :errors
 
-  def initialize(game, round, deck)
-    @game = game
+  def initialize(round, deck)
     @round = round
+    @game = round.game
     @deck = deck
     @errors = []
   end

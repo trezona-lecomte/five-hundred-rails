@@ -7,6 +7,7 @@ class RoundSerializer < ActiveModel::Serializer
              :odd_team_score,
              :even_team_score
 
+  has_one  :game, embed: :id
   has_one  :winning_bid
   has_many :bids,                  key: :placed_bids
 
