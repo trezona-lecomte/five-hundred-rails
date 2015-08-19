@@ -13,11 +13,11 @@ class JoinGame
     @game.with_lock do
       validate_game_can_be_joined
 
-      unless errors.present?
+      if errors.none?
         join_game
       end
 
-      @errors.none?
+      errors.none?
     end
   end
 
@@ -36,7 +36,6 @@ class JoinGame
     @player = @game.players.new(user: @user, handle: @user.username, number_in_game: @game.players.count + 1)
 
     unless @player.save
-      add_error("user is unable to join this game: " + @player.errors)
       add_error("user is unable to join this game: " + @player.errors) # TODO: look into full_sentences
       # TODO also interpolate errors into the string ^^
     end
