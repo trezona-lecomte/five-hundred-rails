@@ -5,6 +5,7 @@ class Card < ActiveRecord::Base
   belongs_to :player
   belongs_to :round
   belongs_to :trick
+  belongs_to :trick, counter_cache: true
 
   validates :round, :rank, :suit, presence: true
   validates :round,               uniqueness: { scope: [:rank, :suit] }

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150816212217) do
+ActiveRecord::Schema.define(version: 20150819020814) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,10 +74,11 @@ ActiveRecord::Schema.define(version: 20150816212217) do
   add_index "rounds", ["game_id"], name: "index_rounds_on_game_id", using: :btree
 
   create_table "tricks", force: :cascade do |t|
-    t.integer  "round_id",        null: false
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.integer  "round_id",                    null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.integer  "number_in_round"
+    t.integer  "cards_count",     default: 0
   end
 
   add_index "tricks", ["round_id", "number_in_round"], name: "index_tricks_on_round_id_and_number_in_round", using: :btree
