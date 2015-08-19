@@ -23,11 +23,11 @@ class RoundsDecorator < SimpleDelegator
   end
 
   def kitty
-    cards.includes(:player).where("player_id is null")
+    cards.includes(:player).where(player: nil)
   end
 
   def unplayed_cards(player)
-    cards.where(player: player).where("trick_id": nil)
+    cards.where(player: player).where(trick: nil)
   end
 
   private
