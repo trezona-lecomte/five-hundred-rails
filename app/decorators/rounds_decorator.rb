@@ -3,42 +3,6 @@
 # RoundsDecorator is a meaningless name - need to describe the context in which it'll be used in the name.
 
 class RoundsDecorator < SimpleDelegator
-  def bidding?
-    # TODO: need to deal with the situation where everyone passes
-    bids.passes.group_by { |pass| pass.player }.count < (game.players.count - 1)
-  end
-  # TODO round.playing? & round.bidding? don't make sense - in_bidding_stage? or something.
-
-  def playing?
-    active_trick
-  end
-
-  def finished?
-    !bidding? && tricks.present? && !active_trick
-  end
-
-  def active_trick
-    unless bidding?
-      tricks.includes(:cards).order(:number_in_round).detect { |trick| trick.cards.count < 4 }
-    end
-  end
-
-  def previous_trick_winner
-    trick = previous_trick
-    if finished?
-      tricks.order(number_in_round: :asc).last.cards.highest.player
-    elsif trick && trick.cards.present? && playing?
-      trick.cards.highest.player
-    end
-  end
-  # TODO the _winner part can go onto trick
-
-  def previous_trick
-    if current_trick = active_trick
-      tricks.find_by(number_in_round: current_trick.number_in_round - 1)
-    end
-  end
-
   # TODO this could be moved out to a service (i.e., find_available_bids(round))
   def available_bids
     if bidding?
