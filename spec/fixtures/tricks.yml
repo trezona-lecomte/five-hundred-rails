@@ -1,3 +1,45 @@
+# Bidding round:
+bidding_trick_1:
+  round: bidding_round
+  number_in_round: 1
+
+bidding_trick_2:
+  round: bidding_round
+  number_in_round: 2
+
+bidding_trick_3:
+  round: bidding_round
+  number_in_round: 3
+
+bidding_trick_4:
+  round: bidding_round
+  number_in_round: 4
+
+bidding_trick_5:
+  round: bidding_round
+  number_in_round: 5
+
+bidding_trick_6:
+  round: bidding_round
+  number_in_round: 6
+
+bidding_trick_7:
+  round: bidding_round
+  number_in_round: 7
+
+bidding_trick_8:
+  round: bidding_round
+  number_in_round: 8
+
+bidding_trick_9:
+  round: bidding_round
+  number_in_round: 9
+
+bidding_trick_10:
+  round: bidding_round
+  number_in_round: 10
+
+# Playing round:
 trick_1:
   round: playing_round
   number_in_round: 1
@@ -43,39 +85,49 @@ trick_10:
 finished_trick_1:
   round: finished_round
   number_in_round: 1
+  cards_count: 4
 
 finished_trick_2:
   round: finished_round
   number_in_round: 2
+  cards_count: 4
 
 finished_trick_3:
   round: finished_round
   number_in_round: 3
+  cards_count: 4
 
 finished_trick_4:
   round: finished_round
   number_in_round: 4
+  cards_count: 4
 
 finished_trick_5:
   round: finished_round
   number_in_round: 5
+  cards_count: 4
 
 finished_trick_6:
   round: finished_round
   number_in_round: 6
+  cards_count: 4
 
 finished_trick_7:
   round: finished_round
   number_in_round: 7
+  cards_count: 4
 
 finished_trick_8:
   round: finished_round
   number_in_round: 8
+  cards_count: 4
 
 finished_trick_9:
   round: finished_round
   number_in_round: 9
+  cards_count: 4
 
 finished_trick_10:
   round: finished_round
   number_in_round: 10
+  cards_count: 4
