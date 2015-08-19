@@ -5,7 +5,8 @@
 class RoundsDecorator < SimpleDelegator
   # TODO this could be moved out to a service (i.e., find_available_bids(round))
   def available_bids
-    if bidding?
+    if in_bidding_stage?
+      # TODO if any bids, rather than if winning_bid.
       if winning_bid
         pass_bid + bids_above_highest_bid(non_pass_bids, winning_bid)
       else
