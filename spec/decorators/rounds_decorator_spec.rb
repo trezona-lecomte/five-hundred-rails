@@ -6,53 +6,54 @@ RSpec.describe RoundsDecorator, type: :decorator do
   let(:decorated_round) { RoundsDecorator.new(round) }
   let(:player)          { players(:player1) }
 
-  describe "#bidding?" do
-    subject { decorated_round.bidding? }
+  # TODO move to round_spec
+  # describe "#in_bidding_stage?" do
+  #   subject { decorated_round.bidding? }
 
-    context "when bidding hasn't finished yet" do
-      let(:round) { rounds(:bidding_round) }
+  #   context "when bidding hasn't finished yet" do
+  #     let(:round) { rounds(:bidding_round) }
 
-      it { is_expected.to be true }
-    end
+  #     it { is_expected.to be true }
+  #   end
 
-    context "when bidding has finished" do
-      it { is_expected.to be false }
-    end
-  end
+  #   context "when bidding has finished" do
+  #     it { is_expected.to be false }
+  #   end
+  # end
 
-  describe "#playing?" do
-    subject { decorated_round.playing? }
+  # describe "#playing?" do
+  #   subject { decorated_round.playing? }
 
-    context "when playing hasn't yet started" do
-      let(:round) { rounds(:bidding_round) }
+  #   context "when playing hasn't yet started" do
+  #     let(:round) { rounds(:bidding_round) }
 
-      it { is_expected.to be_falsey }
-    end
+  #     it { is_expected.to be_falsey }
+  #   end
 
-    context "when playing has begun and not yet finished" do
-      it { is_expected.to be_truthy }
-    end
+  #   context "when playing has begun and not yet finished" do
+  #     it { is_expected.to be_truthy }
+  #   end
 
-    context "when playing has finished" do
-      before { allow(decorated_round).to receive(:active_trick).and_return(nil) }
+  #   context "when playing has finished" do
+  #     before { allow(decorated_round).to receive(:active_trick).and_return(nil) }
 
-      it { is_expected.to be_falsey }
-    end
-  end
+  #     it { is_expected.to be_falsey }
+  #   end
+  # end
 
-  describe "#finished?" do
-    subject { decorated_round.finished? }
+  # describe "#finished?" do
+  #   subject { decorated_round.finished? }
 
-    context "when the round has incomplete tricks" do
-      it { is_expected.to be false }
-    end
+  #   context "when the round has incomplete tricks" do
+  #     it { is_expected.to be false }
+  #   end
 
-    context "when all tricks in the round are complete" do
-      before { allow(decorated_round).to receive(:active_trick).and_return(nil) }
+  #   context "when all tricks in the round are complete" do
+  #     before { allow(decorated_round).to receive(:active_trick).and_return(nil) }
 
-      it { is_expected.to be true }
-    end
-  end
+  #     it { is_expected.to be true }
+  #   end
+  # end
 
   describe "#unplayed cards" do
     let(:player)    { players(:player2) }
@@ -66,93 +67,9 @@ RSpec.describe RoundsDecorator, type: :decorator do
     end
 
     context "when a player has played a card" do
-      before { PlayCard.new(decorated_round.active_trick, player, card).call }
+      before { PlayCard.new(decorated_round.current_trick, player, card).call }
 
       it { is_expected.to eq(all_cards - [card]) }
-    end
-  end
-
-  describe "#previous_trick" do
-    subject { decorated_round.previous_trick }
-
-    context "when it is the first trick" do
-      it { is_expected.to be nil }
-    end
-
-    context "when it is the second trick" do
-      before do
-        %w(2 3 4 1).each do |n|
-          player = players("player#{n}")
-          card = round.cards.where(player: player).sample
-          pc = PlayCard.new(decorated_round.active_trick, player, card)
-          pc.call
-        end
-      end
-
-      it { is_expected.to eq(tricks(:trick_1)) }
-    end
-  end
-
-  describe "#previous_trick_winner" do
-    subject { decorated_round.previous_trick_winner }
-
-    context "when it is the first trick" do
-      it { is_expected.to be nil }
-    end
-
-    context "when player 1 won the first trick" do
-      before do
-        play_card = PlayCard.new(decorated_round.active_trick,
-                                 players(:player2),
-                                 cards(:nine_of_clubs))
-        play_card.call
-
-        play_card = PlayCard.new(decorated_round.active_trick,
-                                 players(:player3),
-                                 cards(:seven_of_clubs))
-        play_card.call
-
-        play_card = PlayCard.new(decorated_round.active_trick,
-                                 players(:player4),
-                                 cards(:five_of_clubs))
-        play_card.call
-
-        play_card = PlayCard.new(decorated_round.active_trick,
-                                 players(:player1),
-                                 cards(:king_of_clubs))
-        play_card.call
-      end
-
-      it { is_expected.to eq(players(:player1)) }
-    end
-  end
-
-  describe "#active_trick" do
-    subject { decorated_round.active_trick }
-
-    context "when the round isn't yet in the playing stage" do
-      let(:round) { rounds(:bidding_round) }
-
-      it { is_expected.to be_nil }
-    end
-
-    context "when the round is in the playing stage" do
-      let(:round) { rounds(:playing_round) }
-
-      context "when it is the first trick" do
-        it { is_expected.to eq(round.tricks.order(number_in_round: :asc).first) }
-      end
-
-      context "when it is a subsequent trick" do
-        before do
-          decorated_round.active_trick.cards << cards(:jack_of_hearts)
-          decorated_round.active_trick.cards << cards(:ten_of_hearts)
-          decorated_round.active_trick.cards << cards(:nine_of_hearts)
-          decorated_round.active_trick.cards << cards(:eight_of_hearts)
-        end
-
-        it { is_expected.to eq(round.tricks.order(number_in_round: :asc).first(2).last) }
-      end
     end
   end
 

@@ -32,7 +32,7 @@ class PlayCard
   def validate_card_can_be_played
     if !card_in_hand?
       add_error("you don't have this card in your hand")
-    elsif !round.playing?
+    elsif !round.in_playing_stage?
       add_error("cards can't be played on this round")
     elsif !trick_active?
       add_error("this trick is not active")
@@ -46,7 +46,7 @@ class PlayCard
   end
 
   def trick_active?
-    @trick == round.active_trick && @trick.cards.count < 4
+    @trick == round.current_trick
   end
 
   def players_turn?
@@ -57,11 +57,14 @@ class PlayCard
   end
 
   def play_card
-    @card.trick = @trick
-    @card.number_in_trick = @trick.cards.count
+    @trick.cards << @card
+    @trick.reload
+    @card.number_in_trick = @trick.cards_count
 
-    unless card.save
-      add_error("you can't play this card right now")
+    binding.pry if @trick.cards_count == 0
+
+    unless @card.save
+      add_error("you can't play this card right now: #{@card.errors.full_messages}, #{@trick.errors.full_messages}")
     end
   end
 

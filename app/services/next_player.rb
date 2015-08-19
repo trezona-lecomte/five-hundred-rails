@@ -7,7 +7,7 @@ class NextPlayer
     @errors = []
     @players = @round.game.players
     @next_player = nil
-    @current_trick = @round.active_trick
+    @current_trick = @round.current_trick
   end
 
   def call
@@ -43,7 +43,7 @@ class NextPlayer
   end
 
   def set_player_for_subsequent_trick
-    @next_player = round.previous_trick_winner
+    @next_player = round.previous_trick.winning_player
   end
 
   def set_player_based_on_cards_played

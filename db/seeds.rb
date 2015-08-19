@@ -41,7 +41,7 @@ SubmitBid.new(round, p2, 0, 0).call # p2 passes
 SubmitBid.new(round, p3, 0, 0).call # p3 passes
 SubmitBid.new(round, p4, 0, 0).call # p4 passes & wins the bidding
 
-trick = RoundsDecorator.new(round).active_trick
+trick = RoundsDecorator.new(round).current_trick
 
 pc4 = PlayCard.new(trick, p4, p4.cards.sample)
 pc1 = PlayCard.new(trick, p1, p1.cards.sample)
@@ -79,7 +79,7 @@ SubmitBid.new(round, p4, 0, 0).call # p4 passes so player 1 wins the bidding
 decorated_round = RoundsDecorator.new(round)
 
 until decorated_round.finished?
-  trick = decorated_round.active_trick
+  trick = decorated_round.current_trick
 
   #playing:
   pc1 = PlayCard.new(trick, p1, p1.cards.where(trick: nil).sample)
@@ -125,7 +125,7 @@ SubmitBid.new(round, p4, 0, 0).call # p4 passes so player 1 wins the bidding
 decorated_round = RoundsDecorator.new(round)
 
 until decorated_round.cards.where(trick: nil).count == 4
-  trick = decorated_round.active_trick
+  trick = decorated_round.current_trick
 
   #playing:
   pc1 = PlayCard.new(trick, p1, p1.cards.where(trick: nil).sample)

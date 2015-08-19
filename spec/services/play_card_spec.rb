@@ -4,7 +4,7 @@ RSpec.describe PlayCard, type: :service do
   fixtures :all
   let(:game)      { games(:playing_game) }
   let(:round)     { RoundsDecorator.new(rounds(:playing_round)) }
-  let(:trick)     { round.active_trick }
+  let(:trick)     { round.current_trick }
   let(:player)    { players(:player2) }
   let(:card)      { cards(:jack_of_hearts) }
   let(:play_card) { PlayCard.new(trick, player, card) }
@@ -16,7 +16,7 @@ RSpec.describe PlayCard, type: :service do
 
         context "when the bid-winner attempts to play a card" do
           it "plays the card into the correct trick" do
-            expect(card.trick).to eq(round.active_trick)
+            expect(card.trick).to eq(round.current_trick)
           end
 
           it "doesn't set any errors" do
@@ -54,7 +54,7 @@ RSpec.describe PlayCard, type: :service do
           let(:card)   { cards(:five_of_clubs) }
 
           it "plays the card into the correct trick" do
-            expect(card.trick).to eq(round.active_trick)
+            expect(card.trick).to eq(round.current_trick)
           end
 
           it "doesn't set any errors" do
@@ -86,7 +86,7 @@ RSpec.describe PlayCard, type: :service do
       end
 
       context "when no cards have been played into this trick" do
-        let(:play_card) { PlayCard.new(round.active_trick, player, card) }
+        let(:play_card) { PlayCard.new(round.current_trick, player, card) }
 
         context "when the last trick winner attempts to play a card" do
           let(:player) { players(:player1) }
@@ -95,7 +95,7 @@ RSpec.describe PlayCard, type: :service do
           before { play_card.call }
 
           it "plays the card into the correct trick into the correct trick" do
-            expect(card.trick).to eq(round.active_trick)
+            expect(card.trick).to eq(round.current_trick)
           end
 
           it "doesn't set any errors" do
@@ -123,18 +123,18 @@ RSpec.describe PlayCard, type: :service do
 
       context "when cards have been played into this trick" do
         before do
-          PlayCard.new(round.active_trick, players(:player1), cards(:ace_of_diamonds)).call
+          PlayCard.new(round.current_trick, players(:player1), cards(:ace_of_diamonds)).call
         end
 
         context "when the correct player attempts to play a card" do
           let(:player)    { players(:player2) }
           let(:card)      { cards(:ten_of_diamonds) }
-          let(:play_card) { PlayCard.new(round.active_trick, player, card) }
+          let(:play_card) { PlayCard.new(round.current_trick, player, card) }
 
           before { play_card.call }
 
           it "plays the card into the correct trick" do
-            expect(card.trick).to eq(round.active_trick)
+            expect(card.trick).to eq(round.current_trick)
           end
 
           it "doesn't set any errors" do
@@ -145,7 +145,7 @@ RSpec.describe PlayCard, type: :service do
         context "when an incorrect player attempts to play a card" do
           let(:player)    { players(:player3) }
           let(:card)      { cards(:nine_of_diamonds) }
-          let(:play_card) { PlayCard.new(round.active_trick, player, card) }
+          let(:play_card) { PlayCard.new(round.current_trick, player, card) }
 
           before { play_card.call }
 
