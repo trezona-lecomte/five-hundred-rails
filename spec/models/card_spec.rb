@@ -1,3 +1,4 @@
+# TODO think about testing interactions rather than testing state.
 require "rails_helper"
 
 RSpec.describe Card, type: :model do
@@ -15,6 +16,7 @@ RSpec.describe Card, type: :model do
 
   it { should validate_uniqueness_of(:round).scoped_to(:rank, :suit) }
 
+  # TODO wrap with context:
   it "should require unique value for number_in_trick scoped to trick_id" do
     trick.cards.create!(number_in_trick: 1,
                         rank: 10,

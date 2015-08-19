@@ -25,6 +25,7 @@ RSpec.describe ScoreRound, type: :service do
         end
 
         context "and lost with a bid of 6 no trumps" do
+          # TODO try to extract round.bids.create! to a let! { } - this is a before before.
           before do
             allow(score_round).to receive(:tricks_for).and_return(round.tricks.first(5), round.tricks.last(5))
             allow(round).to receive(:winning_bid).and_return(round.bids.create!(player: players(:player3),

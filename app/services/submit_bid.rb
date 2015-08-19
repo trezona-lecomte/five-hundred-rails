@@ -14,7 +14,7 @@ class SubmitBid
     @round.with_lock do
       validate_bid_can_be_placed
 
-      submit_bid unless errors.present?
+      submit_bid unless errors.present? # TODO make if errors.none?
     end
 
     @round = RoundsDecorator.new(@round)

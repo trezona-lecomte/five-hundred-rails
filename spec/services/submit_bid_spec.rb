@@ -5,6 +5,7 @@ RSpec.describe SubmitBid, type: :service do
   let(:player)           { players(:bidder1) }
   let(:number_of_tricks) { 6 }
   let(:suit)             { "spades" }
+  # TODO could make submit_bid: service, and let args -> blah.
   let(:submit_bid)       { SubmitBid.new(round, player, number_of_tricks, suit) }
 
   describe "#call" do
@@ -13,7 +14,7 @@ RSpec.describe SubmitBid, type: :service do
 
       context "when the first player bids" do
         it "submits the bid" do
-          expect{ submit_bid.call }.to change(Bid, :count).by(1)
+          expect { submit_bid.call }.to change(Bid, :count).by(1)
           expect(round.bids).to be_one
         end
       end
@@ -23,7 +24,7 @@ RSpec.describe SubmitBid, type: :service do
           let(:player) { players(:bidder2) }
 
           it "doesn't submit the bid" do
-            expect{ submit_bid.call }.to_not change(Bid, :count)
+            expect { submit_bid.call }.to_not change(Bid, :count)
           end
 
           it "sets a 'not your turn' error" do

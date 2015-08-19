@@ -12,6 +12,7 @@ class StartRound
         create_round
         create_tricks
         deal_cards
+        deal_cards # TODO make sure to return true/false even once you save inside deal_cards
       else
         false
       end
@@ -20,6 +21,7 @@ class StartRound
 
   private
 
+  # TODO make it unfinished_rounds
   def no_unfinished_rounds?
     @game.rounds.all? { |round| RoundsDecorator.new(round).finished? }
   end

@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
 
   private
 
+  # TODO: firstly user 'rails token auth', secondly use SecureRandom.uuid
   def update_access_token!
     self.access_token = "#{self.id}:#{Devise.friendly_token}"
     save

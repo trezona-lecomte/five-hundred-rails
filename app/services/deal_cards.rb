@@ -34,6 +34,7 @@ class DealCards
 
         player.cards << card
 
+        # TODO for the whole service, just call save.bang! - don't worry about errors
         unless card.save
           add_error("unable to deal card: #{card.rank} of #{card.suit} to #{player.handle}")
         end
