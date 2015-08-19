@@ -5,7 +5,7 @@ class Game < ActiveRecord::Base
   has_many :rounds,  dependent: :destroy
 
   def finished?
-    odd_team_score.abs >= 500 || even_team_score >= 500
+    odd_team_score.abs >= 500 || even_team_score.abs >= 500
   end
 
   # TODO players would be nicer than 'team'
