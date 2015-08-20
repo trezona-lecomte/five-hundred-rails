@@ -1,11 +1,11 @@
 require "rails_helper"
 
-RSpec.describe FindAvailableBids, type: :service do
+RSpec.describe FindAvailableBidParams, type: :service do
   fixtures :all
 
   describe "#call" do
     let(:round)       { rounds(:bidding_round) }
-    let(:service)     { FindAvailableBids.new(round) }
+    let(:service)     { FindAvailableBidParams.new(round) }
     let(:call_result) { service.call }
 
     context "when the round is in the bidding stage" do
@@ -65,7 +65,7 @@ RSpec.describe FindAvailableBids, type: :service do
     def all_possible_bid_params
       (Bid::MIN_TRICKS..Bid::MAX_TRICKS).to_a.product(Bid.suits.keys).map do |tricks, suit|
         { number_of_tricks: tricks, suit: suit }
-      end << Bid.pass_params
+      end << Bid.params_for_pass_bid
     end
 
     def excluded_bid_params_for(highest_bid)
