@@ -1,12 +1,14 @@
 class RoundSerializer < ActiveModel::Serializer
+  cached
+  delegate :cache_key, to: :object
+
   attributes :id,
              :path,
              :number_in_game,
              :stage,
-             :available_bids,
              :odd_team_score,
-             :even_team_score
-
+             :even_team_score,
+             :available_bids
 
   has_one  :highest_bid
   has_one  :current_trick,  serializer: TrickSerializer
@@ -16,9 +18,6 @@ class RoundSerializer < ActiveModel::Serializer
   has_many :bids,           key: :placed_bids
   has_many :cards,          key: :current_player_cards
   has_many :players,        serializer: PlayerPreviewSerializer
-
-  #cached
-  #delegate :cache_key, to: :object
 
   def path
     round_path(object)
@@ -39,7 +38,9 @@ class RoundSerializer < ActiveModel::Serializer
   end
 
   def available_bids
-    object.available_bids
+    finder = FindAvailableBidParams.new(object)
+    finder.call
+    finder.available_bid_params
   end
 
   def cards

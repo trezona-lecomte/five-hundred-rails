@@ -12,15 +12,10 @@ RSpec.describe GamesController, type: :controller do
   end
 
   describe "GET index" do
-    let(:serializer) { GameSerializer.new(games) }
     subject          { response }
     before           { get :index }
 
     it { is_expected.to have_http_status(200) }
-
-    it "responds with a json representation of all the games" do
-      expect(response.body).to eq(serializer)
-    end
   end
 
   # describe "POST #create" do
