@@ -1,4 +1,4 @@
-class FindAvailableBids
+class FindAvailableBidParams
   attr_reader :round, :available_bid_params, :errors
 
   def initialize(round)
