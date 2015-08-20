@@ -8,6 +8,12 @@ class Game < ActiveRecord::Base
     odd_team_score.abs >= 500 || even_team_score.abs >= 500
   end
 
+  def active_round
+    unless finished?
+      rounds.in_playing_order.last
+    end
+  end
+
   # TODO players would be nicer than 'team'
   def odd_team_score
     rounds.where.not(odd_team_score: nil).to_a.sum(&:odd_team_score)
