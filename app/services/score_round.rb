@@ -74,15 +74,15 @@ class ScoreRound
   end
 
   def bid_winning_player
-    players.find { |player| player == round.winning_bid.player }
+    players.find { |player| player == round.highest_bid.player }
   end
 
   def attempted_number_of_tricks
-    round.winning_bid.number_of_tricks
+    round.highest_bid.number_of_tricks
   end
 
   def attempted_suit
-    round.winning_bid.suit
+    round.highest_bid.suit
   end
 
   def add_error(message)

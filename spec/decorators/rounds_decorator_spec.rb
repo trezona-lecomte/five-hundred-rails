@@ -83,34 +83,7 @@ RSpec.describe RoundsDecorator, type: :decorator do
     it "returns only cards without an associated player" do
       kitty.each do |card|
         expect(card.player).to be_nil
-
       end
     end
-  end
-
-  describe "#winning_bid" do
-    let(:winning_bid) { decorated_round.winning_bid }
-    let(:expected_bid) { bids(:sixth_bid) }
-
-    it "returns the bid with the highest suit/tricks from the round" do
-      expect(winning_bid).to eq(expected_bid)
-    end
-  end
-
-  describe "#available_bids" do
-    context "when there haven't been any bids" do
-      let(:round) { rounds(:bidding_round) }
-
-      it "returns a list of all possible bids" do
-        expect(decorated_round.available_bids.count).to eq(26)
-      end
-    end
-
-    # TODO broken by refactor that only returns available bids when bidding
-    # context "when the highest bid is 8 spades" do
-    #   it "returns a list of all bids higher than 8 spades, as well as a pass" do
-    #     expect(decorated_round.available_bids.count).to eq(15)
-    #   end
-    # end
   end
 end

@@ -39,7 +39,7 @@ class NextPlayer
   end
 
   def set_player_for_first_trick
-    @next_player = round.winning_bid.player
+    @next_player = round.highest_bid.player
   end
 
   def set_player_for_subsequent_trick

@@ -28,7 +28,7 @@ RSpec.describe ScoreRound, type: :service do
           # TODO try to extract round.bids.create! to a let! { } - this is a before before.
           before do
             allow(score_round).to receive(:tricks_for).and_return(round.tricks.first(5), round.tricks.last(5))
-            allow(round).to receive(:winning_bid).and_return(round.bids.create!(player: players(:player3),
+            allow(round).to receive(:highest_bid).and_return(round.bids.create!(player: players(:player3),
                                                                                 number_of_tricks: 6,
                                                                                 suit: Card.suits[:no_suit]))
             score_round.call
@@ -48,7 +48,7 @@ RSpec.describe ScoreRound, type: :service do
         context "and won with a bid of 6 spades" do
           before do
             allow(score_round).to receive(:tricks_for).and_return(round.tricks.first(8), round.tricks.last(2))
-            allow(round).to receive(:winning_bid).and_return(round.bids.create!(player: players(:player2),
+            allow(round).to receive(:highest_bid).and_return(round.bids.create!(player: players(:player2),
                                                                                 number_of_tricks: 6,
                                                                                 suit: Card.suits[:spades]))
             score_round.call
@@ -66,7 +66,7 @@ RSpec.describe ScoreRound, type: :service do
         context "and lost with a bid of 9 diamonds" do
           before do
             allow(score_round).to receive(:tricks_for).and_return(round.tricks.first(8), round.tricks.last(2))
-            allow(round).to receive(:winning_bid).and_return(round.bids.create!(player: players(:player4),
+            allow(round).to receive(:highest_bid).and_return(round.bids.create!(player: players(:player4),
                                                                                 number_of_tricks: 9,
                                                                                 suit: Card.suits[:diamonds]))
             score_round.call
