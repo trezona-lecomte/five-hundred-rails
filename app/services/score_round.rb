@@ -2,7 +2,7 @@ class ScoreRound
   attr_reader :round, :game, :players, :tricks, :errors
 
   def initialize(round)
-    @round   = RoundsDecorator.new(round)
+    @round   = round
     @game    = round.game
     @players = game.players
     @tricks  = round.tricks

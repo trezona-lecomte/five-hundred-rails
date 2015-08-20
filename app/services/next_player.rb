@@ -2,7 +2,7 @@ class NextPlayer
   attr_reader :round, :errors, :next_player, :current_trick
 
   def initialize(round)
-    @round = RoundsDecorator.new(round)
+    @round = round
     @cards = @round.cards
     @errors = []
     @players = @round.game.players

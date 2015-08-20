@@ -25,9 +25,10 @@ class Card < ActiveRecord::Base
   # TODO maybe use order_played:
   validates :number_in_trick,     uniqueness: { scope: [:trick], allow_nil: true }
 
-  scope :highest_to_lowest, -> { order(rank: :desc, suit: :desc) }
-  scope :highest,           -> { highest_to_lowest.first }
-  # TODO make a scope to represent played_cards - number_in_trick: not nil
-  scope :newest_to_oldest,  -> { where.not(number_in_trick: nil).order(number_in_trick: :desc) }
-  scope :last_played,       -> { newest_to_oldest.first }
+  scope :played,           -> { where.not(trick: nil) }
+  scope :unplayed,         -> { where(trick: nil) }
+  scope :in_ranked_order,  -> { order(rank: :desc, suit: :desc) }
+  scope :highest,          -> { in_ranked_order.first }
+  scope :in_playing_order, -> { where.not(number_in_trick: nil).order(number_in_trick: :asc) }
+  scope :last_played,      -> { in_playing_order.last }
 end

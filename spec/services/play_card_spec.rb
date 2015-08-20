@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe PlayCard, type: :service do
   fixtures :all
   let(:game)      { games(:playing_game) }
-  let(:round)     { RoundsDecorator.new(rounds(:playing_round)) }
+  let(:round)     { rounds(:playing_round) }
   let(:trick)     { round.current_trick }
   let(:player)    { players(:player2) }
   let(:card)      { cards(:jack_of_hearts) }

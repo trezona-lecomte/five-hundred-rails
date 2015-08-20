@@ -40,7 +40,7 @@ class RoundsController < ApplicationController
   end
 
   def set_round
-    @round = RoundsDecorator.new(Round.find(params[:id]))
+    @round = Round.find(params[:id])
   end
 
   def round_params

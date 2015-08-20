@@ -17,7 +17,7 @@ class SubmitBid
       submit_bid unless errors.present? # TODO make if errors.none?
     end
 
-    @round = RoundsDecorator.new(@round)
+    @round = @round
   end
 
   private

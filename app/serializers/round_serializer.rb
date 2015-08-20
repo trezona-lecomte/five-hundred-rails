@@ -45,7 +45,7 @@ class RoundSerializer < ActiveModel::Serializer
   def cards
     player = object.game.players.where(user: current_user)
 
-    object.unplayed_cards(player)
+    object.cards.unplayed.where(player: player)
   end
 
   def current_trick

@@ -7,8 +7,5 @@ class Player < ActiveRecord::Base
 
   # TODO mayble bundle validations on user
   validates :game, :user, presence: true
-  validates :user,        uniqueness: { scope: :game }
-
-  # scope :odd_team, -> { where(number_in_game.odd?) }
-  # scope :even_team, -> { where(number_in_game.even?) }
+  validates :user, uniqueness: { scope: :game }
 end

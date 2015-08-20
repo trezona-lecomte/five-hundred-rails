@@ -3,7 +3,7 @@ class PlayCard
 
   def initialize(trick, player, card)
     @trick = trick
-    @round = RoundsDecorator.new(trick.round)
+    @round = trick.round
     @player = player
     @card = card
     @errors = []

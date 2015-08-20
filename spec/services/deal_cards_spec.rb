@@ -4,7 +4,7 @@ RSpec.describe DealCards, type: :service do
   fixtures :all
   let(:game)       { Game.create! }
   let(:base_round) { game.rounds.create! }
-  let(:round)      { RoundsDecorator.new(base_round) }
+  let(:round)      { base_round }
   let(:deck)       { BuildDeck.new.call }
   let(:fresh_deck) { BuildDeck.new.call }
   let(:deal_cards) { DealCards.new(base_round, deck) }
@@ -26,10 +26,8 @@ RSpec.describe DealCards, type: :service do
         end
       end
 
-      it "deals 3 cards into the kitty" do
-        expect(players).to_not include(round.kitty[0])
-
-        expect(round.kitty.count).to eq(3)
+      it "leaves 3 cards without a player" do
+        expect(round.cards.where(player: nil).count).to eq(3)
       end
     end
   end
