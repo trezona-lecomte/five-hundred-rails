@@ -1,9 +1,9 @@
 class FindAvailableBids
-  attr_reader :round, :available_bids, :errors
+  attr_reader :round, :available_bid_params, :errors
 
   def initialize(round)
     @round = round
-    @available_bids = []
+    @available_bid_params = []
     @errors = []
   end
 
@@ -12,7 +12,7 @@ class FindAvailableBids
       validate_round_can_be_bid_on
 
       if errors.none?
-        generate_available_bids
+        generate_available_bid_params
       end
     end
 
@@ -27,11 +27,11 @@ class FindAvailableBids
     end
   end
 
-  def generate_available_bids
+  def generate_available_bid_params
     if any_bids?
-      @available_bids = pass_bid + bids_above_current_highest_bid
+      @available_bid_params = bid_params_above_current_highest_bid << Bid.pass_params
     else
-      @available_bids = pass_bid + bids_that_are_not_passes
+      @available_bid_params = all_bid_params
     end
   end
 
@@ -39,25 +39,26 @@ class FindAvailableBids
     round.bids.any?
   end
 
-  # TODO this could take pass bid as a default (could take current highest bid) - try to generalize down to map
-  def bids_above_current_highest_bid
-    highest_bid = round.highest_bid
-    highest_tricks = highest_bid.number_of_tricks
-    highest_suit   = highest_bid.suit
+  def all_bid_params
+    bid_params_for_non_pass_bids << Bid.pass_params
+  end
 
-    bids_that_are_not_passes.select do |tricks, suit|
-      tricks > highest_tricks || (tricks == highest_tricks && Bid.suits[suit] > Bid.suits[highest_suit])
+  def bid_params_for_non_pass_bids
+    (Bid::MIN_TRICKS..Bid::MAX_TRICKS).to_a.product(Bid.suits.keys).map do |tricks, suit|
+      { number_of_tricks: tricks, suit: suit }
     end
   end
 
-  def bids_that_are_not_passes
-    (6..10).to_a.product(Bid.suits.keys)
-  end
+  # TODO this could take pass bid as a default (could take current highest bid) - try to generalize down to map
+  def bid_params_above_current_highest_bid
+    highest_bid    = round.highest_bid
+    highest_tricks = highest_bid.number_of_tricks
+    highest_suit   = highest_bid.suit
 
-  # TODO move this to be a constant on Bid.
-  # TODO implement a method on bid for passing & another to compare bids.
-  def pass_bid
-    [[0, "no_suit"]]
+    bid_params_for_non_pass_bids.select do |params|
+      (params[:number_of_tricks] > highest_tricks) ||
+      (params[:number_of_tricks] == highest_tricks && Bid.suits[params[:suit]] > Bid.suits[highest_suit])
+    end
   end
 
   def add_error(message)

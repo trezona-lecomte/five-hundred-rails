@@ -11,7 +11,7 @@ RSpec.describe FindAvailableBids, type: :service do
     context "when the round is in the bidding stage" do
       before { service.call }
 
-      let(:bids)        { service.available_bids }
+      let(:bid_params)        { service.available_bid_params }
 
       context "when no bids have been made" do
         it "returns true" do
@@ -19,16 +19,16 @@ RSpec.describe FindAvailableBids, type: :service do
         end
 
         it "generates a full list of all possible bids" do
-          expect(bids).to eq(all_possible_bids)
+          expect(bid_params).to eq(all_possible_bid_params)
         end
       end
 
       context "when bids have been made" do
         let(:highest_bid)   { Bid.create!(round: round,
-                                          suit: "spades",
-                                          number_of_tricks: 8,
+                                          suit: Suits::ALL_SUITS.sample,
+                                          number_of_tricks: (Bid::MIN_TRICKS..Bid::MAX_TRICKS).to_a.sample,
                                           player: players(:bidder1)) }
-        let(:excluded_bids) { excluded_bids_for(highest_bid) }
+        let(:excluded_bid_params) { excluded_bid_params_for(highest_bid) }
 
         before do
           allow(service).to receive(:any_bids?).and_return(true)
@@ -41,7 +41,7 @@ RSpec.describe FindAvailableBids, type: :service do
         end
 
         it "generates a list of all bids higher than the last submitted bid & and a pass" do
-          expect(service.available_bids).to eq(all_possible_bids - excluded_bids)
+          expect(service.available_bid_params).to eq(all_possible_bid_params - excluded_bid_params)
         end
       end
     end
@@ -62,21 +62,24 @@ RSpec.describe FindAvailableBids, type: :service do
       end
     end
 
-    def all_possible_bids
-      [[0, "no_suit"]] + (6..10).to_a.product(Bid.suits.keys)
+    def all_possible_bid_params
+      (Bid::MIN_TRICKS..Bid::MAX_TRICKS).to_a.product(Bid.suits.keys).map do |tricks, suit|
+        { number_of_tricks: tricks, suit: suit }
+      end << Bid.pass_params
     end
 
-    def excluded_bids_for(highest_bid)
-      bids_lower_than(highest_bid) + [[highest_bid.number_of_tricks, highest_bid.suit]]
+    def excluded_bid_params_for(highest_bid)
+      bid_params_lower_than(highest_bid) << { number_of_tricks: highest_bid.number_of_tricks, suit: highest_bid.suit }
     end
 
-    def bids_lower_than(highest_bid)
+    def bid_params_lower_than(highest_bid)
       highest_tricks = highest_bid.number_of_tricks
       highest_suit = highest_bid.suit
 
-      all_possible_bids.select do |tricks, suit|
-        tricks != 0 &&
-          (tricks < highest_tricks || (tricks == highest_tricks && Bid.suits[suit] < Bid.suits[highest_suit]))
+      all_possible_bid_params.select do |params|
+        params[:number_of_tricks] != 0 &&
+          ((params[:number_of_tricks] < highest_tricks) ||
+            (params[:number_of_tricks] == highest_tricks && Bid.suits[params[:suit]] < Bid.suits[highest_suit]))
       end
     end
   end
