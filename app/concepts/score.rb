@@ -1,4 +1,6 @@
 class Score
+  DEFENSIVE_TRICK_MULTIPLIER = 10
+  OFFENSIVE_TRICK_MULTIPLIER = 100
   BASE_SCORES = { Card.suits[:spades]   =>  40,
                   Card.suits[:clubs]    =>  60,
                   Card.suits[:diamonds] =>  80,
@@ -21,12 +23,12 @@ class Score
   end
 
   def for_defense
-    number_of_tricks * 10
+    number_of_tricks * DEFENSIVE_TRICK_MULTIPLIER
   end
 
   private
 
   def for_attack
-    BASE_SCORES[Card.suits[suit]] + ((number_of_tricks - 6) * 100)
+    BASE_SCORES[Card.suits[suit]] + ((number_of_tricks - Bid::MIN_TRICKS) * OFFENSIVE_TRICK_MULTIPLIER)
   end
 end

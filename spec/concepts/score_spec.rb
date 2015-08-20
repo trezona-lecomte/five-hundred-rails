@@ -40,7 +40,7 @@ RSpec.describe Score, type: :concept do
   }
 
 
-  (6..10).to_a.product(Card.suits.keys).each do |n, s|
+  (Bid::MIN_TRICKS..Bid::MAX_TRICKS).to_a.product(Card.suits.keys).each do |n, s|
 
     describe "#for_successful_attack" do
       context "for #{n} #{s}" do
