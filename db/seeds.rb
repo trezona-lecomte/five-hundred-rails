@@ -41,7 +41,7 @@ SubmitBid.new(round, p2, 0, 0).call # p2 passes
 SubmitBid.new(round, p3, 0, 0).call # p3 passes
 SubmitBid.new(round, p4, 0, 0).call # p4 passes & wins the bidding
 
-trick = round).current_trick
+trick = round.current_trick
 
 pc4 = PlayCard.new(trick, p4, p4.cards.sample)
 pc1 = PlayCard.new(trick, p1, p1.cards.sample)
