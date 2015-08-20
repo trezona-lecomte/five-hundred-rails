@@ -4,7 +4,7 @@ class Card < ActiveRecord::Base
   enum rank: EXTENDED_RANKS_AND_VALUES
 
   belongs_to :player
-  belongs_to :round
+  belongs_to :round, touch: true
   belongs_to :trick, counter_cache: true
 
   validates :round, :rank, :suit, presence: true
