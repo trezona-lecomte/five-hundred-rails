@@ -77,7 +77,7 @@ RSpec.describe FindAvailableBids, type: :service do
       highest_suit = highest_bid.suit
 
       all_possible_bid_params.select do |params|
-        params[:number_of_tricks] != 0 &&
+        params[:number_of_tricks] != Bid::PASS_TRICKS &&
           ((params[:number_of_tricks] < highest_tricks) ||
             (params[:number_of_tricks] == highest_tricks && Bid.suits[params[:suit]] < Bid.suits[highest_suit]))
       end
