@@ -1,12 +1,15 @@
 class Round < ActiveRecord::Base
   NUMBER_OF_TRICKS = 10
 
-  belongs_to :game
+  belongs_to :game, touch: true
   has_many   :cards,  dependent: :destroy
   has_many   :tricks, dependent: :destroy
   has_many   :bids,   dependent: :destroy
 
   validates :game, presence: true
+  validates :odd_team_score, :even_team_score, numericality: { only_integer: true}
+
+  scope :in_playing_order, -> { order(number_in_game: :asc) }
 
   def in_bidding_stage?
     bids.passes.count < (game.players.count - 1)

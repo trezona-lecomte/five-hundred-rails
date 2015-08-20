@@ -6,7 +6,7 @@ class GamesController < ApplicationController
   def index
     @games = Game.all
 
-    render json: @games
+    render json: @games, each_serializer: GamePreviewSerializer
   end
 
   def show

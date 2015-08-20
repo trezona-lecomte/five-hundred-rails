@@ -1,5 +1,5 @@
 class Player < ActiveRecord::Base
-  belongs_to :game
+  belongs_to :game, touch: true
   belongs_to :user
 
   has_many :cards, dependent: :destroy

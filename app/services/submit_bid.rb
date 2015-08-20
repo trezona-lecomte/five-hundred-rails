@@ -14,10 +14,10 @@ class SubmitBid
     @round.with_lock do
       validate_bid_can_be_placed
 
-      submit_bid unless errors.present? # TODO make if errors.none?
+      submit_bid if errors.none? # TODO make if errors.none?
     end
 
-    @round = @round
+    errors.none?
   end
 
   private

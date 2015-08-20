@@ -33,7 +33,9 @@ class StartRound
 
   def create_round
     # TODO rename number_in_game on Round
-    @round = @game.rounds.create!(number_in_game: @game.rounds.count + 1)
+    @round = @game.rounds.create!(number_in_game: @game.rounds.count + 1,
+                                  odd_team_score: 0,
+                                  even_team_score: 0)
   end
 
   def create_tricks!
