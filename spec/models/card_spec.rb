@@ -2,7 +2,7 @@
 require "rails_helper"
 
 RSpec.describe Card, type: :model do
-  let(:round) { Game.create!.rounds.create! }
+  let(:round) { Game.create!.rounds.create!(odd_team_score: 0, even_team_score: 0) }
   let(:trick) { round.tricks.create!(number_in_round: 1) }
 
   subject { Card.create!(rank: Card.ranks.keys.first, suit: Card.suits.keys.first, round: round) }
