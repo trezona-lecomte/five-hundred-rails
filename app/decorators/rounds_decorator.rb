@@ -1,26 +1,25 @@
-# TODO: These methods belong closer to the active record layer.
-# Possibly create decorators for each stage that round can be in, otherwise split them onto AR classes.
-# RoundsDecorator is a meaningless name - need to describe the context in which it'll be used in the name.
+# TODO Possibly create decorators for each stage that round can be in, otherwise split them onto AR classes.
+# TODO RoundsDecorator is a meaningless name - need to describe the context in which it'll be used in the name.
 
 class RoundsDecorator < SimpleDelegator
   # TODO this could be moved out to a service (i.e., find_available_bids(round))
-  def available_bids
-    if in_bidding_stage?
-      # TODO if any bids, rather than if winning_bid.
-      if winning_bid
-        pass_bid + bids_above_highest_bid(non_pass_bids, winning_bid)
-      else
-        pass_bid + non_pass_bids
-      end
-    else
-      []
-    end
-  end
+  # def available_bids
+  #   if in_bidding_stage?
+  #     # TODO if any bids, rather than if winning_bid.
+  #     if winning_bid
+  #       pass_bid + bids_above_highest_bid(non_pass_bids, winning_bid)
+  #     else
+  #       pass_bid + non_pass_bids
+  #     end
+  #   else
+  #     []
+  #   end
+  # end
 
   # TODO probably rename to highest_bid, this is misleading.
-  def winning_bid
-    bids.in_ranked_order.first
-  end
+  # def winning_bid
+  #   bids.in_ranked_order.first
+  # end
 
   def kitty
     cards.includes(:player).where(player: nil)

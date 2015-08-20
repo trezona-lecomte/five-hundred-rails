@@ -8,14 +8,6 @@ class Round < ActiveRecord::Base
 
   validates :game, presence: true
 
-  def current_trick
-    tricks.active.in_playing_order.first
-  end
-
-  def previous_trick
-    tricks.inactive.in_playing_order.last
-  end
-
   def in_bidding_stage?
     bids.passes.count < (game.players.count - 1)
   end
@@ -26,5 +18,17 @@ class Round < ActiveRecord::Base
 
   def finished?
     !current_trick
+  end
+
+  def current_trick
+    tricks.active.in_playing_order.first
+  end
+
+  def previous_trick
+    tricks.inactive.in_playing_order.last
+  end
+
+  def highest_bid
+    bids.in_ranked_order.first
   end
 end
