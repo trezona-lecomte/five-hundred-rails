@@ -7,7 +7,7 @@ RSpec.describe NextBidder, type: :service do
 
   describe "#call" do
     context "when there are no passes" do
-      10.times do |n|
+      6.times do |n|
         context "when it is the first round" do
           let(:round) { rounds(:bidding_round) }
 

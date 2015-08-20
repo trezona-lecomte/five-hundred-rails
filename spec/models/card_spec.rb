@@ -14,17 +14,26 @@ RSpec.describe Card, type: :model do
   it { should_not validate_presence_of :trick }
   it { should_not validate_presence_of :number_in_trick }
 
-  it { should validate_uniqueness_of(:round).scoped_to(:rank, :suit) }
+  it "should require unique value for rank & suit scoped to round_id" do
+    round.cards.create!(rank: 10,
+                        suit: Suits::HEARTS)
+    card = round.cards.new(number_in_trick: 1,
+                           rank: 10,
+                           suit: Suits::HEARTS)
 
-  # TODO wrap with context:
+    expect(card).to_not be_valid
+
+    expect(card.errors[:round]).to include("has already been taken")
+  end
+
   it "should require unique value for number_in_trick scoped to trick_id" do
     trick.cards.create!(number_in_trick: 1,
                         rank: 10,
-                        suit: Card.suits[:hearts],
+                        suit: Suits::HEARTS,
                         round: round)
     card = trick.cards.new(number_in_trick: 1,
                            rank: 11,
-                           suit: Card.suits[:hearts],
+                           suit: Suits::HEARTS,
                            round: round)
 
     expect(card).to_not be_valid
