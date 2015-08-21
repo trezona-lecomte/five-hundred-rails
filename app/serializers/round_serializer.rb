@@ -1,18 +1,15 @@
 class RoundSerializer < ActiveModel::Serializer
-  cached
-  delegate :cache_key, to: :object
-
   attributes :id,
              :path,
              :number_in_game,
              :stage,
              :odd_team_score,
              :even_team_score,
-             :available_bids
+             :available_bids,
+             :previous_trick_winner
 
   has_one  :highest_bid
   has_one  :current_trick,  serializer: TrickSerializer
-  has_one  :previous_trick, serializer: TrickSerializer
   has_one  :game,           embed: :id
   has_many :tricks,         embed: :ids
   has_many :bids,           key: :placed_bids
@@ -53,8 +50,8 @@ class RoundSerializer < ActiveModel::Serializer
     object.current_trick
   end
 
-  def previous_trick
-    object.previous_trick
+  def previous_trick_winner
+    object.previous_trick.winning_player if object.previous_trick
   end
 
   def players

@@ -1,3 +1,6 @@
 class CardSerializer < ActiveModel::Serializer
-  attributes :id, :rank, :suit, :trick_id
+  cached
+  delegate :cache_key, to: :object
+
+  attributes :id, :rank, :suit, :trick_id, :player_id
 end

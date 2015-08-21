@@ -1,4 +1,7 @@
 class PlayedCardSerializer < ActiveModel::Serializer
+  cached
+  delegate :cache_key, to: :object
+
   attributes :id, :rank, :suit, :number_in_trick, :played_by
 
   def played_by

@@ -1,4 +1,7 @@
 class TrickSerializer < ActiveModel::Serializer
+  cached
+  delegate :cache_key, to: :object
+
   attributes :id, :number_in_round, :winning_card
 
   has_many :cards, serializer: PlayedCardSerializer
