@@ -9,7 +9,64 @@ RSpec.describe PlayCard, type: :service do
   let(:card)      { cards(:jack_of_hearts) }
   let(:play_card) { PlayCard.new(trick, player, card) }
 
+  TRICK_NOT_ACTIVE_ERROR          = "this trick is not active"
+  NOT_YOUR_TURN_ERROR             = "it's not your turn to play"
+  CARD_NOT_IN_HAND_ERROR          = "you don't have this card in your hand"
+  ROUND_CANNOT_BE_PLAYED_ON_ERROR = "cards can't be played on this round"
+
   describe "#call" do
+
+    context "when the player doesn't have the card in their hand" do
+      let(:call_result) { play_card.call }
+
+      before do
+        allow(card).to receive(:player).and_return(nil)
+        play_card.call
+      end
+
+      it "returns false" do
+        expect(call_result).to be false
+      end
+
+      it "sets a 'don't have this card' error" do
+        expect(play_card.errors).to include(CARD_NOT_IN_HAND_ERROR)
+      end
+    end
+
+    context "when the round isn't in the playing stage" do
+      let(:call_result) { play_card.call }
+
+      before do
+        allow(round).to receive(:in_playing_stage?).and_return(false)
+        play_card.call
+      end
+
+      it "returns false" do
+        expect(call_result).to be false
+      end
+
+      it "sets a 'round can't be played on' error" do
+        expect(play_card.errors).to include(ROUND_CANNOT_BE_PLAYED_ON_ERROR)
+      end
+    end
+
+    context "when the trick isn't active" do
+      let(:call_result) { play_card.call }
+
+      before do
+        allow(play_card).to receive(:trick_active?).and_return(false)
+        play_card.call
+      end
+
+      it "returns false" do
+        expect(call_result).to be false
+      end
+
+      it "sets a 'trick not active' error" do
+        expect(play_card.errors).to include(TRICK_NOT_ACTIVE_ERROR)
+      end
+    end
+
     context "when it is the first trick" do
       context "when no cards have been played yet" do
         before { play_card.call }
@@ -33,7 +90,7 @@ RSpec.describe PlayCard, type: :service do
           end
 
           it "sets a 'not your turn' error" do
-            expect(play_card.errors).to include("it's not your turn to play")
+            expect(play_card.errors).to include(NOT_YOUR_TURN_ERROR)
           end
         end
       end
@@ -71,7 +128,7 @@ RSpec.describe PlayCard, type: :service do
           end
 
           it "doesn't set any errors" do
-            expect(play_card.errors).to include("it's not your turn to play")
+            expect(play_card.errors).to include(NOT_YOUR_TURN_ERROR)
           end
         end
       end
@@ -116,7 +173,7 @@ RSpec.describe PlayCard, type: :service do
           end
 
           it "sets the error to 'not your turn'" do
-            expect(play_card.errors).to include("it's not your turn to play")
+            expect(play_card.errors).to include(NOT_YOUR_TURN_ERROR)
           end
         end
       end
@@ -154,7 +211,7 @@ RSpec.describe PlayCard, type: :service do
           end
 
           it "sets the error to 'not your turn'" do
-            expect(play_card.errors).to include("it's not your turn to play")
+            expect(play_card.errors).to include(NOT_YOUR_TURN_ERROR)
           end
         end
       end
