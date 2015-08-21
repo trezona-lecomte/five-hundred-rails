@@ -16,6 +16,22 @@ RSpec.describe Game, type: :model do
     end
   end
 
+  describe "active_round" do
+    subject { game.active_round }
+
+    context "when the game isn't finished" do
+      let(:active_round) { game.rounds.last }
+
+      it { is_expected.to eq(active_round) }
+    end
+
+    context "when the game is finished" do
+      before { allow(game).to receive(:finished?).and_return(true) }
+
+      it { is_expected.to be nil }
+    end
+  end
+
   describe "odd_players_score" do
     subject { game.odd_players_score }
 
