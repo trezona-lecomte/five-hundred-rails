@@ -22,13 +22,7 @@ class ApplicationController < ActionController::API
   private
 
   def authenticate_with_auth_token auth_token
-    unless auth_token.include?(':')
-      authentication_error
-      return
-    end
-
-    user_id = auth_token.split(':').first
-    user = User.where(id: user_id).first
+    user = User.find_by(access_token: auth_token)
 
     if user && Devise.secure_compare(user.access_token, auth_token)
       sign_in user, store: false
