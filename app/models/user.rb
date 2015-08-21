@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   devise :database_authenticatable, :recoverable, :validatable
 
-  has_many :players # TODO dependent destroy
+  has_many :players, depdendent: :destroy
 
   validates :username, presence: true # TODO not null in db.
 
