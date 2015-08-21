@@ -6,10 +6,10 @@ user4 = User.create!(email: "user4@example.com", username: "user4", password: "p
 # game 1:
 game1 = Game.create!
 
-JoinGame.new(game1, user1).call
-JoinGame.new(game1, user2).call
-JoinGame.new(game1, user3).call
-JoinGame.new(game1, user4).call
+ JoinGame.new(game: game1, user: user1).call
+JoinGame.new(game: game1, user: user2).call
+JoinGame.new(game: game1, user: user3).call
+JoinGame.new(game: game1, user: user4).call
 
 start_round = StartRound.new(game1)
 start_round.call
@@ -18,13 +18,13 @@ round = start_round.round
 # game 2:
 game2 = Game.create!
 
-JoinGame.new(game2, user1).call
+JoinGame.new(game: game2, user: user1).call
 p1 = game2.players.last
-JoinGame.new(game2, user2).call
+JoinGame.new(game: game2, user: user2).call
 p2 = game2.players.last
-JoinGame.new(game2, user3).call
+JoinGame.new(game: game2, user: user3).call
 p3 = game2.players.last
-JoinGame.new(game2, user4).call
+JoinGame.new(game: game2, user: user4).call
 p4 = game2.players.last
 
 start_round = StartRound.new(game2)
@@ -57,13 +57,13 @@ pc3.call
 # Finished round:
 game3 = Game.create!
 
-JoinGame.new(game3, user1).call
+JoinGame.new(game: game: user: game3, user: user1).call
 p1 = game3.players.last
-JoinGame.new(game3, user2).call
+JoinGame.new(game: game3, user: user2).call
 p2 = game3.players.last
-JoinGame.new(game3, user3).call
+JoinGame.new(game: game3, user: user3).call
 p3 = game3.players.last
-JoinGame.new(game3, user4).call
+JoinGame.new(game: game3, user: user4).call
 p4 = game3.players.last
 
 start_round = StartRound.new(game3)
@@ -103,13 +103,13 @@ start_round.call
 # Almost finished round:
 game4 = Game.create!
 
-JoinGame.new(game4, user1).call
+JoinGame.new(game: game4, user: user1).call
 p1 = game4.players.last
-JoinGame.new(game4, user2).call
+JoinGame.new(game: game4, user: user2).call
 p2 = game4.players.last
-JoinGame.new(game4, user3).call
+JoinGame.new(game: game4, user: user3).call
 p3 = game4.players.last
-JoinGame.new(game4, user4).call
+JoinGame.new(game: game4, user: user4).call
 p4 = game4.players.last
 
 start_round = StartRound.new(game4)

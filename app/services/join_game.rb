@@ -1,24 +1,23 @@
 class JoinGame
-  attr_reader :errors
+  attr_reader :errors, :player
 
-  # TODO maybe put named args back in - it'll complain earlier (in initialize) rather than when you use the objs.
-  def initialize(game, user)
+  def initialize(game:, user:)
     @game = game
     @user = user
+    @player = nil
     @errors = []
   end
 
   def call
-    # TODO: check whether with_lock reloads the object.
     @game.with_lock do
       validate_game_can_be_joined
 
       if errors.none?
         join_game
       end
-
-      errors.none?
     end
+
+    errors.none?
   end
 
   private
@@ -28,16 +27,18 @@ class JoinGame
       return true
     else
       add_error("no more than #{Game::MAX_PLAYERS} players can join this game")
-      false
     end
   end
 
   def join_game
-    @player = @game.players.new(user: @user, handle: @user.username, number_in_game: @game.players.count + 1)
+    @player = @game.players.new(user: @user,
+                                handle: @user.username,
+                                number_in_game: @game.players.count + 1)
 
     unless @player.save
-      add_error("user is unable to join this game: " + @player.errors) # TODO: look into full_sentences
-      # TODO also interpolate errors into the string ^^
+      @player.errors.full_messages.each do |message|
+        add_error(message)
+      end
     end
   end
 

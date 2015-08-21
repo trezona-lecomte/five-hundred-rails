@@ -16,7 +16,7 @@ class GamesController < ApplicationController
   def create
     @game = Game.new
 
-    join_game = JoinGame.new(@game, current_user)
+    join_game = JoinGame.new(game: @game, user: current_user)
     join_game.call
 
     if join_game.errors.present?

@@ -10,7 +10,7 @@ RSpec.describe DealCards, type: :service do
   let(:deal_cards) { DealCards.new(base_round, deck) }
   let(:players)    { game.players }
 
-  before { 4.times { |n| JoinGame.new(game, users("user#{n+1}")).call } }
+  before { 4.times { |n| JoinGame.new(game: game, user: users("user#{n+1}")).call } }
 
   describe "#call" do
     before { deal_cards.call }

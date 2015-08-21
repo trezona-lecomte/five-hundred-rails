@@ -14,7 +14,7 @@ class SubmitBid
     @round.with_lock do
       validate_bid_can_be_placed
 
-      submit_bid if errors.none? # TODO make if errors.none?
+      submit_bid if errors.none?
     end
 
     errors.none?
@@ -35,7 +35,6 @@ class SubmitBid
   def players_turn?
     find_next_bidder = NextBidder.new(@round)
     find_next_bidder.call
-
     @player == find_next_bidder.next_bidder
   end
 
@@ -45,7 +44,9 @@ class SubmitBid
 
   def submit_bid
     begin
-      bid = @round.bids.new(player: @player, number_of_tricks: @number_of_tricks, suit: @suit)
+      bid = @round.bids.new(suit: @suit,
+                            player: @player,
+                            number_of_tricks: @number_of_tricks)
 
       unless bid.save
         bid.errors.messages.each do |msg|
