@@ -57,7 +57,7 @@ pc3.call
 # Finished round:
 game3 = Game.create!
 
-JoinGame.new(game: game: user: game3, user: user1).call
+JoinGame.new(game: game3, user: user1).call
 p1 = game3.players.last
 JoinGame.new(game: game3, user: user2).call
 p2 = game3.players.last

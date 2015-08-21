@@ -4,4 +4,3 @@ class AddAccessTokenToUser < ActiveRecord::Migration
     add_column :users, :username, :string, null: false
   end
 end
-a

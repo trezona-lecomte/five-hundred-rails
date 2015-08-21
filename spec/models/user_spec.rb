@@ -20,7 +20,7 @@ RSpec.describe User, type: :model do
     context "after the record has been saved" do
       let(:user) { User.create!(valid_user_attributes) }
 
-      it { is_expected.to include(user.id.to_s) }
+      it { is_expected.to_not be_nil }
     end
   end
 
