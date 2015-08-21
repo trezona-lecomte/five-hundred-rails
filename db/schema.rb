@@ -63,12 +63,12 @@ ActiveRecord::Schema.define(version: 20150819020814) do
   add_index "players", ["user_id"], name: "index_players_on_user_id", using: :btree
 
   create_table "rounds", force: :cascade do |t|
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-    t.integer  "game_id",         null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.integer  "game_id",            null: false
     t.integer  "number_in_game"
-    t.integer  "odd_team_score"
-    t.integer  "even_team_score"
+    t.integer  "odd_players_score"
+    t.integer  "even_players_score"
   end
 
   add_index "rounds", ["game_id"], name: "index_rounds_on_game_id", using: :btree
@@ -97,7 +97,7 @@ ActiveRecord::Schema.define(version: 20150819020814) do
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.string   "access_token"
-    t.string   "username"
+    t.string   "username",                            null: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

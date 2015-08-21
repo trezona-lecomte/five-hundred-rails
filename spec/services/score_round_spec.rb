@@ -16,11 +16,11 @@ RSpec.describe ScoreRound, type: :service do
           before { score_round.call }
 
           it "sets the odd team score to 200" do
-            expect(round.odd_team_score).to eq(200)
+            expect(round.odd_players_score).to eq(200)
           end
 
           it "sets the even team score to 0" do
-            expect(round.even_team_score).to eq(0)
+            expect(round.even_players_score).to eq(0)
           end
         end
 
@@ -35,11 +35,11 @@ RSpec.describe ScoreRound, type: :service do
           end
 
           it "sets the odd team score to -120" do
-            expect(round.odd_team_score).to eq(-120)
+            expect(round.odd_players_score).to eq(-120)
           end
 
           it "sets the even team score to 50" do
-            expect(round.even_team_score).to eq(50)
+            expect(round.even_players_score).to eq(50)
           end
         end
       end
@@ -55,11 +55,11 @@ RSpec.describe ScoreRound, type: :service do
           end
 
           it "sets the even team score to 40" do
-            expect(round.even_team_score).to eq(40)
+            expect(round.even_players_score).to eq(40)
           end
 
           it "sets the odd team score to 20" do
-            expect(round.odd_team_score).to eq(20)
+            expect(round.odd_players_score).to eq(20)
           end
         end
 
@@ -73,11 +73,11 @@ RSpec.describe ScoreRound, type: :service do
           end
 
           it "sets the even team score to -380" do
-            expect(round.even_team_score).to eq(-380)
+            expect(round.even_players_score).to eq(-380)
           end
 
           it "sets the odd team score to 20" do
-            expect(round.odd_team_score).to eq(20)
+            expect(round.odd_players_score).to eq(20)
           end
         end
       end

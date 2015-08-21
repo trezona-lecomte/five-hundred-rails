@@ -43,11 +43,11 @@ class ScoreRound
 
   def set_scores(attack_score, defense_score)
     if attacking_players.first.number_in_game.odd?
-      round.odd_team_score = attack_score
-      round.even_team_score = defense_score
+      round.odd_players_score = attack_score
+      round.even_players_score = defense_score
     else
-      round.odd_team_score = defense_score
-      round.even_team_score = attack_score
+      round.odd_players_score = defense_score
+      round.even_players_score = attack_score
     end
   end
 

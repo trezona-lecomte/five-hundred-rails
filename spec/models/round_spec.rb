@@ -6,7 +6,7 @@ RSpec.describe Round, type: :model do
   let(:round)  { rounds(:playing_round) }
 
   it { should validate_presence_of :game }
-  it { should validate_numericality_of(:odd_team_score).only_integer }
+  it { should validate_numericality_of(:odd_players_score).only_integer }
 
   context "when destroyed" do
     it "destroys all dependent cards" do

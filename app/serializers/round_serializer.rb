@@ -3,8 +3,8 @@ class RoundSerializer < ActiveModel::Serializer
              :path,
              :number_in_game,
              :stage,
-             :odd_team_score,
-             :even_team_score,
+             :odd_players_score,
+             :even_players_score,
              :available_bids,
              :previous_trick_winner
 

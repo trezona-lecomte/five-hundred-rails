@@ -7,7 +7,7 @@ class Round < ActiveRecord::Base
   has_many   :bids,   dependent: :destroy
 
   validates :game, presence: true
-  validates :odd_team_score, :even_team_score, numericality: { only_integer: true}
+  validates :odd_players_score, :even_players_score, numericality: { only_integer: true}
 
   scope :in_playing_order, -> { order(number_in_game: :asc) }
 

@@ -29,7 +29,7 @@ class FindAvailableBidParams
 
   def generate_available_bid_params
     if any_bids?
-      @available_bid_params = bid_params_above_current_highest_bid << Bid.params_for_pass_bid
+      @available_bid_params = bid_params_above_highest_bid << Bid.params_for_pass_bid
     else
       @available_bid_params = all_bid_params
     end
@@ -49,8 +49,7 @@ class FindAvailableBidParams
     end
   end
 
-  # TODO this could take pass bid as a default (could take current highest bid) - try to generalize down to map
-  def bid_params_above_current_highest_bid
+  def bid_params_above_highest_bid
     highest_bid    = round.highest_bid
     highest_tricks = highest_bid.number_of_tricks
     highest_suit   = highest_bid.suit

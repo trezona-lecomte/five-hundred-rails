@@ -2,8 +2,8 @@ class GameSerializer < ActiveModel::Serializer
   attributes :id,
              :path,
              :stage,
-             :odd_team_score,
-             :even_team_score
+             :odd_players_score,
+             :even_players_score
 
   has_one  :active_round, serializer: RoundPreviewSerializer
   has_many :players
