@@ -1,18 +1,16 @@
 class User < ActiveRecord::Base
   devise :database_authenticatable, :recoverable, :validatable
 
-  has_many :players, depdendent: :destroy
+  has_many :players, dependent: :destroy
 
-  validates :username, presence: true # TODO not null in db.
+  validates :username, presence: true
 
-  # Do this in before - after create/save callbacks are icky.
-  after_create :update_access_token!
+  before_create :set_access_token
 
   private
 
-  # TODO: firstly user 'rails token auth', secondly use SecureRandom.uuid
-  def update_access_token!
-    self.access_token = "#{self.id}:#{Devise.friendly_token}"
-    save # TODO should have bang
+  # TODO: use 'rails token auth'
+  def set_access_token
+    self.access_token = SecureRandom.uuid
   end
 end
