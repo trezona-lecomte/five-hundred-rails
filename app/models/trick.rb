@@ -1,8 +1,7 @@
 class Trick < ActiveRecord::Base
   MAX_CARDS = 4
   belongs_to :round
-  has_many   :cards # TODO: dependent nullify (all refs become null)
-  # NOTE: generally try not to delete data, store the date on which it become 'deleted' etc.
+  has_many   :cards, dependent: :nullify
 
   validates :round, presence: true
   validates :number_in_round, numericality: { greater_than: 0 }
