@@ -29,6 +29,7 @@ class Score
   private
 
   def for_attack
-    BASE_SCORES[Card.suits[suit]] + ((number_of_tricks - Bid::MIN_TRICKS) * OFFENSIVE_TRICK_MULTIPLIER)
+    BASE_SCORES[Card.suits[suit]] +
+      ((number_of_tricks - Bid::MIN_TRICKS) * OFFENSIVE_TRICK_MULTIPLIER)
   end
 end
