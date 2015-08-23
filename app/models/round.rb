@@ -32,6 +32,6 @@ class Round < ActiveRecord::Base
   end
 
   def highest_bid
-    bids.in_ranked_order.first
+    bids.non_passes.in_ranked_order.first
   end
 end

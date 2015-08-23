@@ -36,7 +36,7 @@ class FindAvailableBidParams
   end
 
   def any_bids?
-    round.bids.any?
+    round.bids.non_passes.any?
   end
 
   def all_bid_params

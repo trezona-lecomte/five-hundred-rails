@@ -6,26 +6,21 @@ RSpec.describe BidsController, type: :controller do
   let(:user)             { users(:user1) }
   let(:player)           { players(:bidder1) }
   let(:round)            { rounds(:bidding_round) }
-  let(:valid_bid_params) { { number_of_tricks: "0", suit: "hearts" } }
+  let(:valid_bid_params) { { round_id: round, number_of_tricks: "0", suit: "hearts" } }
 
   before do
-    ApplicationController.any_instance.stub(:authenticate_user_from_token!)
+    allow_any_instance_of(ApplicationController).to receive(:authenticate_user_from_token!).and_return true
     allow(controller).to receive(:current_user).and_return(user)
   end
 
-  # describe "POST #create" do
-  #   subject { response }
+  describe "POST crete" do
+    subject          { response }
+    before           { post :create, valid_bid_params }
 
-  #   context "when the bid is valid" do
-  #     before { post :create, round_id: round.id, number_of_tricks: "6", suit: "hearts" }
+    it { is_expected.to have_http_status(201) }
 
-  #     it { is_expected.to have_http_status(201) }
-  #   end
-
-  #   context "when the bid is invalid" do
-  #     before { post :create, round_id: round.id, number_of_tricks: "6", suit: "farts" }
-
-  #     it { is_expected.to have_http_status(422) }
-  #   end
-  # end
+    # it "creates a bid" do
+    #   expect { post :create, valid_bid_params }.to change(Bid, :count).by(1)
+    # end
+  end
 end

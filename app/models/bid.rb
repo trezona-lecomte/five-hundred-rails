@@ -13,7 +13,8 @@ class Bid < ActiveRecord::Base
   validates :round, :player, :number_of_tricks, :suit, presence: true
   validates :number_of_tricks, inclusion: { in: ALLOWED_TRICKS }
 
-  scope :passes,          -> { where(number_of_tricks: 0) }
+  scope :passes,          -> { where(number_of_tricks: PASS_TRICKS) }
+  scope :non_passes,      -> { where.not(number_of_tricks: PASS_TRICKS)}
   scope :in_ranked_order, -> { order(number_of_tricks: :desc, suit: :desc) }
 
   def self.params_for_pass_bid

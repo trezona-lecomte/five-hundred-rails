@@ -18,21 +18,21 @@ RSpec.describe GamesController, type: :controller do
     it { is_expected.to have_http_status(200) }
   end
 
-  # describe "POST #create" do
-  #   subject { response }
+  describe "GET show" do
+    subject          { response }
+    before           { get :show, id: games.first.id }
 
-  #   context "when the bid is valid" do
-  #     before { post :create, round_id: round.id, number_of_tricks: "6", suit: "hearts" }
+    it { is_expected.to have_http_status(200) }
+  end
 
-  #     it { is_expected.to have_http_status(201) }
-  #   end
+  describe "POST crete" do
+    subject          { response }
+    before           { post :create }
 
-  #   context "when the bid is invalid" do
-  #     before { post :create, round_id: round.id, number_of_tricks: "6", suit: "farts" }
+    it { is_expected.to have_http_status(201) }
 
-  #     it { is_expected.to have_http_status(422) }
-  #   end
-  # end
-
-
+    it "creates a game" do
+      expect { post :create }.to change(Game, :count).by(1)
+    end
+  end
 end
