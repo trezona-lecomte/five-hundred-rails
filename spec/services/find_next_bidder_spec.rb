@@ -1,9 +1,9 @@
 require "rails_helper"
 
-RSpec.describe NextBidder, type: :service do
+RSpec.describe FindNextBidder, type: :service do
   fixtures :all
   let(:game)             { games(:bidding_game) }
-  let(:find_next_bidder) { NextBidder.new(round) }
+  let(:find_next_bidder) { FindNextBidder.new(round) }
 
   describe "#call" do
     context "when there are no passes" do
@@ -105,7 +105,8 @@ RSpec.describe NextBidder, type: :service do
     number_of_bids.times do |n|
       round.bids.create!(player: players("bidder#{((n + previous_bids) % game.players.count) + 1}"),
                          number_of_tricks: 6 + n + previous_bids,
-                         suit: rand(0..(Bid.suits.length - 1)))
+                         suit: rand(0..(Bid.suits.length - 1)),
+                         order_in_round: round.bids.count + 1)
     end
   end
 
@@ -113,7 +114,8 @@ RSpec.describe NextBidder, type: :service do
     number_of_passes.times do |n|
       round.bids.create!(player: players("bidder#{((n + previous_bids) % game.players.count) + 1}"),
                          number_of_tricks: 0,
-                         suit: 0)
+                         suit: 0,
+                         order_in_round: round.bids.count + 1)
     end
   end
 end

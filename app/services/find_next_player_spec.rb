@@ -1,8 +1,8 @@
 require "rails_helper"
 
-RSpec.describe NextPlayer, type: :service do
+RSpec.describe FindNextPlayer, type: :service do
   fixtures :all
-  let(:find_next_player) { NextPlayer.new(round) }
+  let(:find_next_player) { FindNextPlayer.new(round) }
 
   describe "#call" do
     before { find_next_player.call }

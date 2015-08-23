@@ -1,4 +1,4 @@
-class NextBidder
+class FindNextBidder
   attr_reader :next_bidder, :messages
 
   def initialize(round)
@@ -29,14 +29,14 @@ class NextBidder
   end
 
   def set_bidder_for_first_bid
-    next_bidder_number = @round.number_in_game % @players.length
+    next_bidder_number = @round.order_in_game % @players.length
 
     if next_bidder_number == 0
       next_bidder_number = @players.length
     end
 
     @next_bidder = @players.detect do |player|
-      player.number_in_game == next_bidder_number
+      player.order_in_game == next_bidder_number
     end
   end
 
