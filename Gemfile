@@ -10,10 +10,13 @@ gem 'puma'
 
 group :development, :test do
   gem 'spring'
-  gem 'pry-byebug'
-  gem 'pry-rails'
   gem 'faker'
   gem 'rspec-rails'
   gem 'codeclimate-test-reporter'
   gem 'shoulda-matchers'
+end
+
+group :development do
+  gem 'pry-byebug'
+  gem 'pry-rails'
 end
