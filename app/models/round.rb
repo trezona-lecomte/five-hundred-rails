@@ -9,7 +9,7 @@ class Round < ActiveRecord::Base
   validates :game, :odd_players_score, :even_players_score, presence: true
   validates :odd_players_score, :even_players_score, numericality: { only_integer: true}
 
-  scope :in_playing_order, -> { order(number_in_game: :asc) }
+  scope :in_playing_order, -> { order(order_in_game: :asc) }
 
   def in_bidding_stage?
     bids.passes.count < (game.players.count - 1)

@@ -3,7 +3,7 @@ require "rails_helper"
 
 RSpec.describe Card, type: :model do
   let(:round) { Game.create!.rounds.create!(odd_players_score: 0, even_players_score: 0) }
-  let(:trick) { round.tricks.create!(number_in_round: 1) }
+  let(:trick) { round.tricks.create!(order_in_round: 1) }
 
   subject { Card.create!(rank: Card.ranks.keys.first, suit: Card.suits.keys.first, round: round) }
 
@@ -12,12 +12,12 @@ RSpec.describe Card, type: :model do
   it { should validate_presence_of :rank }
   it { should_not validate_presence_of :player }
   it { should_not validate_presence_of :trick }
-  it { should_not validate_presence_of :number_in_trick }
+  it { should_not validate_presence_of :order_in_trick }
 
   it "should require unique value for rank & suit scoped to round_id" do
     round.cards.create!(rank: 10,
                         suit: Suits::HEARTS)
-    card = round.cards.new(number_in_trick: 1,
+    card = round.cards.new(order_in_trick: 1,
                            rank: 10,
                            suit: Suits::HEARTS)
 
@@ -26,18 +26,18 @@ RSpec.describe Card, type: :model do
     expect(card.errors[:round]).to include("has already been taken")
   end
 
-  it "should require unique value for number_in_trick scoped to trick_id" do
-    trick.cards.create!(number_in_trick: 1,
+  it "should require unique value for order_in_trick scoped to trick_id" do
+    trick.cards.create!(order_in_trick: 1,
                         rank: 10,
                         suit: Suits::HEARTS,
                         round: round)
-    card = trick.cards.new(number_in_trick: 1,
+    card = trick.cards.new(order_in_trick: 1,
                            rank: 11,
                            suit: Suits::HEARTS,
                            round: round)
 
     expect(card).to_not be_valid
 
-    expect(card.errors[:number_in_trick]).to include("has already been taken")
+    expect(card.errors[:order_in_trick]).to include("has already been taken")
   end
 end

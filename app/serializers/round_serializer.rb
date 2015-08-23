@@ -1,7 +1,7 @@
 class RoundSerializer < ActiveModel::Serializer
   attributes :id,
              :path,
-             :number_in_game,
+             :order_in_game,
              :stage,
              :odd_players_score,
              :even_players_score,

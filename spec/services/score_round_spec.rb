@@ -30,7 +30,8 @@ RSpec.describe ScoreRound, type: :service do
             allow(score_round).to receive(:tricks_for).and_return(round.tricks.first(5), round.tricks.last(5))
             allow(round).to receive(:highest_bid).and_return(round.bids.create!(player: players(:player3),
                                                                                 number_of_tricks: 6,
-                                                                                suit: Card.suits[:no_suit]))
+                                                                                suit: Card.suits[:no_suit],
+                                                                                order_in_round: round.bids.count + 1))
             score_round.call
           end
 
@@ -50,7 +51,8 @@ RSpec.describe ScoreRound, type: :service do
             allow(score_round).to receive(:tricks_for).and_return(round.tricks.first(8), round.tricks.last(2))
             allow(round).to receive(:highest_bid).and_return(round.bids.create!(player: players(:player2),
                                                                                 number_of_tricks: 6,
-                                                                                suit: Card.suits[:spades]))
+                                                                                suit: Card.suits[:spades],
+                                                                                order_in_round: round.bids.count + 1))
             score_round.call
           end
 
@@ -68,7 +70,8 @@ RSpec.describe ScoreRound, type: :service do
             allow(score_round).to receive(:tricks_for).and_return(round.tricks.first(8), round.tricks.last(2))
             allow(round).to receive(:highest_bid).and_return(round.bids.create!(player: players(:player4),
                                                                                 number_of_tricks: 9,
-                                                                                suit: Card.suits[:diamonds]))
+                                                                                suit: Card.suits[:diamonds],
+                                                                                order_in_round: round.bids.count + 1))
             score_round.call
           end
 
@@ -88,9 +91,5 @@ RSpec.describe ScoreRound, type: :service do
     context "when the round hasn't yet finished" do
 
     end
-  end
-
-  def even_players(round)
-    round.players.select { |player| player.number_in_round.even? }
   end
 end

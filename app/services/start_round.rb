@@ -32,15 +32,14 @@ class StartRound
   end
 
   def create_round
-    # TODO rename number_in_game on Round
-    @round = @game.rounds.create!(number_in_game: @game.rounds.count + 1,
+    @round = @game.rounds.create!(order_in_game: @game.rounds.count + 1,
                                   odd_players_score: 0,
                                   even_players_score: 0)
   end
 
   def create_tricks!
     Round::NUMBER_OF_TRICKS.times do |n|
-      @round.tricks.create!(number_in_round: n + 1)
+      @round.tricks.create!(order_in_round: n + 1)
     end
   end
 

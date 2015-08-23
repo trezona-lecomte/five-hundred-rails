@@ -42,7 +42,7 @@ class ScoreRound
   end
 
   def set_scores(attack_score, defense_score)
-    if attacking_players.first.number_in_game.odd?
+    if attacking_players.first.order_in_game.odd?
       round.odd_players_score = attack_score
       round.even_players_score = defense_score
     else
@@ -62,10 +62,10 @@ class ScoreRound
   end
 
   def attacking_players
-    if bid_winning_player.number_in_game.even?
-      players.select { |player| player.number_in_game.even? }
+    if bid_winning_player.order_in_game.even?
+      players.select { |player| player.order_in_game.even? }
     else
-      players.select { |player| player.number_in_game.odd? }
+      players.select { |player| player.order_in_game.odd? }
     end
   end
 

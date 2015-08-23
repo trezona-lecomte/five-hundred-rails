@@ -41,13 +41,13 @@ RSpec.describe Game, type: :model do
 
     context "when the total of the odd teams score across all rounds is 290" do
       before do
-        game.rounds.create!(number_in_game: 1,
+        game.rounds.create!(order_in_game: 1,
                             odd_players_score: -50,
                             even_players_score: 10)
-        game.rounds.create!(number_in_game: 2,
+        game.rounds.create!(order_in_game: 2,
                             odd_players_score: 100,
                             even_players_score: -40)
-        game.rounds.create!(number_in_game: 3,
+        game.rounds.create!(order_in_game: 3,
                             odd_players_score: 240,
                             even_players_score: 50)
       end
@@ -65,13 +65,13 @@ RSpec.describe Game, type: :model do
 
     context "when the total of the even teams score across all rounds is 20" do
       before do
-        game.rounds.create!(number_in_game: 1,
+        game.rounds.create!(order_in_game: 1,
                             odd_players_score: 50,
                             even_players_score: 10)
-        game.rounds.create!(number_in_game: 2,
+        game.rounds.create!(order_in_game: 2,
                             odd_players_score: 100,
                             even_players_score: -40)
-        game.rounds.create!(number_in_game: 3,
+        game.rounds.create!(order_in_game: 3,
                             odd_players_score: 240,
                             even_players_score: 50)
       end

@@ -50,7 +50,7 @@ class PlayCard
   end
 
   def players_turn?
-    find_next_player = NextPlayer.new(round)
+    find_next_player = FindNextPlayer.new(round)
     find_next_player.call
 
     @player == find_next_player.next_player
@@ -59,9 +59,7 @@ class PlayCard
   def play_card
     @trick.cards << @card
     @trick.reload
-    @card.number_in_trick = @trick.cards_count
-
-    binding.pry if @trick.cards_count == 0
+    @card.order_in_trick = @trick.cards_count
 
     unless @card.save
       add_error("you can't play this card right now: #{@card.errors.full_messages}, #{@trick.errors.full_messages}")

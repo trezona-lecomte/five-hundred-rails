@@ -1,4 +1,4 @@
-class NextPlayer
+class FindNextPlayer
   attr_reader :round, :errors, :next_player, :current_trick
 
   def initialize(round)
@@ -35,7 +35,7 @@ class NextPlayer
   end
 
   def first_trick?
-    current_trick.number_in_round == 1
+    current_trick.order_in_round == 1
   end
 
   def set_player_for_first_trick
@@ -47,12 +47,12 @@ class NextPlayer
   end
 
   def set_player_based_on_cards_played
-    last_player_number = current_trick.cards.last_played.player.number_in_game
+    last_player_number = current_trick.cards.last_played.player.order_in_game
 
     # Either increment from the last player, or wrap to player 1 if it was player 4:
     next_player_number = last_player_number < 4 ? last_player_number + 1 : 1
 
-    @next_player = @players.find_by(number_in_game: next_player_number)
+    @next_player = @players.find_by(order_in_game: next_player_number)
   end
 
   def add_error(message)

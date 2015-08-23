@@ -33,7 +33,7 @@ class SubmitBid
   end
 
   def players_turn?
-    find_next_bidder = NextBidder.new(@round)
+    find_next_bidder = FindNextBidder.new(@round)
     find_next_bidder.call
     @player == find_next_bidder.next_bidder
   end
@@ -46,7 +46,8 @@ class SubmitBid
     begin
       bid = @round.bids.new(suit: @suit,
                             player: @player,
-                            number_of_tricks: @number_of_tricks)
+                            number_of_tricks: @number_of_tricks,
+                            order_in_round: @round.bids.count + 1)
 
       unless bid.save
         bid.errors.messages.each do |msg|

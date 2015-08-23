@@ -25,7 +25,7 @@ class GameSerializer < ActiveModel::Serializer
     if object.finished?
       nil
     else
-      object.rounds.max_by { |round| round.number_in_game }
+      object.rounds.max_by { |round| round.order_in_game }
     end
   end
 end

@@ -133,8 +133,8 @@ until decorated_round.cards.where(trick: nil).count == 4
   pc3 = PlayCard.new(trick, p3, p3.cards.where(trick: nil).sample)
   pc4 = PlayCard.new(trick, p4, p4.cards.where(trick: nil).sample)
 
-  pc1.call unless trick.number_in_round == 10 && trick.cards.count == 3
-  pc2.call unless trick.number_in_round == 10 && trick.cards.count == 3
-  pc3.call unless trick.number_in_round == 10 && trick.cards.count == 3
-  pc4.call unless trick.number_in_round == 10 && trick.cards.count == 3
+  pc1.call unless trick.order_in_round == 10 && trick.cards.count == 3
+  pc2.call unless trick.order_in_round == 10 && trick.cards.count == 3
+  pc3.call unless trick.order_in_round == 10 && trick.cards.count == 3
+  pc4.call unless trick.order_in_round == 10 && trick.cards.count == 3
 end

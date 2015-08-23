@@ -1,6 +1,5 @@
 class Bid < ActiveRecord::Base
-  include Suits
-  enum suit: ALL_SUITS
+  enum suit: Suits::ALL_SUITS
 
   PASS_TRICKS = 0
   MIN_TRICKS  = 6
@@ -10,14 +9,16 @@ class Bid < ActiveRecord::Base
   belongs_to :round, touch: true
   belongs_to :player
 
-  validates :round, :player, :number_of_tricks, :suit, presence: true
-  validates :number_of_tricks, inclusion: { in: ALLOWED_TRICKS }
+  validates :round, :player, :suit, presence: true
+  validates :number_of_tricks,      presence: true, inclusion: { in: ALLOWED_TRICKS }
+  validates :order_in_round,        presence: true, numericality: { only_integer: true }
 
-  scope :passes,          -> { where(number_of_tricks: PASS_TRICKS) }
-  scope :non_passes,      -> { where.not(number_of_tricks: PASS_TRICKS)}
-  scope :in_ranked_order, -> { order(number_of_tricks: :desc, suit: :desc) }
+  scope :passes,           -> { where(number_of_tricks: PASS_TRICKS) }
+  scope :non_passes,       -> { where.not(number_of_tricks: PASS_TRICKS)}
+  scope :in_ranked_order,  -> { order(number_of_tricks: :desc, suit: :desc) }
+  scope :in_playing_order, -> { order(order_in_round: :asc) }
 
   def self.params_for_pass_bid
-    { number_of_tricks: PASS_TRICKS, suit: NO_SUIT }
+    { number_of_tricks: PASS_TRICKS, suit: Suits::NO_SUIT }
   end
 end
