@@ -175,6 +175,7 @@ DEPENDENCIES
   rails-api
   rspec-rails
   shoulda-matchers
+  simplecov
   spring
 
 BUNDLED WITH

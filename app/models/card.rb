@@ -1,17 +1,32 @@
 class Card < ActiveRecord::Base
-  include Suits, Ranks
-  enum suit: ALL_SUITS
-  enum rank: EXTENDED_RANKS_AND_VALUES
+  enum suit: Suits::ALL_SUITS
+  enum rank: {
+    "2"     => 2,
+    "3"     => 3,
+    "4"     => 4,
+    "5"     => 5,
+    "6"     => 6,
+    "7"     => 7,
+    "8"     => 8,
+    "9"     => 9,
+    "10"    => 10,
+    "11"    => 11,
+    "12"    => 12,
+    "13"    => 13,
+    "jack"  => 14,
+    "queen" => 15,
+    "king"  => 16,
+    "ace"   => 17,
+    "joker" => 18
+  }
 
   belongs_to :player
   belongs_to :round, touch: true
   belongs_to :trick, counter_cache: true, touch: true
 
-  validates :round, :rank, :suit, presence: true
-  validates :round,               uniqueness: { scope: [:rank, :suit] }
-
-  # TODO maybe use order_played:
-  validates :order_in_trick, uniqueness: { scope: [:trick], allow_nil: true }
+  validates :rank, :suit, presence: true
+  validates :round,       presence: true, uniqueness: { scope: [:rank, :suit] }
+  validates :order_in_trick,              uniqueness: { scope: [:trick], allow_nil: true }
 
   scope :played,           -> { where.not(trick: nil) }
   scope :unplayed,         -> { where(trick: nil) }
