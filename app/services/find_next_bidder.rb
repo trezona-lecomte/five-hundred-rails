@@ -6,6 +6,7 @@ class FindNextBidder
     @messages = []
     @players = @round.game.players
     @next_bidder = nil
+    @count_of_players_checked = 1
   end
 
   def call
@@ -14,58 +15,70 @@ class FindNextBidder
     end
 
     unless @next_bidder
-      add_message("bidding for this round is finished")
+      add_message("bidding for this round has finished")
     end
+
+    @next_bidder.present?
   end
 
   private
 
   def set_next_bidder
-    if @round.bids.none?
+    if round_is_awaiting_first_bid?
       set_bidder_for_first_bid
     else
       set_bidder_for_subsequent_bid
     end
   end
 
+  def round_is_awaiting_first_bid?
+    @round.bids.none?
+  end
+
   def set_bidder_for_first_bid
-    next_bidder_number = @round.order_in_game % @players.length
+    first_bidder_number = @round.order_in_game % @players.length
 
-    if next_bidder_number == 0
-      next_bidder_number = @players.length
-    end
+    first_bidder_number = @players.length if first_bidder_number == 0
 
-    @next_bidder = @players.detect do |player|
-      player.order_in_game == next_bidder_number
-    end
+    @next_bidder = @players.find_by(order_in_game: first_bidder_number)
   end
 
   def set_bidder_for_subsequent_bid
-    passed_players_offset = 0
+    until @next_bidder || all_players_have_been_checked?
+      @next_bidder = next_bidder_in_order
 
-    until @next_bidder || passed_players_offset > 3
-      incremented_index = next_bidder_index(passed_players_offset)
+      skip_bidder if bidder_has_already_passed?
 
-      @next_bidder = fetch_next_bidder(incremented_index)
-
-      if bidder_has_already_passed?
-        @next_bidder = nil
-      end
-
-      passed_players_offset += 1
+      @count_of_players_checked += 1
     end
+  end
+
+  def all_players_have_been_checked?
+    @count_of_players_checked == (@players.length - 1)
+  end
+
+  def next_bidder_in_order
+    previous_player = @round.bids.in_playing_order.last.player
+
+    incremented_order_in_game = previous_player.order_in_game + @count_of_players_checked
+
+    @next_bidder = next_bidder_for_incremented_order_in_game(incremented_order_in_game)
+  end
+
+  def next_bidder_for_incremented_order_in_game(incremented_order_in_game)
+    if incremented_order_in_game > @players.length
+      @players.find_by(order_in_game: 1)
+    else
+      @players.find_by(order_in_game: incremented_order_in_game)
+    end
+  end
+
+  def skip_bidder
+    @next_bidder = nil
   end
 
   def bidder_has_already_passed?
     @round.bids.passes.any? { |pass| pass.player == @next_bidder }
-  end
-
-  def next_bidder_index(offset)
-    (@round.bids.count % @players.count) + offset
-  end
-
-  def fetch_next_bidder(index)
-    index < @players.length ? @players[index] : @players[0]
   end
 
   def add_message(message)

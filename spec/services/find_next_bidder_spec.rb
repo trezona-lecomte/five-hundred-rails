@@ -4,6 +4,7 @@ RSpec.describe FindNextBidder, type: :service do
   fixtures :all
   let(:game)             { games(:bidding_game) }
   let(:find_next_bidder) { FindNextBidder.new(round) }
+  BIDDING_FINISHED_MESSAGE = "bidding for this round has finished"
 
   describe "#call" do
     context "when there are no passes" do
@@ -16,7 +17,7 @@ RSpec.describe FindNextBidder, type: :service do
             find_next_bidder.call
           end
 
-          it "returns the correct bidder" do
+          it "returns the correct bidder - player #{(n % 4) + 1}" do
             expect(find_next_bidder.next_bidder).to eq(players("bidder#{(n % game.players.count) + 1}"))
           end
         end
@@ -74,6 +75,24 @@ RSpec.describe FindNextBidder, type: :service do
           expect(find_next_bidder.next_bidder).to eq(players(:bidder4))
         end
       end
+
+      context "when all but one of the players have been checked" do
+        let(:round) { rounds(:bidding_round) }
+
+        before do
+          allow(find_next_bidder).to receive(:round_is_awaiting_first_bid?).and_return(false)
+          allow(find_next_bidder).to receive(:all_players_have_been_checked?).and_return(true)
+          find_next_bidder.call
+        end
+
+        it "returns nil" do
+          expect(find_next_bidder.next_bidder).to be nil
+        end
+
+        it "sets a 'bidding is over' message" do
+          expect(find_next_bidder.messages).to include(BIDDING_FINISHED_MESSAGE)
+        end
+      end
     end
 
     context "when all players have passed" do
@@ -96,7 +115,7 @@ RSpec.describe FindNextBidder, type: :service do
       end
 
       it "sets a 'bidding is over' message" do
-        expect(find_next_bidder.messages).to include("bidding for this round is finished")
+        expect(find_next_bidder.messages).to include(BIDDING_FINISHED_MESSAGE)
       end
     end
   end
