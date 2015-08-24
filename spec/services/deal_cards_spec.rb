@@ -3,7 +3,9 @@ require "rails_helper"
 RSpec.describe DealCards, type: :service do
   fixtures :all
   let(:game)       { Game.create! }
-  let(:base_round) { game.rounds.create!(odd_players_score: 0, even_players_score: 0) }
+  let(:base_round) { game.rounds.create!(odd_players_score: 0,
+                                         even_players_score: 0,
+                                         order_in_game: 0) }
   let(:round)      { base_round }
   let(:deck)       { BuildDeck.new.call }
   let(:fresh_deck) { BuildDeck.new.call }

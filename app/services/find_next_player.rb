@@ -35,7 +35,7 @@ class FindNextPlayer
   end
 
   def first_trick?
-    current_trick.order_in_round == 1
+    current_trick.order_in_round.zero?
   end
 
   def set_player_for_first_trick

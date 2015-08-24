@@ -4,7 +4,7 @@ class Trick < ActiveRecord::Base
   has_many   :cards, dependent: :nullify
 
   validates :round, presence: true
-  validates :order_in_round, numericality: { greater_than: 0 }
+  validates :order_in_round, numericality: { greater_than_or_equal_to: 0 }
 
   scope :active,           -> { where("cards_count < ?", MAX_CARDS) }
   scope :inactive,         -> { where(cards_count: MAX_CARDS) }

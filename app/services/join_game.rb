@@ -33,7 +33,7 @@ class JoinGame
   def join_game
     @player = @game.players.new(user: @user,
                                 handle: @user.username,
-                                order_in_game: @game.players.count + 1)
+                                order_in_game: @game.players.count)
 
     unless @player.save
       @player.errors.full_messages.each do |message|

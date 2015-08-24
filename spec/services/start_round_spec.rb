@@ -8,7 +8,7 @@ RSpec.describe StartRound, type: :service do
 
   describe "#call" do
     context "when the game has no unfinished rounds" do
-      before { allow(start_round).to receive(:all_existing_rounds_finished?).and_return(true) }
+      before { allow(start_round).to receive(:rounds_in_progress?).and_return(false) }
 
       it "creates a round" do
         expect { start_round.call }.to change { game.rounds.count }.by(1)

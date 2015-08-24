@@ -2,8 +2,8 @@
 require "rails_helper"
 
 RSpec.describe Card, type: :model do
-  let(:round) { Game.create!.rounds.create!(odd_players_score: 0, even_players_score: 0) }
-  let(:trick) { round.tricks.create!(order_in_round: 1) }
+  let(:round) { Game.create!.rounds.create!(odd_players_score: 0, even_players_score: 0, order_in_game: 0) }
+  let(:trick) { round.tricks.create!(order_in_round: 0) }
 
   subject { Card.create!(rank: Card.ranks.keys.first, suit: Card.suits.keys.first, round: round) }
 
@@ -13,6 +13,8 @@ RSpec.describe Card, type: :model do
   it { should_not validate_presence_of :player }
   it { should_not validate_presence_of :trick }
   it { should_not validate_presence_of :order_in_trick }
+
+  it { should validate_numericality_of(:order_in_trick).is_greater_than_or_equal_to(0).allow_nil}
 
   it "should require unique value for rank & suit scoped to round_id" do
     round.cards.create!(rank: 10,
