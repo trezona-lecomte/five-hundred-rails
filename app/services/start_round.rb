@@ -1,17 +1,19 @@
+# TODO apply AM validations pattern to all other services.
 class StartRound
-  attr_reader :round, :errors
+  include ActiveModel::Validations
+  attr_reader :round
+
+  validate :round_can_be_started
 
   def initialize(game)
     @game = game
     @round = nil
-    @errors = []
   end
 
   def call
     @game.with_lock do
-      validate_round_can_be_started
 
-      if errors.none?
+      if valid?
         create_round
         create_tricks!
         deal_cards
@@ -21,35 +23,27 @@ class StartRound
 
   private
 
-  def validate_round_can_be_started
-    unless all_existing_rounds_finished?
-      add_error("rounds can't be started on games with unfinished rounds")
-    end
+  def round_can_be_started
+    errors.add(:base, "rounds can't be started on games with unfinished rounds") if rounds_in_progress?
   end
 
-  def all_existing_rounds_finished?
-    @game.rounds.all?(&:finished?)
+  def rounds_in_progress?
+    @game.rounds.any? { |round| !round.finished? }
   end
 
+  # TODO: check if scores are specified anywhere else for round.
   def create_round
-    @round = @game.rounds.create!(order_in_game: @game.rounds.count + 1,
-                                  odd_players_score: 0,
-                                  even_players_score: 0)
+    @round = @game.rounds.create!(order_in_game: @game.rounds.count)
   end
 
   def create_tricks!
     Round::NUMBER_OF_TRICKS.times do |n|
-      @round.tricks.create!(order_in_round: n + 1)
+      @round.tricks.create!(order_in_round: n)
     end
   end
 
   def deal_cards
     deck = BuildDeck.new.call
-    dealer = DealCards.new(@round, deck)
-    dealer.call
-  end
-
-  def add_error(message)
-    @errors << message
+    DealCards.new(@round, deck).call
   end
 end
