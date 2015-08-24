@@ -10,7 +10,7 @@ class DealCards
       deal_cards if cards_can_be_dealt
     end
 
-    @round.cards.present?
+    true
   end
 
   private
