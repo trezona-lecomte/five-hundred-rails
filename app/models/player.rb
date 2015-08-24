@@ -5,7 +5,6 @@ class Player < ActiveRecord::Base
   has_many :cards, dependent: :destroy
   has_many :bids,  dependent: :destroy
 
-  # TODO mayble bundle validations on user
-  validates :game, :user, presence: true
-  validates :user, uniqueness: { scope: :game }
+  validates :game, presence: true
+  validates :user, presence: true, uniqueness: { scope: :game }
 end

@@ -2,12 +2,13 @@ class Round < ActiveRecord::Base
   NUMBER_OF_TRICKS = 10
 
   belongs_to :game, touch: true
-  has_many   :cards,  dependent: :destroy
-  has_many   :tricks, dependent: :destroy
-  has_many   :bids,   dependent: :destroy
+  has_many :cards,  dependent: :destroy
+  has_many :tricks, dependent: :destroy
+  has_many :bids,   dependent: :destroy
 
-  validates :game, :odd_players_score, :even_players_score, presence: true
-  validates :odd_players_score, :even_players_score, numericality: { only_integer: true}
+  validates :game, presence: true
+  validates :odd_players_score, :even_players_score, presence: true,
+                                                     numericality: { only_integer: true}
 
   scope :in_playing_order, -> { order(order_in_game: :asc) }
 

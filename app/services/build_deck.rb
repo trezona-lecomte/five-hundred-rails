@@ -36,6 +36,6 @@ class BuildDeck
   end
 
   def joker
-    Card.new(rank: "joker", suit: "no_suit")
+    Card.new(rank: "joker", suit: Suits::NO_SUIT)
   end
 end

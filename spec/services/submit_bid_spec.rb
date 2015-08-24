@@ -4,7 +4,7 @@ RSpec.describe SubmitBid, type: :service do
   fixtures :all
   let(:player)           { players(:bidder1) }
   let(:number_of_tricks) { 6 }
-  let(:suit)             { "spades" }
+  let(:suit)             { Suits::SPADES }
   # TODO could make submit_bid: service, and let args -> blah.
   let(:submit_bid)       { SubmitBid.new(round, player, number_of_tricks, suit) }
 

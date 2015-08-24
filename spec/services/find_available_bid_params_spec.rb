@@ -64,9 +64,10 @@ RSpec.describe FindAvailableBidParams, type: :service do
     end
 
     def all_possible_bid_params
+      [Bid.params_for_pass_bid] +
       (Bid::MIN_TRICKS..Bid::MAX_TRICKS).to_a.product(Bid.suits.keys).map do |tricks, suit|
         { number_of_tricks: tricks, suit: suit }
-      end << Bid.params_for_pass_bid
+      end
     end
 
     def excluded_bid_params_for(highest_bid)

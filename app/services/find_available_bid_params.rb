@@ -29,7 +29,7 @@ class FindAvailableBidParams
 
   def generate_available_bid_params
     if any_bids?
-      @available_bid_params = bid_params_above_highest_bid << Bid.params_for_pass_bid
+      @available_bid_params = [Bid.params_for_pass_bid] + bid_params_above_highest_bid
     else
       @available_bid_params = all_bid_params
     end
@@ -40,7 +40,7 @@ class FindAvailableBidParams
   end
 
   def all_bid_params
-    bid_params_for_non_pass_bids << Bid.params_for_pass_bid
+    [Bid.params_for_pass_bid] + bid_params_for_non_pass_bids
   end
 
   def bid_params_for_non_pass_bids
