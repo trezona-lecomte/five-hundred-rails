@@ -2,16 +2,50 @@ require "rails_helper"
 
 RSpec.describe SubmitBid, type: :service do
   fixtures :all
+
+  let(:suit)             { Suits::NO_SUIT }
+  let(:round)            { rounds(:bidding_round) }
   let(:player)           { players(:bidder1) }
-  let(:number_of_tricks) { 6 }
-  let(:suit)             { Suits::SPADES }
-  # TODO could make submit_bid: service, and let args -> blah.
-  let(:submit_bid)       { SubmitBid.new(round, player, number_of_tricks, suit) }
+  let(:number_of_tricks) { Bid::PASS_TRICKS }
+  let(:service_args)     { [round, player, number_of_tricks, suit] }
+  let(:service)          { SubmitBid.new(*service_args) }
+
+  BIDDING_IS_FINISHED_ERROR = "bidding for this round has finished"
+  NOT_PLAYERS_TURN_ERROR    = "it's not your turn to bid"
+  PLAYER_HAS_PASSED_ERROR   = "you have already passed during this round"
+
+  describe "#bidding_is_open" do
+    subject { service }
+
+    before { service.valid? }
+
+    context "when the round is finished" do
+      let(:round) { rounds(:finished_round) }
+
+      it { is_expected.to be_invalid }
+
+      it "has the correct 'round has finished' error" do
+        expect(service.errors[:base]).to include(BIDDING_IS_FINISHED_ERROR)
+      end
+    end
+
+    context "when the round is in the playing stage" do
+      let(:round) { rounds(:playing_round) }
+
+      it { is_expected.to be_invalid }
+
+      it "has the correct 'round has finished' error" do
+        expect(service.errors[:base]).to include(BIDDING_IS_FINISHED_ERROR)
+      end
+    end
+
+    context "when the round is in the bidding stage" do
+      it { is_expected.to be_valid }
+    end
+  end
 
   describe "#call" do
     context "when no bids have been made" do
-      let(:round) { rounds(:bidding_round) }
-
       context "when the first player bids" do
         it "submits the bid" do
           expect { submit_bid.call }.to change(Bid, :count).by(1)
@@ -30,7 +64,7 @@ RSpec.describe SubmitBid, type: :service do
           it "sets a 'not your turn' error" do
             submit_bid.call
 
-            expect(submit_bid.errors).to include("it's not your turn to bid")
+            expect(submit_bid.errors[:base]).to include("it's not your turn to bid")
           end
         end
 
@@ -44,10 +78,10 @@ RSpec.describe SubmitBid, type: :service do
           it "sets a 'not your turn' error" do
             submit_bid.call
 
-            expect(submit_bid.errors).to include("it's not your turn to bid")
+            expect(submit_bid.errors[:base]).to include("it's not your turn to bid")
           end
         end
-        context "when the fourht player bids" do
+        context "when the fourth player bids" do
           let(:player) { players(:bidder4) }
 
           it "doesn't submit the bid" do
@@ -57,7 +91,7 @@ RSpec.describe SubmitBid, type: :service do
           it "sets a 'not your turn' error" do
             submit_bid.call
 
-            expect(submit_bid.errors).to include("it's not your turn to bid")
+            expect(submit_bid.errors[:base]).to include("it's not your turn to bid")
           end
         end
       end
