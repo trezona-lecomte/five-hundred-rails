@@ -48,7 +48,7 @@ RSpec.describe SubmitBid, type: :service do
     context "when no bids have been made" do
       context "when the first player bids" do
         it "submits the bid" do
-          expect { submit_bid.call }.to change(Bid, :count).by(1)
+          expect { service.call }.to change(Bid, :count).by(1)
           expect(round.bids).to be_one
         end
       end
@@ -58,13 +58,13 @@ RSpec.describe SubmitBid, type: :service do
           let(:player) { players(:bidder2) }
 
           it "doesn't submit the bid" do
-            expect { submit_bid.call }.to_not change(Bid, :count)
+            expect { service.call }.to_not change(Bid, :count)
           end
 
           it "sets a 'not your turn' error" do
-            submit_bid.call
+            service.call
 
-            expect(submit_bid.errors[:base]).to include("it's not your turn to bid")
+            expect(service.errors[:base]).to include("it's not your turn to bid")
           end
         end
 
@@ -72,38 +72,28 @@ RSpec.describe SubmitBid, type: :service do
           let(:player) { players(:bidder3) }
 
           it "doesn't submit the bid" do
-            expect{ submit_bid.call }.to_not change(Bid, :count)
+            expect{ service.call }.to_not change(Bid, :count)
           end
 
           it "sets a 'not your turn' error" do
-            submit_bid.call
+            service.call
 
-            expect(submit_bid.errors[:base]).to include("it's not your turn to bid")
+            expect(service.errors[:base]).to include("it's not your turn to bid")
           end
         end
         context "when the fourth player bids" do
           let(:player) { players(:bidder4) }
 
           it "doesn't submit the bid" do
-            expect{ submit_bid.call }.to_not change(Bid, :count)
+            expect{ service.call }.to_not change(Bid, :count)
           end
 
           it "sets a 'not your turn' error" do
-            submit_bid.call
+            service.call
 
-            expect(submit_bid.errors[:base]).to include("it's not your turn to bid")
+            expect(service.errors[:base]).to include("it's not your turn to bid")
           end
         end
-      end
-    end
-
-    context "when some bids have been made" do
-      context "when the correct player bids" do
-
-      end
-
-      context "when the incorrect player bids" do
-
       end
     end
   end

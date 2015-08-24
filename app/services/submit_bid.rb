@@ -1,18 +1,15 @@
 class SubmitBid
-  include ActiveModel::BidSubmissionValidator
+  include ActiveModel::Validations
 
-  attr_reader :bid, :round
+  attr_reader :round, :player, :number_of_tricks, :suit
 
   validates_with BidSubmissionValidator
-  #validate :this_players_turn
-  #validate :bidding_is_open
 
   def initialize(round, player, number_of_tricks, suit)
     @round = round
     @player = player
     @number_of_tricks = number_of_tricks
     @suit = suit
-    @bid = nil
   end
 
   def call
