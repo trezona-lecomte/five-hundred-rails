@@ -1,3 +1,4 @@
+# TODO: simplify this service to only check if a given player is next to bid
 class FindNextBidder
   attr_reader :next_bidder, :messages
 
@@ -57,20 +58,14 @@ class FindNextBidder
     @count_of_players_checked == (@players.length - 1)
   end
 
+  # TODO: try using mod to simplify this stuff..
   def next_bidder_in_order
     previous_player = @round.bids.in_playing_order.last.player
 
     incremented_order_in_game = previous_player.order_in_game + @count_of_players_checked
+    incremented_order_in_game -= @players.length if incremented_order_in_game > @players.length
 
-    @next_bidder = next_bidder_for_incremented_order_in_game(incremented_order_in_game)
-  end
-
-  def next_bidder_for_incremented_order_in_game(incremented_order_in_game)
-    if incremented_order_in_game > @players.length
-      @players.find_by(order_in_game: 1)
-    else
-      @players.find_by(order_in_game: incremented_order_in_game)
-    end
+    @next_bidder = @players.detect { |player| player.order_in_game ==incremented_order_in_game }
   end
 
   def skip_bidder
