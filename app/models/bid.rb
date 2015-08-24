@@ -9,9 +9,8 @@ class Bid < ActiveRecord::Base
   belongs_to :round, touch: true
   belongs_to :player
 
-  validates :round, :player, :suit, presence: true
-  validates :number_of_tricks,      presence: true, inclusion: { in: ALLOWED_TRICKS }
-  validates :order_in_round,        presence: true, numericality: { only_integer: true }
+  validates :round, :player,   presence: true
+  validates :number_of_tricks, presence: true, inclusion: { in: ALLOWED_TRICKS }
 
   scope :passes,           -> { where(number_of_tricks: PASS_TRICKS) }
   scope :non_passes,       -> { where.not(number_of_tricks: PASS_TRICKS)}
@@ -20,5 +19,9 @@ class Bid < ActiveRecord::Base
 
   def self.params_for_pass_bid
     { number_of_tricks: PASS_TRICKS, suit: Suits::NO_SUIT }
+  end
+
+  def pass?
+    number_of_tricks == PASS_TRICKS
   end
 end
