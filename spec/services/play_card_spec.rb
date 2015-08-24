@@ -151,7 +151,7 @@ RSpec.describe PlayCard, type: :service do
 
           before { play_card.call }
 
-          it "plays the card into the correct trick into the correct trick" do
+          it "plays the card into the correct trick" do
             expect(card.trick).to eq(round.current_trick)
           end
 
