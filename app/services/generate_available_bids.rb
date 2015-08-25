@@ -1,7 +1,3 @@
-# TODO: generate potential bids?
-# NOTE: passing around params requires outside world to have too much knowledge of the internals -
-# passing around bid AR objects would be cleaner.
-# TODO: can use pass scope for construction of pass bids after ^^ is done.
 class GenerateAvailableBids
   include ActiveModel::Validations
 

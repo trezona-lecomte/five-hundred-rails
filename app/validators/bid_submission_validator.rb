@@ -19,7 +19,8 @@ class BidSubmissionValidator < ActiveModel::Validator
     if round_is_awaiting_first_bid?(round)
       player_is_first_to_bid_for_this_round?(round, player)
     else
-      players = round.game.players.slice(0, round.game.players.length)
+      # TODO use dup instead of slice
+      players = round.game.players.to_a.dup
       players.rotate!(round.order_in_game % players.length)
 
       round.bids.each do |bid|

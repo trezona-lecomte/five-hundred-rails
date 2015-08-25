@@ -1,9 +1,9 @@
 class Bid < ActiveRecord::Base
   enum suit: Suits::ALL_SUITS
 
-  PASS_TRICKS = 0
-  MIN_TRICKS  = 6
-  MAX_TRICKS  = 10
+  PASS_TRICKS    = 0
+  MIN_TRICKS     = 6
+  MAX_TRICKS     = 10
   ALLOWED_TRICKS = [PASS_TRICKS] + (MIN_TRICKS..MAX_TRICKS).to_a
 
   belongs_to :round, touch: true

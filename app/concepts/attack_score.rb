@@ -1,10 +1,12 @@
 class AttackScore
   OFFENSIVE_TRICK_MULTIPLIER = 100
-  BASE_SCORES = { Card.suits[:spades]   =>  40,
-                  Card.suits[:clubs]    =>  60,
-                  Card.suits[:diamonds] =>  80,
-                  Card.suits[:hearts]   => 100,
-                  Card.suits[:no_suit]  => 120  }
+  BASE_SCORES = {
+    Card.suits[:spades]   =>  40,
+    Card.suits[:clubs]    =>  60,
+    Card.suits[:diamonds] =>  80,
+    Card.suits[:hearts]   => 100,
+    Card.suits[:no_suit]  => 120
+  }
 
   def initialize(attempted_number_of_tricks:, attempted_suit:, number_of_tricks_won:)
     @attempted_number_of_tricks = attempted_number_of_tricks
