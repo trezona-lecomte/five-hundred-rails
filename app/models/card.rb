@@ -24,10 +24,11 @@ class Card < ActiveRecord::Base
   belongs_to :round, touch: true
   belongs_to :trick, counter_cache: true, touch: true
 
-  validates :rank, :suit, presence: true
-  validates :round,       presence: true, uniqueness: { scope: [:rank, :suit] }
+  validates :rank, :suit,    presence: true
+  validates :round,          presence: true, uniqueness: { scope: [:rank, :suit] }
   validates :order_in_trick, uniqueness: { scope: [:trick], allow_nil: true },
-                             numericality: { greater_than_or_equal_to: 0, allow_nil: true }
+                             numericality: { greater_than_or_equal_to: 0,
+                                             allow_nil: true }
 
   scope :played,           -> { where.not(trick: nil) }
   scope :unplayed,         -> { where(trick: nil) }
