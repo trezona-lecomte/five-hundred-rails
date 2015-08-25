@@ -1,9 +1,9 @@
 class PlayCard
   include ActiveModel::Validations
 
-  attr_reader :round, :card, :trick
+  attr_reader :round, :trick, :player, :card
 
-  validate :card_can_be_played
+  validates_with PlayCardValidator
 
   def initialize(trick:, player:, card:)
     @trick = trick
@@ -19,33 +19,6 @@ class PlayCard
   end
 
   private
-
-  def card_can_be_played
-    if !card_in_hand?
-      errors.add(:base, "you don't have this card in your hand")
-    elsif !round.in_playing_stage?
-      errors.add(:base, "cards can't be played on this round")
-    elsif !trick_active?
-      errors.add(:base, "this trick is not active")
-    elsif !players_turn?
-      errors.add(:base, "it's not your turn to play")
-    end
-  end
-
-  def card_in_hand?
-    (card.player == @player) && card.trick.blank?
-  end
-
-  def trick_active?
-    @trick == round.current_trick
-  end
-
-  def players_turn?
-    find_next_player = FindNextPlayer.new(round)
-    find_next_player.call
-
-    @player == find_next_player.next_player
-  end
 
   def play_card
     @trick.cards << @card
