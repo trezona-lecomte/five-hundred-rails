@@ -35,4 +35,8 @@ class Card < ActiveRecord::Base
   scope :highest,          -> { in_ranked_order.first }
   scope :in_playing_order, -> { played.order(order_in_trick: :asc) }
   scope :last_played,      -> { in_playing_order.last }
+
+  def played?
+    trick.present?
+  end
 end
