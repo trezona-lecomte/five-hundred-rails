@@ -5,7 +5,7 @@ class PlayCard
 
   validate :card_can_be_played
 
-  def initialize(trick: trick, player: player, card: card)
+  def initialize(trick:, player:, card:)
     @trick = trick
     @round = trick.round
     @player = player

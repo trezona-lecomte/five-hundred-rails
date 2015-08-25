@@ -35,9 +35,9 @@ class RoundSerializer < ActiveModel::Serializer
   end
 
   def available_bids
-    finder = FindAvailableBidParams.new(object)
+    finder = GenerateAvailableBids.new(object)
     finder.call
-    finder.available_bid_params
+    finder.available_bids
   end
 
   def cards
