@@ -1,34 +1,19 @@
-# TODO: add negative tests for bids having to be higher
 require "rails_helper"
 
-RSpec.describe BidSubmissionValidator, type: :validator do
+RSpec.describe BidderTurnValidator, type: :validator do
   fixtures :all
 
   let(:suit)             { Suits::NO_SUIT }
   let(:round)            { rounds(:bidding_round) }
   let(:player)           { players(:bidder1) }
   let(:number_of_tricks) { Bid::PASS_TRICKS }
+  let(:service_args)     { { round: round, player: player, number_of_tricks: number_of_tricks, suit: suit } }
 
-  subject(:service) { SubmitBid.new(suit: suit,
-                                    round: round,
-                                    player: player,
-                                    number_of_tricks: number_of_tricks) }
+  subject(:service) { SubmitBid.new(**service_args) }
 
   BIDDING_IS_FINISHED_ERROR  = "bidding for this round has finished"
   NOT_YOUR_TURN_TO_BID_ERROR = "it's not your turn to bid"
   PLAYER_HAS_PASSED_ERROR    = "you have already passed during this round"
-
-  context "when the round is not in the bidding stage" do
-    let(:round) { rounds(:playing_round) }
-
-    before { service.valid? }
-
-    it { is_expected.to be_invalid }
-
-    it "has the correct 'round has finished' error" do
-      expect(service.errors[:base]).to include(BIDDING_IS_FINISHED_ERROR)
-    end
-  end
 
   context "when it is the first bid of the round" do
     context "when the correct player tries to bid" do
