@@ -1,4 +1,6 @@
 class DealCards
+  attr_reader :round, :game, :deck
+
   def initialize(round, deck)
     @round = round
     @game = round.game
@@ -18,9 +20,9 @@ class DealCards
   end
 
   def deal_hands!
-    @game.players.each do |player|
-      @deck.pop(10).each do |card|
-        card.round = @round
+    game.players.each do |player|
+      deck.pop(10).each do |card|
+        card.round = round
 
         player.cards << card
 
@@ -30,8 +32,8 @@ class DealCards
   end
 
   def deal_kitty!
-    @deck.each do |card|
-      card.round = @round
+    deck.each do |card|
+      card.round = round
 
       card.save!
     end

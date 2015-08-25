@@ -16,8 +16,8 @@ class PlayCard
   end
 
   def call
-    @round.with_lock do
-      valid? && play_card
+    round.with_lock do
+      valid? && play_card!
     end
   end
 
@@ -45,14 +45,11 @@ class PlayCard
     end
   end
 
-  def play_card
-    @trick.cards << @card
-    @trick.reload
-    @card.order_in_trick = @trick.cards_count
+  def play_card!
+    trick.cards << card
+    trick.reload
+    card.order_in_trick = trick.cards_count
 
-    # TODO follow pattern from other service for bubbling errors up
-    unless @card.save
-      errors.add(:base, "you can't play this card right now: #{@card.errors.full_messages}, #{@trick.errors.full_messages}")
-    end
+    card.save!
   end
 end

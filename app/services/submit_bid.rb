@@ -16,7 +16,7 @@ class SubmitBid
   end
 
   def call
-    @round.with_lock do
+    round.with_lock do
       valid? && submit_bid!
     end
   end
@@ -29,9 +29,9 @@ class SubmitBid
 
   def submit_bid!
     begin
-      @round.bids.create!(suit: @suit,
-                          player: @player,
-                          number_of_tricks: @number_of_tricks)
+      round.bids.create!(suit: suit,
+                         player: player,
+                         number_of_tricks: number_of_tricks)
 
     rescue ActiveRecord::RecordInvalid => e
       e.record.errors.messages.each do |msg|

@@ -1,7 +1,7 @@
 class JoinGame
   include ActiveModel::Validations
 
-  attr_reader :player
+  attr_reader :game, :user, :player
 
   validate :game_can_be_joined
 
@@ -12,7 +12,7 @@ class JoinGame
   end
 
   def call
-    @game.with_lock do
+    game.with_lock do
       valid? && join_game!
     end
   end
@@ -24,14 +24,14 @@ class JoinGame
   end
 
   def game_full?
-    @game.players.count == Game::MAX_PLAYERS
+    game.players.count == Game::MAX_PLAYERS
   end
 
   def join_game!
     begin
-      @player = @game.players.create!(user: @user,
-                                      handle: @user.username,
-                                      order_in_game: @game.players.count)
+      @player = game.players.create!(user: user,
+                                     handle: user.username,
+                                     order_in_game: game.players.count)
 
     rescue ActiveRecord::RecordInvalid => e
       e.record.errors.messages.each do |msg|
