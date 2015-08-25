@@ -1,18 +1,6 @@
 # TODO: add negative tests for bids having to be higher
 require "rails_helper"
 
-class Validatable
-  include ActiveModel::Model
-  include ActiveModel::Validations
-  validates_with BidSubmissionValidator
-
-  attr_accessor :round, :player, :number_of_tricks, :suit
-end
-
-BIDDING_IS_FINISHED_ERROR = "bidding for this round has finished"
-NOT_PLAYERS_TURN_ERROR    = "it's not your turn to bid"
-PLAYER_HAS_PASSED_ERROR   = "you have already passed during this round"
-
 RSpec.describe BidSubmissionValidator, type: :validator do
   fixtures :all
 
@@ -21,20 +9,24 @@ RSpec.describe BidSubmissionValidator, type: :validator do
   let(:player)           { players(:bidder1) }
   let(:number_of_tricks) { Bid::PASS_TRICKS }
 
-  subject(:validatable) { Validatable.new(suit: suit,
-                                          round: round,
-                                          player: player,
-                                          number_of_tricks: number_of_tricks) }
+  subject(:service) { SubmitBid.new(suit: suit,
+                                    round: round,
+                                    player: player,
+                                    number_of_tricks: number_of_tricks) }
+
+  BIDDING_IS_FINISHED_ERROR  = "bidding for this round has finished"
+  NOT_YOUR_TURN_TO_BID_ERROR = "it's not your turn to bid"
+  PLAYER_HAS_PASSED_ERROR    = "you have already passed during this round"
 
   context "when the round is not in the bidding stage" do
     let(:round) { rounds(:playing_round) }
 
-    before { validatable.valid? }
+    before { service.valid? }
 
     it { is_expected.to be_invalid }
 
     it "has the correct 'round has finished' error" do
-      expect(validatable.errors[:base]).to include(BIDDING_IS_FINISHED_ERROR)
+      expect(service.errors[:base]).to include(BIDDING_IS_FINISHED_ERROR)
     end
   end
 
@@ -47,12 +39,12 @@ RSpec.describe BidSubmissionValidator, type: :validator do
       3.times do |n|
         let(:player) { players("bidder#{n + 1}") }
 
-        before { validatable.valid? }
+        before { service.valid? }
 
         it { is_expected.to be_invalid }
 
         it "has the correct 'not your turn' error" do
-          expect(validatable.errors[:base]).to include(NOT_PLAYERS_TURN_ERROR)
+          expect(service.errors[:base]).to include(NOT_YOUR_TURN_TO_BID_ERROR)
         end
       end
     end
@@ -72,12 +64,12 @@ RSpec.describe BidSubmissionValidator, type: :validator do
         context "when an incorrect player tries to bid" do
           let(:player) { n.zero? ? players(:bidder1) : players("bidder#{n + 2}") }
 
-          before { validatable.valid? }
+          before { service.valid? }
 
           it { is_expected.to be_invalid }
 
           it "has the correct 'not your turn' error" do
-            expect(validatable.errors[:base]).to include(NOT_PLAYERS_TURN_ERROR)
+            expect(service.errors[:base]).to include(NOT_YOUR_TURN_TO_BID_ERROR)
           end
         end
       end
@@ -96,12 +88,12 @@ RSpec.describe BidSubmissionValidator, type: :validator do
         context "when an incorrect player tries to bid" do
           let(:player) { n.zero? ? players(:bidder1) : players("bidder#{n + 2}") }
 
-          before { validatable.valid? }
+          before { service.valid? }
 
           it { is_expected.to be_invalid }
 
           it "has the correct 'not your turn' error" do
-            expect(validatable.errors[:base]).to include(NOT_PLAYERS_TURN_ERROR)
+            expect(service.errors[:base]).to include(NOT_YOUR_TURN_TO_BID_ERROR)
           end
         end
       end
@@ -128,12 +120,12 @@ RSpec.describe BidSubmissionValidator, type: :validator do
           context "when an incorrect player tries to bid" do
             let(:player) { n == 2 ? players(:bidder4) : players("bidder#{n + 1}") }
 
-            before { validatable.valid? }
+            before { service.valid? }
 
             it { is_expected.to be_invalid }
 
             it "has the correct 'not your turn' error" do
-              expect(validatable.errors[:base]).to include(NOT_PLAYERS_TURN_ERROR)
+              expect(service.errors[:base]).to include(NOT_YOUR_TURN_TO_BID_ERROR)
             end
           end
         end
@@ -163,12 +155,12 @@ RSpec.describe BidSubmissionValidator, type: :validator do
             context "when an incorrect player tries to bid" do
               let(:player) { players("bidder#{n + 1}") }
 
-              before { validatable.valid? }
+              before { service.valid? }
 
               it { is_expected.to be_invalid }
 
               it "has the correct 'not your turn' error" do
-                expect(validatable.errors[:base]).to include(NOT_PLAYERS_TURN_ERROR)
+                expect(service.errors[:base]).to include(NOT_YOUR_TURN_TO_BID_ERROR)
               end
             end
           end
@@ -181,12 +173,12 @@ RSpec.describe BidSubmissionValidator, type: :validator do
             4.times do |n|
               let(:player) { players("bidder#{n + 1}") }
 
-              before { validatable.valid? }
+              before { service.valid? }
 
               it { is_expected.to be_invalid }
 
               it "has the correct 'bidding has finished' error" do
-                expect(validatable.errors[:base]).to include(BIDDING_IS_FINISHED_ERROR)
+                expect(service.errors[:base]).to include(BIDDING_IS_FINISHED_ERROR)
               end
             end
           end
@@ -220,12 +212,12 @@ RSpec.describe BidSubmissionValidator, type: :validator do
               3.times do |n|
                 let(:player) { players("bidder#{n + 1}") }
 
-                before { validatable.valid? }
+                before { service.valid? }
 
                 it { is_expected.to be_invalid }
 
                 it "has the correct 'not your turn' error" do
-                  expect(validatable.errors[:base]).to include(NOT_PLAYERS_TURN_ERROR)
+                  expect(service.errors[:base]).to include(NOT_YOUR_TURN_TO_BID_ERROR)
                 end
               end
             end
@@ -244,12 +236,12 @@ RSpec.describe BidSubmissionValidator, type: :validator do
               3.times do |n|
                 let(:player) { players("bidder#{n + 1}") }
 
-                before { validatable.valid? }
+                before { service.valid? }
 
                 it { is_expected.to be_invalid }
 
                 it "has the correct 'not your turn' error" do
-                  expect(validatable.errors[:base]).to include(NOT_PLAYERS_TURN_ERROR)
+                  expect(service.errors[:base]).to include(NOT_YOUR_TURN_TO_BID_ERROR)
                 end
               end
             end
