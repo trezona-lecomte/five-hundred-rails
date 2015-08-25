@@ -5,7 +5,7 @@ class SubmitBid
 
   validates_with BidSubmissionValidator
 
-  def initialize(round, player, number_of_tricks, suit)
+  def initialize(round:, player:, number_of_tricks:, suit:)
     @round = round
     @player = player
     @number_of_tricks = number_of_tricks
@@ -14,18 +14,17 @@ class SubmitBid
 
   def call
     @round.with_lock do
-      valid? && submit_bid
+      valid? && submit_bid!
     end
   end
 
   private
 
-  def submit_bid
+  def submit_bid!
     begin
       @round.bids.create!(suit: @suit,
                           player: @player,
-                          number_of_tricks: @number_of_tricks,
-                          order_in_round: @round.bids.count)
+                          number_of_tricks: @number_of_tricks)
 
     rescue ActiveRecord::RecordInvalid => e
       e.record.errors.messages.each do |msg|

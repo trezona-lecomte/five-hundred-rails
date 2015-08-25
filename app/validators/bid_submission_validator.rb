@@ -1,15 +1,10 @@
 class BidSubmissionValidator < ActiveModel::Validator
   def validate(submit_bid)
-    round = submit_bid.round
-    player = submit_bid.player
-    number_of_tricks = submit_bid.number_of_tricks
-    suit = submit_bid.suit
-
-    if !bidding_is_open?(round)
+    if !bidding_is_open?(submit_bid.round)
       submit_bid.errors.add(:base, "bidding for this round has finished")
-    elsif !this_players_turn?(round, player)
+    elsif !this_players_turn?(submit_bid.round, submit_bid.player)
       submit_bid.errors.add(:base, "it's not your turn to bid")
-    elsif !bid_is_higher_than_previous_or_pass?(round, number_of_tricks, suit)
+    elsif !bid_is_higher_than_previous_or_pass?(submit_bid.round, submit_bid.number_of_tricks, submit_bid.suit)
       submit_bid.errors.add(:base, "your bid must be higher than the previous bid")
     end
   end
@@ -53,8 +48,9 @@ class BidSubmissionValidator < ActiveModel::Validator
   def bid_is_higher_than_previous_or_pass?(round, number_of_tricks, suit)
     highest_bid = round.bids.last
 
+    !highest_bid ||
     number_of_tricks == Bid::PASS_TRICKS ||
     number_of_tricks > highest_bid.number_of_tricks ||
-    (number_of_tricks == highest_bid.number_of_tricks && suit > highest_bid.suit)
+    (number_of_tricks == highest_bid.number_of_tricks && suit > Bid.suits[highest_bid.suit])
   end
 end

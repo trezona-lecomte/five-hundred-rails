@@ -1,22 +1,22 @@
 # TODO apply AM validations pattern to all other services.
 class StartRound
   include ActiveModel::Validations
+
   attr_reader :round
 
   validate :round_can_be_started
 
-  def initialize(game)
+  def initialize(game:)
     @game = game
     @round = nil
   end
 
   def call
     @game.with_lock do
-
       if valid?
-        create_round
+        create_round!
         create_tricks!
-        deal_cards
+        deal_cards!
       end
     end
   end
@@ -24,15 +24,14 @@ class StartRound
   private
 
   def round_can_be_started
-    errors.add(:base, "rounds can't be started on games with unfinished rounds") if rounds_in_progress?
+    errors.add(:base, "there are active rounds on this game") if active_rounds?
   end
 
-  def rounds_in_progress?
+  def active_rounds?
     @game.rounds.any? { |round| !round.finished? }
   end
 
-  # TODO: check if scores are specified anywhere else for round.
-  def create_round
+  def create_round!
     @round = @game.rounds.create!(order_in_game: @game.rounds.count)
   end
 
@@ -42,7 +41,7 @@ class StartRound
     end
   end
 
-  def deal_cards
+  def deal_cards!
     deck = BuildDeck.new.call
     DealCards.new(@round, deck).call
   end

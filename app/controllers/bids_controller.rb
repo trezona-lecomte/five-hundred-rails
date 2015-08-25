@@ -3,7 +3,10 @@ class BidsController < ApplicationController
   before_action :set_player, only: [:create]
 
   def create
-    submit_bid = SubmitBid.new(@round, @player, bid_params[:number_of_tricks], bid_params[:suit])
+    submit_bid = SubmitBid.new(round: @round,
+                               player: @player,
+                               number_of_tricks: bid_params[:number_of_tricks],
+                               suit: bid_params[:suit])
 
     submit_bid.call
 

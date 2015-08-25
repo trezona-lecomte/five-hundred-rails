@@ -27,8 +27,7 @@ RSpec.describe FindAvailableBidParams, type: :service do
         let(:highest_bid)   { Bid.create!(round: round,
                                           suit: Suits::ALL_SUITS.sample,
                                           number_of_tricks: (Bid::MIN_TRICKS..Bid::MAX_TRICKS).to_a.sample,
-                                          player: players(:bidder1),
-                                          order_in_round: round.bids.count + 1) }
+                                          player: players(:bidder1)) }
         let(:excluded_bid_params) { excluded_bid_params_for(highest_bid) }
 
         before do

@@ -15,11 +15,11 @@ RSpec.describe Player, type: :model do
 
   context "when destroyed" do
     it "destroys all dependent cards" do
-      expect { player.destroy }.to change(Card, :count).by(-20)
+      expect { player.destroy }.to change(Card, :count).by(-10)
     end
 
     it "destroys all dependent bids" do
-      expect { player.destroy }.to change(Bid, :count).by(-3)
+      expect { player.destroy }.to change(Bid, :count).by(-2)
     end
   end
 end

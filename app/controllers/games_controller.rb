@@ -14,7 +14,7 @@ class GamesController < ApplicationController
   end
 
   def create
-    @game = Game.new
+    @game = Game.create!
 
     join_game = JoinGame.new(game: @game, user: current_user)
     join_game.call
@@ -22,11 +22,7 @@ class GamesController < ApplicationController
     if join_game.errors.present?
       render json: { errors: join_game.errors }, status: :unprocessable_entity
     else
-      if @game.save
-        render json: @game, status: :created, location: @game
-      else
-        render json: @game.errors, status: :unprocessable_entity
-      end
+      render json: @game, status: :created, location: @game
     end
   end
 

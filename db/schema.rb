@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150823202939) do
+ActiveRecord::Schema.define(version: 20150819020814) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,7 +23,6 @@ ActiveRecord::Schema.define(version: 20150823202939) do
     t.integer  "suit"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
-    t.integer  "order_in_round"
   end
 
   add_index "bids", ["player_id"], name: "index_bids_on_player_id", using: :btree
@@ -57,7 +56,7 @@ ActiveRecord::Schema.define(version: 20150823202939) do
     t.datetime "updated_at",    null: false
     t.integer  "game_id",       null: false
     t.integer  "user_id"
-    t.integer  "order_in_game"
+    t.integer  "order_in_game", null: false
   end
 
   add_index "players", ["game_id", "user_id"], name: "index_players_on_game_id_and_user_id", unique: true, using: :btree
@@ -67,7 +66,7 @@ ActiveRecord::Schema.define(version: 20150823202939) do
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
     t.integer  "game_id",                        null: false
-    t.integer  "order_in_game"
+    t.integer  "order_in_game",                  null: false
     t.integer  "odd_players_score",  default: 0, null: false
     t.integer  "even_players_score", default: 0, null: false
   end

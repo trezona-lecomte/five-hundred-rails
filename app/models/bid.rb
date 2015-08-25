@@ -15,7 +15,6 @@ class Bid < ActiveRecord::Base
   scope :passes,           -> { where(number_of_tricks: PASS_TRICKS) }
   scope :non_passes,       -> { where.not(number_of_tricks: PASS_TRICKS)}
   scope :in_ranked_order,  -> { order(number_of_tricks: :desc, suit: :desc) }
-  scope :in_playing_order, -> { order(order_in_round: :asc) }
 
   def self.params_for_pass_bid
     { number_of_tricks: PASS_TRICKS, suit: Suits::NO_SUIT }

@@ -54,3 +54,31 @@
     game: bidding_game
     user_id: 4
     order_in_game: 3
+
+- finished_player1:
+    id: 9
+    handle: "finished_player 1"
+    game: finished_game
+    user_id: 1
+    order_in_game: 0
+
+- finished_player2:
+    id: 10
+    handle: "finished_player 2"
+    game: finished_game
+    user_id: 2
+    order_in_game: 1
+
+- finished_player3:
+    id: 11
+    handle: "finished_player 3"
+    game: finished_game
+    user_id: 3
+    order_in_game: 2
+
+- finished_player4:
+    id: 12
+    handle: "finished_player 4"
+    game: finished_game
+    user_id: 4
+    order_in_game: 3

@@ -7,7 +7,7 @@ RSpec.describe PlayCard, type: :service do
   let(:trick)     { round.current_trick }
   let(:player)    { players(:player2) }
   let(:card)      { cards(:jack_of_hearts) }
-  let(:play_card) { PlayCard.new(trick, player, card) }
+  let(:play_card) { PlayCard.new(trick: trick, player: player, card: card) }
 
   TRICK_NOT_ACTIVE_ERROR          = "this trick is not active"
   NOT_YOUR_TURN_ERROR             = "it's not your turn to play"
@@ -29,7 +29,7 @@ RSpec.describe PlayCard, type: :service do
       end
 
       it "sets a 'don't have this card' error" do
-        expect(play_card.errors).to include(CARD_NOT_IN_HAND_ERROR)
+        expect(play_card.errors[:base]).to include(CARD_NOT_IN_HAND_ERROR)
       end
     end
 
@@ -46,7 +46,7 @@ RSpec.describe PlayCard, type: :service do
       end
 
       it "sets a 'round can't be played on' error" do
-        expect(play_card.errors).to include(ROUND_CANNOT_BE_PLAYED_ON_ERROR)
+        expect(play_card.errors[:base]).to include(ROUND_CANNOT_BE_PLAYED_ON_ERROR)
       end
     end
 
@@ -63,7 +63,7 @@ RSpec.describe PlayCard, type: :service do
       end
 
       it "sets a 'trick not active' error" do
-        expect(play_card.errors).to include(TRICK_NOT_ACTIVE_ERROR)
+        expect(play_card.errors[:base]).to include(TRICK_NOT_ACTIVE_ERROR)
       end
     end
 
@@ -77,7 +77,7 @@ RSpec.describe PlayCard, type: :service do
           end
 
           it "doesn't set any errors" do
-            expect(play_card.errors).to be_empty
+            expect(play_card.errors[:base]).to be_empty
           end
         end
 
@@ -90,16 +90,16 @@ RSpec.describe PlayCard, type: :service do
           end
 
           it "sets a 'not your turn' error" do
-            expect(play_card.errors).to include(NOT_YOUR_TURN_ERROR)
+            expect(play_card.errors[:base]).to include(NOT_YOUR_TURN_ERROR)
           end
         end
       end
 
       context "when cards have been played" do
         before do
-          pc = PlayCard.new(trick, players(:player2), cards(:nine_of_clubs))
+          pc = PlayCard.new(trick: trick, player: players(:player2), card: cards(:nine_of_clubs))
           pc.call
-          pc = PlayCard.new(trick, players(:player3), cards(:seven_of_clubs))
+          pc = PlayCard.new(trick: trick, player: players(:player3), card: cards(:seven_of_clubs))
           pc.call
 
           play_card.call
@@ -115,7 +115,7 @@ RSpec.describe PlayCard, type: :service do
           end
 
           it "doesn't set any errors" do
-            expect(play_card.errors).to be_empty
+            expect(play_card.errors[:base]).to be_empty
           end
         end
 
@@ -128,7 +128,7 @@ RSpec.describe PlayCard, type: :service do
           end
 
           it "doesn't set any errors" do
-            expect(play_card.errors).to include(NOT_YOUR_TURN_ERROR)
+            expect(play_card.errors[:base]).to include(NOT_YOUR_TURN_ERROR)
           end
         end
       end
@@ -136,14 +136,14 @@ RSpec.describe PlayCard, type: :service do
 
     context "when it isn't the first trick" do
       before do
-        PlayCard.new(trick, players(:player2), cards(:ten_of_hearts)).call
-        PlayCard.new(trick, players(:player3), cards(:nine_of_hearts)).call
-        PlayCard.new(trick, players(:player4), cards(:six_of_hearts)).call
-        PlayCard.new(trick, players(:player1), cards(:king_of_hearts)).call
+        PlayCard.new(trick: trick, player: players(:player2), card: cards(:ten_of_hearts)).call
+        PlayCard.new(trick: trick, player: players(:player3), card: cards(:nine_of_hearts)).call
+        PlayCard.new(trick: trick, player: players(:player4), card: cards(:six_of_hearts)).call
+        PlayCard.new(trick: trick, player: players(:player1), card: cards(:king_of_hearts)).call
       end
 
       context "when no cards have been played into this trick" do
-        let(:play_card) { PlayCard.new(round.current_trick, player, card) }
+        let(:play_card) { PlayCard.new(trick: round.current_trick, player: player, card: card) }
 
         context "when the last trick winner attempts to play a card" do
           let(:player) { players(:player1) }
@@ -156,7 +156,7 @@ RSpec.describe PlayCard, type: :service do
           end
 
           it "doesn't set any errors" do
-            expect(play_card.errors).to be_empty
+            expect(play_card.errors[:base]).to be_empty
           end
         end
 
@@ -173,20 +173,20 @@ RSpec.describe PlayCard, type: :service do
           end
 
           it "sets the error to 'not your turn'" do
-            expect(play_card.errors).to include(NOT_YOUR_TURN_ERROR)
+            expect(play_card.errors[:base]).to include(NOT_YOUR_TURN_ERROR)
           end
         end
       end
 
       context "when cards have been played into this trick" do
         before do
-          PlayCard.new(round.current_trick, players(:player1), cards(:ace_of_diamonds)).call
+          PlayCard.new(trick: round.current_trick, player: players(:player1), card: cards(:ace_of_diamonds)).call
         end
 
         context "when the correct player attempts to play a card" do
           let(:player)    { players(:player2) }
           let(:card)      { cards(:ten_of_diamonds) }
-          let(:play_card) { PlayCard.new(round.current_trick, player, card) }
+          let(:play_card) { PlayCard.new(trick: round.current_trick, player: player, card: card) }
 
           before { play_card.call }
 
@@ -195,14 +195,14 @@ RSpec.describe PlayCard, type: :service do
           end
 
           it "doesn't set any errors" do
-            expect(play_card.errors).to be_empty
+            expect(play_card.errors[:base]).to be_empty
           end
         end
 
         context "when an incorrect player attempts to play a card" do
           let(:player)    { players(:player3) }
           let(:card)      { cards(:nine_of_diamonds) }
-          let(:play_card) { PlayCard.new(round.current_trick, player, card) }
+          let(:play_card) { PlayCard.new(trick: round.current_trick, player: player, card: card) }
 
           before { play_card.call }
 
@@ -211,7 +211,7 @@ RSpec.describe PlayCard, type: :service do
           end
 
           it "sets the error to 'not your turn'" do
-            expect(play_card.errors).to include(NOT_YOUR_TURN_ERROR)
+            expect(play_card.errors[:base]).to include(NOT_YOUR_TURN_ERROR)
           end
         end
       end

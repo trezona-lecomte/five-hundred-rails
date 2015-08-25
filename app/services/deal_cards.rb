@@ -6,26 +6,18 @@ class DealCards
   end
 
   def call
-    @round.with_lock do
-      deal_cards if cards_can_be_dealt
-    end
-
-    true
+    deal_cards!
   end
 
   private
 
-  def cards_can_be_dealt
-    @round.cards.none?
+  def deal_cards!
+    deal_hands!
+
+    deal_kitty!
   end
 
-  def deal_cards
-    deal_hands
-
-    deal_kitty
-  end
-
-  def deal_hands
+  def deal_hands!
     @game.players.each do |player|
       @deck.pop(10).each do |card|
         card.round = @round
@@ -37,7 +29,7 @@ class DealCards
     end
   end
 
-  def deal_kitty
+  def deal_kitty!
     @deck.each do |card|
       card.round = @round
 

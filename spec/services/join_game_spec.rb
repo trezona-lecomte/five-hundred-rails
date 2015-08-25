@@ -13,7 +13,7 @@ RSpec.describe JoinGame, type: :service do
       let!(:player)      { service.player }
 
       it "returns true" do
-        expect(call_result).to be true
+        expect(call_result).to be_truthy
       end
 
       it "creates a player" do

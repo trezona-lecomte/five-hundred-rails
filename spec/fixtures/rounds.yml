@@ -17,5 +17,5 @@ playing_round:
   order_in_game: 0
 
 finished_round:
-  game: playing_game
-  order_in_game: 1
+  game: finished_game
+  order_in_game: 0

@@ -1,48 +1,42 @@
 class JoinGame
-  attr_reader :errors, :player
+  include ActiveModel::Validations
+
+  attr_reader :player
+
+  validate :game_can_be_joined
 
   def initialize(game:, user:)
     @game = game
     @user = user
     @player = nil
-    @errors = []
   end
 
   def call
     @game.with_lock do
-      validate_game_can_be_joined
-
-      if errors.none?
-        join_game
-      end
+      valid? && join_game!
     end
-
-    errors.none?
   end
 
   private
 
-  def validate_game_can_be_joined
-    if @game.players.count < Game::MAX_PLAYERS
-      return true
-    else
-      add_error("no more than #{Game::MAX_PLAYERS} players can join this game")
-    end
+  def game_can_be_joined
+    errors.add(:base, "no more than #{Game::MAX_PLAYERS} players can join") if game_full?
   end
 
-  def join_game
-    @player = @game.players.new(user: @user,
-                                handle: @user.username,
-                                order_in_game: @game.players.count)
+  def game_full?
+    @game.players.count == Game::MAX_PLAYERS
+  end
 
-    unless @player.save
-      @player.errors.full_messages.each do |message|
-        add_error(message)
+  def join_game!
+    begin
+      @player = @game.players.create!(user: @user,
+                                      handle: @user.username,
+                                      order_in_game: @game.players.count)
+
+    rescue ActiveRecord::RecordInvalid => e
+      e.record.errors.messages.each do |msg|
+        errors.add(:base, msg)
       end
     end
-  end
-
-  def add_error(message)
-    @errors << message
   end
 end

@@ -50,7 +50,7 @@ class FindNextPlayer
     last_player_number = current_trick.cards.last_played.player.order_in_game
 
     # Either increment from the last player, or wrap to player 1 if it was player 4:
-    next_player_number = last_player_number < 4 ? last_player_number + 1 : 1
+    next_player_number = last_player_number < @players.length - 1 ? last_player_number + 1 : 0
 
     @next_player = @players.find_by(order_in_game: next_player_number)
   end

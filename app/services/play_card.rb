@@ -1,43 +1,34 @@
 class PlayCard
-  attr_reader :round, :card, :errors, :trick
+  include ActiveModel::Validations
 
-  def initialize(trick, player, card)
+  attr_reader :round, :card, :trick
+
+  validate :card_can_be_played
+
+  def initialize(trick: trick, player: player, card: card)
     @trick = trick
     @round = trick.round
     @player = player
     @card = card
-    @errors = []
   end
 
   def call
     @round.with_lock do
-      if valid_input?
-        validate_card_can_be_played
-
-        play_card if @errors.none?
-      else
-        add_error("couldn't play this card")
-      end
+      valid? && play_card
     end
-
-    @errors.none?
   end
 
   private
 
-  def valid_input?
-    @trick && @round && @player && @card
-  end
-
-  def validate_card_can_be_played
+  def card_can_be_played
     if !card_in_hand?
-      add_error("you don't have this card in your hand")
+      errors.add(:base, "you don't have this card in your hand")
     elsif !round.in_playing_stage?
-      add_error("cards can't be played on this round")
+      errors.add(:base, "cards can't be played on this round")
     elsif !trick_active?
-      add_error("this trick is not active")
+      errors.add(:base, "this trick is not active")
     elsif !players_turn?
-      add_error("it's not your turn to play")
+      errors.add(:base, "it's not your turn to play")
     end
   end
 
@@ -61,12 +52,9 @@ class PlayCard
     @trick.reload
     @card.order_in_trick = @trick.cards_count
 
+    # TODO follow pattern from other service for bubbling errors up
     unless @card.save
-      add_error("you can't play this card right now: #{@card.errors.full_messages}, #{@trick.errors.full_messages}")
+      errors.add("you can't play this card right now: #{@card.errors.full_messages}, #{@trick.errors.full_messages}")
     end
-  end
-
-  def add_error(message)
-    @errors << message
   end
 end

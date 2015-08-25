@@ -11,3 +11,6 @@ bidding_game:
 
 playing_game:
   created_at: <%= Time.now.to_s(:db) %>
+
+finished_game:
+  created_at: <%= Time.now.to_s(:db) %>
