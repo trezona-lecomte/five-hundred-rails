@@ -54,7 +54,7 @@ class PlayCard
 
     # TODO follow pattern from other service for bubbling errors up
     unless @card.save
-      errors.add("you can't play this card right now: #{@card.errors.full_messages}, #{@trick.errors.full_messages}")
+      errors.add(:base, "you can't play this card right now: #{@card.errors.full_messages}, #{@trick.errors.full_messages}")
     end
   end
 end
