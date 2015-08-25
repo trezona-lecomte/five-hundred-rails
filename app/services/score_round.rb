@@ -1,33 +1,30 @@
 class ScoreRound
-  attr_reader :round, :game, :players, :tricks, :errors
+  include ActiveModel::Validations
+
+  attr_reader :round, :game, :players, :tricks
+
+  validate :round_has_finished
 
   def initialize(round)
     @round   = round
     @game    = round.game
     @players = game.players
     @tricks  = round.tricks
-    @errors  = []
   end
 
   def call
     round.with_lock do
-      if round.finished?
-        score_round
-
-        unless round.save
-          add_error("unable to save round")
-        end
-      else
-        add_error("this round hasn't finished yet")
-      end
+      valid? && score_round!
     end
-
-    errors.none?
   end
 
   private
 
-  def score_round
+  def round_has_finished
+    errors.add(:base, "this round can't be scored until it has finished") if !round.finished?
+  end
+
+  def score_round!
     score = Score.new(number_of_tricks: attempted_number_of_tricks,
                       suit: attempted_suit)
     if successful_attack?
@@ -38,10 +35,10 @@ class ScoreRound
 
     defender_score = Score.new(number_of_tricks: tricks_for(defending_players).size).for_defense
 
-    set_scores(attacker_score, defender_score)
+    set_scores!(attacker_score, defender_score)
   end
 
-  def set_scores(attack_score, defense_score)
+  def set_scores!(attack_score, defense_score)
     if attacking_players.first.order_in_game.odd?
       round.odd_players_score = attack_score
       round.even_players_score = defense_score
@@ -49,6 +46,8 @@ class ScoreRound
       round.odd_players_score = defense_score
       round.even_players_score = attack_score
     end
+
+    round.save!
   end
 
   def successful_attack?
@@ -83,9 +82,5 @@ class ScoreRound
 
   def attempted_suit
     round.highest_bid.suit
-  end
-
-  def add_error(message)
-    errors << message
   end
 end
