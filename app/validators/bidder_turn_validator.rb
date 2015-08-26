@@ -11,18 +11,7 @@ class BidderTurnValidator < ActiveModel::Validator
     if round_is_awaiting_first_bid?(round)
       player_is_first_to_bid_for_this_round?(round, player)
     else
-      players = round.game.players.to_a.dup
-      players.rotate!(round.order_in_game % players.length)
-
-      round.bids.each do |bid|
-        if bid.pass?
-          players.shift
-        else
-          players.rotate!
-        end
-      end
-
-      player == players.first
+      player_is_next_in_order?(round, player)
     end
   end
 
@@ -32,5 +21,28 @@ class BidderTurnValidator < ActiveModel::Validator
 
   def player_is_first_to_bid_for_this_round?(round, player)
     player.order_in_game == round.order_in_game % round.game.players.length
+  end
+
+  def player_is_next_in_order?(round, player)
+    players = rotate_to_next_non_passing_player(round, players_in_order_for_round(round))
+
+    player == players.first
+  end
+
+  def players_in_order_for_round(round)
+    players = round.game.players.to_a.dup
+    players.rotate!(round.order_in_game % players.length)
+  end
+
+  def rotate_to_next_non_passing_player(round, players)
+    round.bids.each do |bid|
+      if bid.pass?
+        players.shift
+      else
+        players.rotate!
+      end
+    end
+
+    players
   end
 end
