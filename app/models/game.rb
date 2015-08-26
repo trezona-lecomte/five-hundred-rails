@@ -1,11 +1,13 @@
 class Game < ActiveRecord::Base
-  MAX_PLAYERS = 4
+  MAX_PLAYERS  =   4
+  HAND_SIZE    =  10
+  TARGET_SCORE = 500
 
   has_many :players, dependent: :destroy
   has_many :rounds,  dependent: :destroy
 
   def finished?
-    odd_players_score.abs >= 500 || even_players_score.abs >= 500
+    odd_players_score.abs >= TARGET_SCORE || even_players_score.abs >= TARGET_SCORE
   end
 
   def active_round
@@ -15,10 +17,10 @@ class Game < ActiveRecord::Base
   end
 
   def odd_players_score
-    rounds.where.not(odd_players_score: nil).sum(:odd_players_score)
+    rounds.sum(:odd_players_score)
   end
 
   def even_players_score
-    rounds.where.not(even_players_score: nil).sum(:even_players_score)
+    rounds.sum(:even_players_score)
   end
 end
