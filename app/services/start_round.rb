@@ -12,6 +12,8 @@ class StartRound
 
   def call
     game.with_lock do
+      # TODO when an object is calling valid on itself when there is no user input this is too defensive
+      # TODO try pulling call up to the caller (controller)
       if valid?
         create_round!
         create_tricks!
@@ -27,7 +29,7 @@ class StartRound
   end
 
   def active_rounds?
-    game.rounds.any? { |round| !round.finished? }
+    game.rounds.none?(&:finished?)
   end
 
   def create_round!
@@ -35,8 +37,8 @@ class StartRound
   end
 
   def create_tricks!
-    Round::NUMBER_OF_TRICKS.times do |n|
-      round.tricks.create!(order_in_round: n)
+    Round::NUMBER_OF_TRICKS.times do |trick_number|
+      round.tricks.create!(order_in_round: trick_number)
     end
   end
 
