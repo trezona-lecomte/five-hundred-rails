@@ -1,3 +1,4 @@
+# TODO try SimpleDelegator for service validations
 class JoinGame
   include ActiveModel::Validations
 
@@ -28,10 +29,13 @@ class JoinGame
   end
 
   def join_game!
+    # TODO apply multi-line formatting as below across project:
     begin
-      @player = game.players.create!(user: user,
-                                     handle: user.username,
-                                     order_in_game: game.players.count)
+      @player = game.players.create!(
+        user: user,
+        handle: user.username,
+        order_in_game: game.players.count
+      )
 
     rescue ActiveRecord::RecordInvalid => e
       e.record.errors.messages.each do |msg|
