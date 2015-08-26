@@ -13,7 +13,7 @@ class ApplicationController < ActionController::API
     auth_token = request.headers['Authorization']
 
     if auth_token
-      authenticate_with_auth_token auth_token
+      authenticate_with_auth_token(auth_token)
     else
       authentication_error
     end
@@ -21,11 +21,11 @@ class ApplicationController < ActionController::API
 
   private
 
-  def authenticate_with_auth_token auth_token
+  def authenticate_with_auth_token(auth_token)
     user = User.find_by(access_token: auth_token)
 
     if user && Devise.secure_compare(user.access_token, auth_token)
-      sign_in user, store: false
+      sign_in(user, store: false)
     else
       authentication_error
     end
