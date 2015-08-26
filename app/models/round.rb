@@ -17,14 +17,12 @@ class Round < ActiveRecord::Base
     bids.passes.count < game.players.count - 1
   end
 
-  # TODO use tricks.active.any? instead
   def in_playing_stage?
-    !in_bidding_stage? && current_trick.present?
+    !in_bidding_stage? && tricks.active.any?
   end
 
-  # TODO tricks.active.none? or all tricks in round inactive..
   def finished?
-    current_trick.nil?
+    tricks.active.none?
   end
 
   def current_trick
