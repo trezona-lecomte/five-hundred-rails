@@ -9,7 +9,7 @@ class Round < ActiveRecord::Base
   validates :game, presence: true
   validates :order_in_game, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :odd_players_score, :even_players_score, presence: true,
-                                                     numericality: { only_integer: true}
+                                                     numericality: { only_integer: true }
 
   scope :in_playing_order, -> { order(order_in_game: :asc) }
 
@@ -17,12 +17,14 @@ class Round < ActiveRecord::Base
     bids.passes.count < game.players.count - 1
   end
 
+  # TODO use tricks.active.any? instead
   def in_playing_stage?
-    !in_bidding_stage? && current_trick
+    !in_bidding_stage? && current_trick.present?
   end
 
+  # TODO tricks.active.none? or all tricks in round inactive..
   def finished?
-    !current_trick
+    current_trick.nil?
   end
 
   def current_trick
