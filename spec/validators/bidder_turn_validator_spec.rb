@@ -11,7 +11,7 @@ RSpec.describe BidderTurnValidator, type: :validator do
 
   subject(:service) { SubmitBid.new(**service_args) }
 
-  BIDDING_IS_FINISHED_ERROR  = "bidding for this round has finished"
+  BIDDING_FINISHED_ERROR  = "bidding for this round has finished"
   NOT_YOUR_TURN_TO_BID_ERROR = "it's not your turn to bid"
   PLAYER_HAS_PASSED_ERROR    = "you have already passed during this round"
 

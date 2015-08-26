@@ -12,6 +12,7 @@ class SubmitBid
     @player = player
     @number_of_tricks = number_of_tricks
     @suit = suit
+    # TODO bug??
     @highest_bid = round.bids.last
   end
 
@@ -29,9 +30,11 @@ class SubmitBid
 
   def submit_bid!
     begin
-      round.bids.create!(suit: suit,
-                         player: player,
-                         number_of_tricks: number_of_tricks)
+      round.bids.create!(
+        suit: suit,
+        player: player,
+        number_of_tricks: number_of_tricks
+      )
 
     rescue ActiveRecord::RecordInvalid => e
       e.record.errors.messages.each do |msg|
