@@ -21,21 +21,15 @@ class DealCards
 
   def deal_hands!
     game.players.each do |player|
-      deck.pop(10).each do |card|
-        card.round = round
-
-        player.cards << card
-
-        card.save!
+      deck.pop(Game::HAND_SIZE).each do |card|
+        card.update!(round: round, player: player)
       end
     end
   end
 
   def deal_kitty!
     deck.each do |card|
-      card.round = round
-
-      card.save!
+      card.update!(round: round)
     end
   end
 end
