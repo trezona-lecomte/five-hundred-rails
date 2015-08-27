@@ -3,7 +3,7 @@ class SubmitBid
 
   attr_reader :round, :player, :number_of_tricks, :suit, :highest_bid
 
-  validate :bidding_is_open
+  validate       :bidding_is_open
   validates_with BidderTurnValidator
   validates_with BidHighEnoughValidator
 
@@ -12,7 +12,6 @@ class SubmitBid
     @player = player
     @number_of_tricks = number_of_tricks
     @suit = suit
-    # TODO bug??
     @highest_bid = round.bids.last
   end
 
