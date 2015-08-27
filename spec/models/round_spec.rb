@@ -5,13 +5,13 @@ describe Round, type: :model do
 
   let(:round)  { rounds(:playing_round) }
 
-  it { should validate_presence_of :game }
-  it { should validate_presence_of :odd_players_score }
-  it { should validate_presence_of :even_players_score }
-  it { should validate_numericality_of(:odd_players_score).only_integer }
-  it { should validate_numericality_of(:even_players_score).only_integer }
+  it { is_expected.to validate_presence_of :game }
+  it { is_expected.to validate_presence_of :odd_players_score }
+  it { is_expected.to validate_presence_of :even_players_score }
+  it { is_expected.to validate_numericality_of(:odd_players_score).only_integer }
+  it { is_expected.to validate_numericality_of(:even_players_score).only_integer }
 
-  it { should validate_numericality_of(:order_in_game).is_greater_than_or_equal_to(0) }
+  it { is_expected.to validate_numericality_of(:order_in_game).is_greater_than_or_equal_to(0) }
 
   context "when destroyed" do
     it "destroys all dependent cards" do
