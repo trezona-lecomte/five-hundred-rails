@@ -3,16 +3,13 @@ class SubmitBid
 
   attr_reader :round, :player, :number_of_tricks, :suit, :highest_bid
 
-  validate :bidding_is_open
-  validates_with BidderTurnValidator
-  validates_with BidHighEnoughValidator
+  validates_with SubmitBidValidator
 
   def initialize(round:, player:, number_of_tricks:, suit:)
     @round = round
     @player = player
     @number_of_tricks = number_of_tricks
     @suit = suit
-    # TODO bug??
     @highest_bid = round.bids.last
   end
 
@@ -24,9 +21,6 @@ class SubmitBid
 
   private
 
-  def bidding_is_open
-    errors.add(:base, "bidding for this round has finished") unless round.in_bidding_stage?
-  end
 
   def submit_bid!
     begin
