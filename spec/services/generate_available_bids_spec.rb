@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe GenerateAvailableBids, type: :service do
+describe GenerateAvailableBids, type: :service do
   fixtures :all
 
   describe "#call" do

@@ -3,7 +3,8 @@ class StartRound
 
   attr_reader :game, :round
 
-  validate :round_can_be_started
+  validate :all_rounds_in_game_finished
+  validate :enough_players_in_game
 
   def initialize(game:)
     @game = game
@@ -24,12 +25,24 @@ class StartRound
 
   private
 
-  def round_can_be_started
-    errors.add(:base, "there are active rounds on this game") if active_rounds?
+  def all_rounds_in_game_finished
+    if any_active_rounds_on_game?
+      errors.add(:base, "all rounds in this game must be finished before starting a new one")
+    end
   end
 
-  def active_rounds?
-    game.rounds.none?(&:finished?)
+  def enough_players_in_game
+    if players_less_than_minimum?
+      errors.add(:base, "there are not enough players in the game to start")
+    end
+  end
+
+  def any_active_rounds_on_game?
+    game.rounds.present? && !game.rounds.all?(&:finished?)
+  end
+
+  def players_less_than_minimum?
+    game.players.count < Game::MIN_PLAYERS
   end
 
   def create_round!

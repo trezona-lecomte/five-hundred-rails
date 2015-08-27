@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe BuildDeck, type: :service do
+describe BuildDeck, type: :service do
   describe "#call" do
     let(:build_deck) { BuildDeck.new }
 

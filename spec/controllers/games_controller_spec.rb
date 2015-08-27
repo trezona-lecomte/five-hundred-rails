@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe GamesController, type: :controller do
+describe GamesController, type: :controller do
   fixtures :all
 
   let(:user)  { users(:user1) }

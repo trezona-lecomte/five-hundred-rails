@@ -1,7 +1,7 @@
 # TODO: add negative tests for bids having to be higher
 require "rails_helper"
 
-RSpec.describe PlayerTurnValidator, type: :validator do
+describe PlayerTurnValidator, type: :validator do
   fixtures :all
 
   let(:game)        { games(:playing_game) }

@@ -32,14 +32,14 @@ start_round.call
 round = start_round.round
 
 # bidding:
-SubmitBid.new(round: round, player: p1, number_of_tricks: 6, suit: 0).call # p1 bids 6 spades
-SubmitBid.new(round: round, player: p2, number_of_tricks: 6, suit: 1).call # p2 bids 6 clubs
-SubmitBid.new(round: round, player: p3, number_of_tricks: 7, suit: 0).call # p3 bids 7 clubs
-SubmitBid.new(round: round, player: p4, number_of_tricks: 7, suit: 1).call # p4 bids 7 spades
-SubmitBid.new(round: round, player: p1, number_of_tricks: 0, suit: 0).call # p1 passes
-SubmitBid.new(round: round, player: p2, number_of_tricks: 0, suit: 0).call # p2 passes
-SubmitBid.new(round: round, player: p3, number_of_tricks: 0, suit: 0).call # p3 passes
-SubmitBid.new(round: round, player: p4, number_of_tricks: 0, suit: 0).call # p4 passes & wins the bidding
+SubmitBid.new(round: round, player: p1, number_of_tricks: 6, suit: Suits::SPADES).call # p1 bids 6 spades
+SubmitBid.new(round: round, player: p2, number_of_tricks: 6, suit: Suits::CLUBS).call # p2 bids 6 clubs
+SubmitBid.new(round: round, player: p3, number_of_tricks: 7, suit: Suits::SPADES).call # p3 bids 7 clubs
+SubmitBid.new(round: round, player: p4, number_of_tricks: 7, suit: Suits::CLUBS).call # p4 bids 7 spades
+SubmitBid.new(round: round, player: p1, number_of_tricks: 0, suit: Suits::SPADES).call # p1 passes
+SubmitBid.new(round: round, player: p2, number_of_tricks: 0, suit: Suits::SPADES).call # p2 passes
+SubmitBid.new(round: round, player: p3, number_of_tricks: 0, suit: Suits::SPADES).call # p3 passes
+SubmitBid.new(round: round, player: p4, number_of_tricks: 0, suit: Suits::SPADES).call # p4 passes & wins the bidding
 
 trick = round.current_trick
 
@@ -71,10 +71,10 @@ start_round.call
 round = start_round.round
 
 # bidding:
-SubmitBid.new(round: round, player: p1, number_of_tricks: 6, suit: 0).call # p1 bids 7 hearts
-SubmitBid.new(round: round, player: p2, number_of_tricks: 0, suit: 0).call # p2 passes
-SubmitBid.new(round: round, player: p3, number_of_tricks: 0, suit: 0).call # p3 passes
-SubmitBid.new(round: round, player: p4, number_of_tricks: 0, suit: 0).call # p4 passes so player 1 wins the bidding
+SubmitBid.new(round: round, player: p1, number_of_tricks: 6, suit: Suits::CLUBS).call # p1 bids 7 hearts
+SubmitBid.new(round: round, player: p2, number_of_tricks: 0, suit: Suits::CLUBS).call # p2 passes
+SubmitBid.new(round: round, player: p3, number_of_tricks: 0, suit: Suits::CLUBS).call # p3 passes
+SubmitBid.new(round: round, player: p4, number_of_tricks: 0, suit: Suits::CLUBS).call # p4 passes so player 1 wins the bidding
 
 decorated_round = round
 
@@ -117,10 +117,10 @@ start_round.call
 round = start_round.round
 
 # bidding:
-SubmitBid.new(round: round, player: p1, number_of_tricks: 6, suit: 0).call # p1 bids 7 hearts
-SubmitBid.new(round: round, player: p2, number_of_tricks: 0, suit: 0).call # p2 passes
-SubmitBid.new(round: round, player: p3, number_of_tricks: 0, suit: 0).call # p3 passes
-SubmitBid.new(round: round, player: p4, number_of_tricks: 0, suit: 0).call # p4 passes so player 1 wins the bidding
+SubmitBid.new(round: round, player: p1, number_of_tricks: 6, suit: Suits::CLUBS).call # p1 bids 7 hearts
+SubmitBid.new(round: round, player: p2, number_of_tricks: 0, suit: Suits::CLUBS).call # p2 passes
+SubmitBid.new(round: round, player: p3, number_of_tricks: 0, suit: Suits::CLUBS).call # p3 passes
+SubmitBid.new(round: round, player: p4, number_of_tricks: 0, suit: Suits::CLUBS).call # p4 passes so player 1 wins the bidding
 
 decorated_round = round
 

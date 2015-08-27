@@ -25,31 +25,39 @@ class ScoreRound
   end
 
   def score_round!
-    highest_bid = round.highest_bid
-
-    attack = AttackScore.new(attempted_number_of_tricks: highest_bid.number_of_tricks,
-                             number_of_tricks_won: tricks_for(attacking_players).size,
-                             attempted_suit: highest_bid.suit)
-
-    defense = DefenseScore.new(number_of_tricks_won: tricks_for(defending_players).size)
-
-    set_scores!(attack_score: attack.score, defense_score: defense.score)
+    set_scores && round.save!
   end
 
-  def set_scores!(attack_score:, defense_score:)
-    if attacking_players.first.order_in_game.odd?
-      round.odd_players_score = attack_score
-      round.even_players_score = defense_score
+  def set_scores
+    if odd_team_attacked?
+      round.odd_players_score  = attackers_score(round.highest_bid)
+      round.even_players_score = defenders_score
     else
-      round.odd_players_score = defense_score
-      round.even_players_score = attack_score
+      round.odd_players_score  = defenders_score
+      round.even_players_score = attackers_score(round.highest_bid)
     end
+  end
 
-    round.save!
+  def attackers_score(highest_bid)
+    AttackScore.new(
+      attempted_suit:             highest_bid.suit,
+      attempted_number_of_tricks: highest_bid.number_of_tricks,
+      number_of_tricks_won:       tricks_for(attacking_players).size
+    ).score
+  end
+
+  def defenders_score
+    DefenseScore.new(
+      number_of_tricks_won: tricks_for(defending_players).size
+    ).score
   end
 
   def tricks_for(players)
     tricks.select { |trick| players.include?(trick.cards.highest.player) }
+  end
+
+  def odd_team_attacked?
+    attacking_players.first.order_in_game.odd?
   end
 
   def attacking_players

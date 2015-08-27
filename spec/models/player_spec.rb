@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Player, type: :model do
+describe Player, type: :model do
   fixtures :all
 
   let(:round)  { rounds(:playing_round) }

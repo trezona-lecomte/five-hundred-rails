@@ -5,5 +5,18 @@ module Suits
   HEARTS   = "hearts"
   NO_SUIT  = "no_suit"
 
-  ALL_SUITS = [SPADES, CLUBS, DIAMONDS, HEARTS, NO_SUIT]
+  STANDARD_SUITS = [
+    SPADES,
+    CLUBS,
+    DIAMONDS,
+    HEARTS
+  ]
+
+  ALL_SUITS = [
+    SPADES,
+    CLUBS,
+    DIAMONDS,
+    HEARTS,
+    NO_SUIT
+  ]
 end

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe PlayCard, type: :service do
+describe PlayCard, type: :service do
   fixtures :all
 
   let(:game)         { games(:playing_game) }

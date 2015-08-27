@@ -1,9 +1,7 @@
 class BuildDeck
-  attr_reader :deck
+  include Ranks, Suits
 
-  # def initialize
-  #   @deck = []
-  # end
+  attr_reader :deck
 
   def call
     standard_deck.shuffle!
@@ -12,33 +10,23 @@ class BuildDeck
   private
 
   def standard_deck
-    standard_ranks.product(standard_suits).map do |rank, suit|
+    standard_ranks.product(STANDARD_SUITS).map do |rank, suit|
       Card.new(rank: rank, suit: suit)
     end + red_fours + [joker]
-
-    # @deck += red_fours
-    # @deck << joker
   end
 
-  # TODO should be using enum values for this filter (build an array of wanted cards & check inclusion)
   def standard_ranks
-    Card.ranks.select { |_, rank| rank.between?(5, 17) && !rank.between?(11, 13) }
-      .keys
+    ALL_RANKS - [TWO, THREE, FOUR, ELEVEN, TWELVE, THIRTEEN, JOKER]
   end
 
-  def standard_suits
-    Card.suits.keys - [Suits::NO_SUIT]
-  end
-
-  # TODO again (next two methods), use enum values
   def red_fours
     [
-      Card.new(rank: "4", suit: Suits::HEARTS),
-      Card.new(rank: "4", suit: Suits::DIAMONDS)
+      Card.new(rank: FOUR, suit: HEARTS),
+      Card.new(rank: FOUR, suit: DIAMONDS)
     ]
   end
 
   def joker
-    Card.new(rank: "joker", suit: Suits::NO_SUIT)
+    Card.new(rank: JOKER, suit: NO_SUIT)
   end
 end

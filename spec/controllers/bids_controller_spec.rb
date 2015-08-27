@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe BidsController, type: :controller do
+describe BidsController, type: :controller do
   fixtures :all
 
   let(:user)             { users(:user1) }

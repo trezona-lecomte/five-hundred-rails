@@ -1,45 +1,60 @@
-# TODO think about testing interactions rather than testing state.
 require "rails_helper"
 
-RSpec.describe Card, type: :model do
-  let(:round) { Game.create!.rounds.create!(odd_players_score: 0, even_players_score: 0, order_in_game: 0) }
-  let(:trick) { round.tricks.create!(order_in_round: 0) }
+describe Card, type: :model do
+  let(:round)          { Game.create!.rounds.create!(odd_players_score: 0, even_players_score: 0, order_in_game: 0) }
+  let(:trick)          { round.tricks.create!(order_in_round: 0) }
+  let(:rank)           { Card.ranks.keys.first }
+  let(:suit)           { Card.suits.keys.first }
+  let(:order_in_trick) { nil }
 
-  subject { Card.create!(rank: Card.ranks.keys.first, suit: Card.suits.keys.first, round: round) }
+  subject(:card) { Card.new(rank: rank, suit: suit, round: round, order_in_trick: order_in_trick) }
 
-  it { should validate_presence_of :round }
-  it { should validate_presence_of :suit }
-  it { should validate_presence_of :rank }
-  it { should_not validate_presence_of :player }
-  it { should_not validate_presence_of :trick }
-  it { should_not validate_presence_of :order_in_trick }
+  describe "validations" do
+    it { is_expected.to     validate_presence_of :suit }
+    it { is_expected.to     validate_presence_of :rank }
+    it { is_expected.to_not validate_presence_of :player }
+    it { is_expected.to_not validate_presence_of :trick }
+    it { is_expected.to_not validate_presence_of :order_in_trick }
+    it { is_expected.to     validate_numericality_of(:order_in_trick).is_greater_than_or_equal_to(0).allow_nil}
 
-  it { should validate_numericality_of(:order_in_trick).is_greater_than_or_equal_to(0).allow_nil}
+    context "when no round is present" do
+      let(:round) { nil }
 
-  it "should require unique value for rank & suit scoped to round_id" do
-    round.cards.create!(rank: 10,
-                        suit: Suits::HEARTS)
-    card = round.cards.new(order_in_trick: 1,
-                           rank: 10,
-                           suit: Suits::HEARTS)
+      before { card.valid? }
 
-    expect(card).to_not be_valid
+      it { is_expected.to be_invalid }
 
-    expect(card.errors[:round]).to include("has already been taken")
-  end
+      it "sets a 'round can't be blank' error" do
+        expect(card.errors[:round]).to include("can't be blank")
+      end
+    end
 
-  it "should require unique value for order_in_trick scoped to trick_id" do
-    trick.cards.create!(order_in_trick: 1,
-                        rank: 10,
-                        suit: Suits::HEARTS,
-                        round: round)
-    card = trick.cards.new(order_in_trick: 1,
-                           rank: 11,
-                           suit: Suits::HEARTS,
-                           round: round)
+    context "when rank & suit aren't unique within a round" do
+      before do
+        round.cards.create!(rank: rank, suit: suit)
+        card.valid?
+      end
 
-    expect(card).to_not be_valid
+      it { is_expected.to be_invalid }
 
-    expect(card.errors[:order_in_trick]).to include("has already been taken")
+      it "sets a 'has already been taken' error" do
+        expect(card.errors[:round]).to include("has already been taken")
+      end
+    end
+
+    context "when the order_in_trick isn't unique within a trick" do
+      let(:order_in_trick) { 1 }
+
+      before do
+        round.cards.create!(rank: Card.ranks.keys.last, suit: suit, order_in_trick: order_in_trick)
+        card.valid?
+      end
+
+      it { is_expected.to be_invalid }
+
+      it "sets a 'has already been taken' error" do
+        expect(card.errors[:order_in_trick]).to include("has already been taken")
+      end
+    end
   end
 end

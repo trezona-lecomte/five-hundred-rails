@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe ScoreRound, type: :service do
+describe ScoreRound, type: :service do
   fixtures :all
 
   let(:game)        { games(:finished_game) }

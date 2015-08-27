@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Game, type: :model do
+describe Game, type: :model do
   fixtures :all
 
   let(:game)   { games(:bidding_game) }

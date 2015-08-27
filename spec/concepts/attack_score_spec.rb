@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe AttackScore, type: :concept do
+describe AttackScore, type: :concept do
   SCORES = {
     Card.suits[:spades] => {
       6  =>  40,

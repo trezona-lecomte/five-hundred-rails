@@ -1,6 +1,7 @@
 class Bid < ActiveRecord::Base
   enum suit: Suits::ALL_SUITS
 
+  # TODO perhaps make pass a flag on bid.
   PASS_TRICKS    = 0
   MIN_TRICKS     = 6
   MAX_TRICKS     = 10

@@ -1,5 +1,6 @@
 class Game < ActiveRecord::Base
   MAX_PLAYERS  =   4
+  MIN_PLAYERS  =   4
   HAND_SIZE    =  10
   TARGET_SCORE = 500
 

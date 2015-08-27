@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe JoinGame, type: :service do
+describe JoinGame, type: :service do
   fixtures :users, :games
 
   let(:game)    { Game.create! }

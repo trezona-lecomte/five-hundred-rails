@@ -35,14 +35,14 @@ class PlayCard
     end
   end
 
-  def player_owns_card?
-    card.player == player
-  end
-
   def round_is_in_playing_stage
     unless round.in_playing_stage?
       errors.add(:base, "this round isn't in the playing stage")
     end
+  end
+
+  def player_owns_card?
+    card.player == player
   end
 
   def play_card!

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe DealCards, type: :service do
+describe DealCards, type: :service do
   fixtures :all
   let(:game)       { Game.create! }
   let(:base_round) { game.rounds.create!(odd_players_score: 0,
@@ -24,7 +24,7 @@ RSpec.describe DealCards, type: :service do
 
       it "deals 10 cards to each player" do
         game.players.each do |player|
-          expect(player.cards.count).to eq(10)
+          expect(player.cards.count).to eq(Game::HAND_SIZE)
         end
       end
 

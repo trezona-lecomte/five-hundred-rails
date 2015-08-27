@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe StartRound, type: :service do
+describe StartRound, type: :service do
   fixtures :all
 
   let(:game)        { games(:playing_game) }
@@ -8,7 +8,7 @@ RSpec.describe StartRound, type: :service do
 
   describe "#call" do
     context "when the game has no unfinished rounds" do
-      before { allow(start_round).to receive(:active_rounds?).and_return(false) }
+      before { allow(start_round).to receive(:any_active_rounds_on_game?).and_return(false) }
 
       it "creates a round" do
         expect { start_round.call }.to change { game.rounds.count }.by(1)
