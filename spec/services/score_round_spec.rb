@@ -27,6 +27,7 @@ describe ScoreRound, type: :service do
           before do
             allow(score_round).to receive(:tricks_for).and_return(round.tricks.first(5), round.tricks.last(5))
             allow(round).to receive(:highest_bid).and_return(round.bids.create!(player: players(:finished_player3),
+                                                                                pass: false,
                                                                                 number_of_tricks: 6,
                                                                                 suit: Card.suits[:no_suit]))
             score_round.call
@@ -47,6 +48,7 @@ describe ScoreRound, type: :service do
           before do
             allow(score_round).to receive(:tricks_for).and_return(round.tricks.first(8), round.tricks.last(2))
             allow(round).to receive(:highest_bid).and_return(round.bids.create!(player: players(:finished_player2),
+                                                                                pass: false,
                                                                                 number_of_tricks: 6,
                                                                                 suit: Card.suits[:spades]))
             score_round.call
@@ -65,6 +67,7 @@ describe ScoreRound, type: :service do
           before do
             allow(score_round).to receive(:tricks_for).and_return(round.tricks.first(8), round.tricks.last(2))
             allow(round).to receive(:highest_bid).and_return(round.bids.create!(player: players(:finished_player4),
+                                                                                pass: false,
                                                                                 number_of_tricks: 9,
                                                                                 suit: Card.suits[:diamonds]))
             score_round.call

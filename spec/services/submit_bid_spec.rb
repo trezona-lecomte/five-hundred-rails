@@ -4,11 +4,18 @@ require "rails_helper"
 RSpec.describe SubmitBid, type: :service do
   fixtures :all
 
-  let(:suit)             { Suits::NO_SUIT }
   let(:round)            { rounds(:bidding_round) }
   let(:player)           { players(:bidder1) }
-  let(:number_of_tricks) { Bid::PASS_TRICKS }
-  let(:service_args)     { { round: round, player: player, number_of_tricks: number_of_tricks, suit: suit } }
+  let(:pass)             { false }
+  let(:suit)             { Suits::NO_SUIT }
+  let(:number_of_tricks) { Bid::MIN_TRICKS }
+  let(:service_args)     { {
+                             round: round,
+                             player: player,
+                             pass: pass,
+                             number_of_tricks: number_of_tricks,
+                             suit: suit
+                           } }
 
   subject(:service) { SubmitBid.new(**service_args) }
 
@@ -68,7 +75,9 @@ RSpec.describe SubmitBid, type: :service do
       end
 
       context "when the bid is a pass" do
-        let(:number_of_tricks) { Bid::PASS_TRICKS }
+        let(:pass)             { true }
+        let(:suit)             { nil }
+        let(:number_of_tricks) { nil }
 
         it { is_expected.to be_valid }
       end

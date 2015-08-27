@@ -6,7 +6,7 @@ describe BidsController, type: :controller do
   let(:user)             { users(:user1) }
   let(:player)           { players(:bidder1) }
   let(:round)            { rounds(:bidding_round) }
-  let(:valid_bid_params) { { round_id: round, number_of_tricks: Bid::PASS_TRICKS, suit: Suits::HEARTS } }
+  let(:valid_bid_params) { { round_id: round, pass: true } }
 
   before do
     allow_any_instance_of(ApplicationController).to receive(:authenticate_user_from_token!).and_return true

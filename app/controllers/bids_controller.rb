@@ -5,6 +5,7 @@ class BidsController < ApplicationController
   def create
     submit_bid = SubmitBid.new(round: @round,
                                player: @player,
+                               pass: bid_params[:pass],
                                number_of_tricks: bid_params[:number_of_tricks],
                                suit: bid_params[:suit])
 
@@ -30,6 +31,6 @@ class BidsController < ApplicationController
   end
 
   def bid_params
-    params.permit(:round_id, :number_of_tricks, :suit)
+    params.permit(:round_id, :pass, :number_of_tricks, :suit)
   end
 end

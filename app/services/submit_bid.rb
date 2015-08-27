@@ -1,18 +1,19 @@
 class SubmitBid
   include ActiveModel::Validations
 
-  attr_reader :round, :player, :number_of_tricks, :suit, :highest_bid
+  attr_reader :round, :player, :number_of_tricks, :suit, :highest_bid, :pass
 
   validate       :bidding_is_open
   validates_with BidderTurnValidator
-  validates_with BidHighEnoughValidator
+  validates_with BidHighEnoughValidator, unless: :pass
 
-  def initialize(round:, player:, number_of_tricks:, suit:)
+  def initialize(round:, player:, pass: false, number_of_tricks: nil, suit: nil)
     @round = round
     @player = player
+    @pass = pass
     @number_of_tricks = number_of_tricks
     @suit = suit
-    @highest_bid = round.bids.last
+    @highest_bid = round.bids.non_passes.last
   end
 
   def call
@@ -30,6 +31,7 @@ class SubmitBid
   def submit_bid!
     begin
       round.bids.create!(
+        pass: pass,
         suit: suit,
         player: player,
         number_of_tricks: number_of_tricks

@@ -3,54 +3,55 @@ first_bid:
   player_id: 1
   number_of_tricks: 6
   suit: 0
+  pass: false
 
 second_bid:
   round: playing_round
   player_id: 2
   number_of_tricks: 6
   suit: 1
+  pass: false
 
 third_bid:
   round: playing_round
   player_id: 3
   number_of_tricks: 7
   suit: 0
+  pass: false
 
 fourth_bid:
   round: playing_round
   player_id: 4
   number_of_tricks: 7
   suit: 1
+  pass: false
 
 fifth_bid:
   round: playing_round
   player_id: 1
-  number_of_tricks: 0
-  suit: 0
+  pass: true
 
 sixth_bid:
   round: playing_round
   player_id: 2
   number_of_tricks: 8
   suit: 0
+  pass: false
 
 seventh_bid:
   round: playing_round
   player_id: 3
-  number_of_tricks: 0
-  suit: 0
+  pass: true
 
 eighth_bid:
   round: playing_round
   player_id: 4
-  number_of_tricks: 0
-  suit: 0
+  pass: true
 
 ninth_bid:
   round: playing_round
   player_id: 2
-  number_of_tricks: 0
-  suit: 0
+  pass: true
 
 # Finished round bids:
 
@@ -59,21 +60,19 @@ finished_round_winning_bid:
   player_id: 9
   number_of_tricks: 7
   suit: 3
+  pass: false
 
 finished_round_second_bid:
   round: finished_round
   player_id: 10
-  number_of_tricks: 0
-  suit: 1
+  pass: true
 
 finished_round_third_bid:
   round: finished_round
   player_id: 11
-  number_of_tricks: 0
-  suit: 0
+  pass: true
 
 finished_round_fourth_bid:
   round: finished_round
   player_id: 12
-  number_of_tricks: 0
-  suit: 1
+  pass: true

@@ -3,11 +3,19 @@ require "rails_helper"
 RSpec.describe BidderTurnValidator, type: :validator do
   fixtures :all
 
-  let(:suit)             { Suits::NO_SUIT }
+
   let(:round)            { rounds(:bidding_round) }
   let(:player)           { players(:bidder1) }
-  let(:number_of_tricks) { Bid::PASS_TRICKS }
-  let(:service_args)     { { round: round, player: player, number_of_tricks: number_of_tricks, suit: suit } }
+  let(:pass)             { false }
+  let(:suit)             { Suits::NO_SUIT }
+  let(:number_of_tricks) { Bid::MIN_TRICKS }
+  let(:service_args)     { {
+                             round: round,
+                             player: player,
+                             pass: pass,
+                             number_of_tricks: number_of_tricks,
+                             suit: suit
+                           } }
 
   subject(:service) { SubmitBid.new(**service_args) }
 
@@ -61,7 +69,7 @@ RSpec.describe BidderTurnValidator, type: :validator do
     end
 
     context "when the first player didn't pass" do
-      before { round.bids.create!(player: players(:bidder1), number_of_tricks: 6, suit: Suits::HEARTS) }
+      before { round.bids.non_passes.create!(player: players(:bidder1), number_of_tricks: 6, suit: Suits::HEARTS) }
 
       context "when the second player tries to bid" do
         let(:player) { players(:bidder2) }
@@ -91,7 +99,7 @@ RSpec.describe BidderTurnValidator, type: :validator do
     context "when the first player didn't pass" do
       context "and the second player passed" do
         before do
-          round.bids.create!(player: players(:bidder1), number_of_tricks: 6, suit: Suits::HEARTS)
+          round.bids.non_passes.create!(player: players(:bidder1), number_of_tricks: 6, suit: Suits::HEARTS)
           round.bids.passes.create!(player: players(:bidder2))
         end
 
@@ -128,17 +136,21 @@ RSpec.describe BidderTurnValidator, type: :validator do
         before { round.bids.passes.create!(player: players(:bidder2)) }
 
         context "but the third player didn't pass" do
-          before { round.bids.create!(player: players(:bidder3), number_of_tricks: 7, suit: Suits::SPADES) }
+          before { round.bids.non_passes.create!(player: players(:bidder3), number_of_tricks: 7, suit: Suits::SPADES) }
 
           context "when the fourth player tries to bid" do
-            let(:player) { players(:bidder4) }
+            let(:player)           { players(:bidder4) }
+            let(:number_of_tricks) { 8 }
 
-            it { is_expected.to be_valid }
+            it do
+              is_expected.to be_valid
+            end
           end
 
           3.times do |n|
             context "when an incorrect player tries to bid" do
               let(:player) { players("bidder#{n + 1}") }
+              let(:number_of_tricks) { 8 }
 
               before { service.valid? }
 
@@ -163,7 +175,7 @@ RSpec.describe BidderTurnValidator, type: :validator do
               it { is_expected.to be_invalid }
 
               it "has the correct 'bidding has finished' error" do
-                expect(service.errors[:base]).to include(BIDDING_IS_FINISHED_ERROR)
+                expect(service.errors[:base]).to include(BIDDING_FINISHED_ERROR)
               end
             end
           end
@@ -176,26 +188,28 @@ RSpec.describe BidderTurnValidator, type: :validator do
     let(:round) { rounds(:bidding_round) }
 
     context "when the first player didn't pass" do
-      before { round.bids.create!(player: players(:bidder1), number_of_tricks: 6, suit: Suits::HEARTS) }
+      before { round.bids.non_passes.create!(player: players(:bidder1), number_of_tricks: 6, suit: Suits::HEARTS) }
 
       context "and the second player passed" do
         before { round.bids.passes.create!(player: players(:bidder2)) }
 
         context "and the third player didn't pass" do
-          before { round.bids.create!(player: players(:bidder3), number_of_tricks: 7, suit: Suits::SPADES) }
+          before { round.bids.non_passes.create!(player: players(:bidder3), number_of_tricks: 7, suit: Suits::SPADES) }
 
           context "and the fourth player passed" do
             before { round.bids.passes.create!(player: players(:bidder4)) }
 
             context "when the first player tries to bid" do
-              let(:player) { players(:bidder1) }
+              let(:player)           { players(:bidder1) }
+              let(:number_of_tricks) { 8 }
 
               it { is_expected.to be_valid }
             end
 
             context "when the incorrect player tries to bid" do
               3.times do |n|
-                let(:player) { players("bidder#{n + 1}") }
+                let(:player)           { players("bidder#{n + 1}") }
+                let(:number_of_tricks) { 8 }
 
                 before { service.valid? }
 
@@ -209,10 +223,11 @@ RSpec.describe BidderTurnValidator, type: :validator do
           end
 
           context "and the fourth player didn't pass" do
-            before { round.bids.create!(player: players(:bidder4), number_of_tricks: 7, suit: Suits::CLUBS) }
+            before { round.bids.non_passes.create!(player: players(:bidder4), number_of_tricks: 7, suit: Suits::CLUBS) }
 
             context "when the first player tries to bid" do
-              let(:player) { players(:bidder1) }
+              let(:player)           { players(:bidder1) }
+              let(:number_of_tricks) { 8 }
 
               it { is_expected.to be_valid }
             end

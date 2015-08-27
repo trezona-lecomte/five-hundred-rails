@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150819020814) do
+ActiveRecord::Schema.define(version: 20150827060250) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,12 +21,14 @@ ActiveRecord::Schema.define(version: 20150819020814) do
     t.integer  "player_id"
     t.integer  "number_of_tricks"
     t.integer  "suit"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.boolean  "pass",             default: false, null: false
   end
 
   add_index "bids", ["player_id"], name: "index_bids_on_player_id", using: :btree
   add_index "bids", ["round_id", "number_of_tricks"], name: "index_bids_on_round_id_and_number_of_tricks", using: :btree
+  add_index "bids", ["round_id", "pass"], name: "index_bids_on_round_id_and_pass", using: :btree
 
   create_table "cards", force: :cascade do |t|
     t.integer  "suit"

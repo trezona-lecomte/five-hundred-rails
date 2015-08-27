@@ -25,6 +25,7 @@ describe GenerateAvailableBids, type: :service do
 
       context "when bids have been made" do
         let(:highest_bid)   { Bid.create!(round: round,
+                                          pass: false,
                                           suit: Suits::NO_SUIT,
                                           number_of_tricks: Bid::MAX_TRICKS,
                                           player: players(:bidder1)) }
