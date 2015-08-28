@@ -3,20 +3,18 @@ class BidsController < ApplicationController
   before_action :set_player, only: [:create]
 
   def create
-    submit_bid = SubmitBid.new(round: @round,
-                               player: @player,
-                               pass: bid_params[:pass],
-                               number_of_tricks: bid_params[:number_of_tricks],
-                               suit: bid_params[:suit])
+    bid = Bid.new(
+      round: @round,
+      player: @player,
+      pass: bid_params[:pass],
+      number_of_tricks: bid_params[:number_of_tricks],
+      suit: bid_params[:suit]
+    )
 
-    submit_bid.call
-
-    @bids = @round.bids.all
-
-    if submit_bid.errors.empty?
-      render json: submit_bid.round, serializer: RoundSerializer, status: :created, locals: { errors: [] }
+    if bid.save
+      render json: bid.round, serializer: RoundSerializer, status: :created, locals: { errors: [] }
     else
-      render json: { errors: submit_bid.errors }, status: :unprocessable_entity
+      render json: { errors: bid.errors }, status: :unprocessable_entity
     end
   end
 

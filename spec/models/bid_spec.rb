@@ -18,8 +18,9 @@ describe Bid, type: :model do
 
   subject(:bid) { Bid.new(**bid_args) }
 
+  BIDDING_IS_FINISHED_ERROR = "bidding for this round has finished"
+
   describe "validations" do
-    # TODO replace should with is_expected.to
     it { is_expected.to validate_presence_of :round }
     it { is_expected.to validate_presence_of :player }
     it { is_expected.to validate_inclusion_of(:number_of_tricks).in_array(Bid::ALLOWED_TRICKS) }
@@ -60,6 +61,20 @@ describe Bid, type: :model do
         let(:suit) { nil }
 
         it { is_expected.to be_invalid }
+      end
+    end
+
+    describe "#bidding_is_open" do
+      context "when the round is not in the bidding stage" do
+        let(:round) { rounds(:playing_round) }
+
+        before { bid.valid? }
+
+        it { is_expected.to be_invalid }
+
+        it "has the correct 'round has finished' error" do
+          expect(bid.errors[:base]).to include(BIDDING_IS_FINISHED_ERROR)
+        end
       end
     end
   end

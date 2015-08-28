@@ -1,25 +1,21 @@
-class BidderTurnValidator < ActiveModel::Validator
-  def validate(submit_bid)
-    unless this_players_turn?(submit_bid.round, submit_bid.player)
-      submit_bid.errors.add(:base, "it's not your turn to bid")
+class BidderIsNextInOrderValidator < ActiveModel::Validator
+  def validate(bid)
+    unless this_players_turn?(bid.round, bid.player)
+      bid.errors.add(:base, "it's not your turn to bid")
     end
   end
 
   private
 
   def this_players_turn?(round, player)
-    if round_is_awaiting_first_bid?(round)
-      player_is_first_to_bid_for_this_round?(round, player)
+    if round.has_no_bids_yet?
+      player_is_first_in_order_for_this_round?(round, player)
     else
       player_is_next_in_order?(round, player)
     end
   end
 
-  def round_is_awaiting_first_bid?(round)
-    round.bids.none?
-  end
-
-  def player_is_first_to_bid_for_this_round?(round, player)
+  def player_is_first_in_order_for_this_round?(round, player)
     player.order_in_game == round.order_in_game % round.game.players.length
   end
 
@@ -35,7 +31,7 @@ class BidderTurnValidator < ActiveModel::Validator
   end
 
   def rotate_to_next_non_passing_player(round, players)
-    round.bids.each do |bid|
+    round.bids.select(&:persisted?).each do |bid|
       if bid.pass?
         players.shift
       else

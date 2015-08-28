@@ -36,4 +36,8 @@ class Round < ActiveRecord::Base
   def highest_bid
     bids.non_passes.in_ranked_order.first
   end
+
+  def has_no_bids_yet?
+    bids.count.zero?
+  end
 end

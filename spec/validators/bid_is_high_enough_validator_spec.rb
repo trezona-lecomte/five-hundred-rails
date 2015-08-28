@@ -8,15 +8,16 @@ describe BidIsHighEnoughValidator, type: :validator do
   let(:pass)             { false }
   let(:suit)             { Suits::NO_SUIT }
   let(:number_of_tricks) { Bid::MIN_TRICKS }
-  let(:bid_args)         { {
-                             round: round,
-                             player: player,
-                             pass: pass,
-                             number_of_tricks: number_of_tricks,
-                             suit: suit
-                           } }
 
-  subject(:bid) { Bid.new(**bid_args) }
+  subject(:bid) {
+    Bid.new(
+      round: round,
+      player: player,
+      pass: pass,
+      suit: suit,
+      number_of_tricks: number_of_tricks
+    )
+  }
 
   BID_NOT_HIGH_ENOUGH_ERROR = "your bid isn't high enough"
 
@@ -32,12 +33,12 @@ describe BidIsHighEnoughValidator, type: :validator do
       let(:player)              { players(:bidder2) }
 
       before do
-        SubmitBid.new(
+        Bid.non_passes.create!(
           round: round,
           player: players(:bidder1),
           suit: Suits::HEARTS,
           number_of_tricks: previous_tricks_bid
-        ).call
+        )
       end
 
       context "when the bid is a pass" do
@@ -68,12 +69,12 @@ describe BidIsHighEnoughValidator, type: :validator do
       let(:player)              { players(:bidder2) }
 
       before do
-        SubmitBid.new(
+        Bid.create!(
           round: round,
           player: players(:bidder1),
           suit: Suits::HEARTS,
           number_of_tricks: previous_tricks_bid
-        ).call
+        )
       end
 
       context "when the number of tricks aren't higher than the previous bid" do
@@ -82,10 +83,7 @@ describe BidIsHighEnoughValidator, type: :validator do
 
         before { bid.valid? }
 
-        it do
-
-          is_expected.to be_invalid
-        end
+        it { is_expected.to be_invalid }
 
         it "has the correct 'bid not high enough' error" do
           expect(bid.errors[:base]).to include(BID_NOT_HIGH_ENOUGH_ERROR)

@@ -13,14 +13,29 @@ describe BidsController, type: :controller do
     allow(controller).to receive(:current_user).and_return(user)
   end
 
-  describe "POST crete" do
-    subject          { response }
-    before           { post :create, valid_bid_params }
+  describe "POST create" do
+    context "when the bid is valid" do
+      it "responds with http status 201" do
+        post :create, valid_bid_params
 
-    it { is_expected.to have_http_status(201) }
+        expect(response).to have_http_status(201)
+      end
 
-    # it "creates a bid" do
-    #   expect { post :create, valid_bid_params }.to change(Bid, :count).by(1)
-    # end
+      it "creates a bid" do
+        expect { post :create, valid_bid_params }.to change(Bid, :count).by(1)
+      end
+    end
+
+    context "when the bid is invalid" do
+      it "responds with http status 422" do
+        post :create, { round_id: round, pass: false, number_of_tricks: Bid::MAX_TRICKS + 1, suit: "hearts" }
+
+        expect(response).to have_http_status(422)
+      end
+
+      it "doesn't create a bid" do
+        expect { post :create, { round_id: round, pass: false } }.to_not change(Bid, :count)
+      end
+    end
   end
 end
