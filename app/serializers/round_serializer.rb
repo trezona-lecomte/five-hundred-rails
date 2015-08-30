@@ -5,12 +5,12 @@ class RoundSerializer < ActiveModel::Serializer
              :stage,
              :odd_players_score,
              :even_players_score,
-             :available_bids,
              :previous_trick_winner
 
   has_one  :highest_bid
   has_one  :current_trick,  serializer: TrickSerializer
   has_one  :game,           embed: :id
+  has_many :available_bids, serializer: AvailableBidSerializer
   has_many :tricks,         embed: :ids
   has_many :bids,           key: :placed_bids
   has_many :cards,          key: :current_player_cards
