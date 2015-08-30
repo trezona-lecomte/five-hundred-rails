@@ -13,7 +13,6 @@ JoinGame.new(game: game1, user: user4).call
 
 start_round = StartRound.new(game: game1)
 start_round.call
-round = start_round.round
 
 # game 2:
 game2 = Game.create!
@@ -32,21 +31,28 @@ start_round.call
 round = start_round.round
 
 # bidding:
-sb = SubmitBid.new(round: round, player: p1, number_of_tricks: 6, suit: Suits::SPADES)
-sb.call # p1 bids 6 spades
-SubmitBid.new(round: round, player: p2, number_of_tricks: 6, suit: Suits::CLUBS).call # p2 bids 6 clubs
-SubmitBid.new(round: round, player: p3, number_of_tricks: 7, suit: Suits::SPADES).call # p3 bids 7 clubs
-SubmitBid.new(round: round, player: p4, number_of_tricks: 7, suit: Suits::CLUBS).call # p4 bids 7 spades
-SubmitBid.new(round: round, player: p1, pass: true).call # p1 passes
-SubmitBid.new(round: round, player: p2, pass: true).call # p2 passes
-SubmitBid.new(round: round, player: p3, pass: true).call # p3 passes
-SubmitBid.new(round: round, player: p4, pass: true).call # p4 passes & wins the bidding
+bid = Bid.new(round: round, player: p1, number_of_tricks: 6, suit: Suits::SPADES)
+bid.save
+bid = Bid.new(round: round, player: p2, number_of_tricks: 6, suit: Suits::CLUBS)
+bid.save
+bid = Bid.new(round: round, player: p3, number_of_tricks: 7, suit: Suits::SPADES)
+bid.save
+bid = Bid.new(round: round, player: p4, number_of_tricks: 7, suit: Suits::CLUBS)
+bid.save
+bid = Bid.new(round: round, player: p1, pass: true)
+bid.save
+bid = Bid.new(round: round, player: p2, pass: true)
+bid.save
+bid = Bid.new(round: round, player: p3, pass: true)
+bid.save
+bid = Bid.new(round: round, player: p4, pass: true)
+bid.save
 trick = round.current_trick
 
-pc4 = PlayCard.new(trick: trick, player: p4, card: p4.cards.sample)
-pc1 = PlayCard.new(trick: trick, player: p1, card: p1.cards.sample)
-pc2 = PlayCard.new(trick: trick, player: p2, card: p2.cards.sample)
-pc3 = PlayCard.new(trick: trick, player: p3, card: p3.cards.sample)
+pc4 = PlayCard.new(round: round, player: p4, card: p4.cards.sample)
+pc1 = PlayCard.new(round: round, player: p1, card: p1.cards.sample)
+pc2 = PlayCard.new(round: round, player: p2, card: p2.cards.sample)
+pc3 = PlayCard.new(round: round, player: p3, card: p3.cards.sample)
 
 # playing:
 pc4.call
@@ -71,12 +77,14 @@ start_round.call
 round = start_round.round
 
 # bidding:
-SubmitBid.new(round: round, player: p1, number_of_tricks: 6, suit: Suits::CLUBS).call # p1 bids 7 hearts
-SubmitBid.new(round: round, player: p2, pass: true).call # p2 passes
-SubmitBid.new(round: round, player: p3, pass: true).call # p3 passes
-SubmitBid.new(round: round, player: p4, pass: true).call # p4 passes so player 1 wins the bidding
-
-decorated_round = round
+bid = Bid.new(round: round, player: p1, number_of_tricks: 6, suit: Suits::CLUBS)
+bid.save
+bid = Bid.new(round: round, player: p2, pass: true)
+bid.save
+bid = Bid.new(round: round, player: p3, pass: true)
+bid.save
+bid = Bid.new(round: round, player: p4, pass: true)
+bid.save
 
 # until decorated_round.finished?
 #   trick = decorated_round.current_trick
@@ -117,12 +125,14 @@ start_round.call
 round = start_round.round
 
 # bidding:
-SubmitBid.new(round: round, player: p1, number_of_tricks: 6, suit: Suits::CLUBS).call # p1 bids 7 hearts
-SubmitBid.new(round: round, player: p2, pass: true).call # p2 passes
-SubmitBid.new(round: round, player: p3, pass: true).call # p3 passes
-SubmitBid.new(round: round, player: p4, pass: true).call # p4 passes so player 1 wins the bidding
-
-decorated_round = round
+bid = Bid.new(round: round, player: p1, number_of_tricks: 6, suit: Suits::CLUBS)
+bid.save
+bid = Bid.new(round: round, player: p2, pass: true)
+bid.save
+bid = Bid.new(round: round, player: p3, pass: true)
+bid.save
+bid = Bid.new(round: round, player: p4, pass: true)
+bid.save
 
 # until decorated_round.cards.where(trick: nil).count == 3
 #   trick = decorated_round.current_trick

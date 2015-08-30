@@ -1,5 +1,7 @@
 class RoundsController < ApplicationController
-  before_action :set_round, only: [:show, :update]
+  before_action :set_round,  only: [:show, :update]
+  before_action :set_player, only: [:update]
+  before_action :set_card,   only: [:update]
 
   def index
     @rounds = Round.all
@@ -12,11 +14,13 @@ class RoundsController < ApplicationController
   end
 
   def update
-    player = @round.game.players.find_by(user: current_user)
-    trick = Trick.find(round_params[:cards][0][:trick_id])
-    card  = Card.find(round_params[:cards][0][:id])
-    play_card = PlayCard.new(trick: trick, player: player, card: card)
+    play_card = PlayCard.new(
+      round: @round,
+      player: @player,
+      card: @card
+    )
 
+    # TODO need to remove errors on successful requests!
     if play_card.call
       score_round = ScoreRound.new(@round)
 
@@ -43,7 +47,15 @@ class RoundsController < ApplicationController
     @round = Round.find(params[:id])
   end
 
+  def set_player
+    @player = @round.game.players.find_by(user: current_user)
+  end
+
+  def set_card
+    @card = Card.find(round_params[:card_id])
+  end
+
   def round_params
-    params.require(:round).permit(cards: [:id, :trick_id])
+    params.permit(:card_id)
   end
 end

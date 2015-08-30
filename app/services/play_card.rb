@@ -3,14 +3,13 @@ class PlayCard
 
   attr_reader :round, :trick, :player, :card
 
-  validate :trick_is_current
   validate :card_is_in_players_hand
   validate :round_is_in_playing_stage
   validates_with PlayerTurnValidator
 
-  def initialize(trick:, player:, card:)
-    @trick = trick
-    @round = trick.round
+  def initialize(round:, player:, card:)
+    @round = round
+    @trick = round.current_trick
     @player = player
     @card = card
   end
@@ -22,12 +21,6 @@ class PlayCard
   end
 
   private
-
-  def trick_is_current
-    if trick != round.current_trick
-      errors.add(:base, "this trick is not active")
-    end
-  end
 
   def card_is_in_players_hand
     if card.played? || !player_owns_card?
