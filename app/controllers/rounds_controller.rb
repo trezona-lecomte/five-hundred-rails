@@ -24,12 +24,16 @@ class RoundsController < ApplicationController
 
     # TODO need to remove errors on successful requests!
     if play_card.call
-      score_round = ScoreRound.new(@round)
+      if @round.finished?
+        score_round = ScoreRound.new(@round)
 
-      if score_round.call
-        render json: score_round.round, serializer: RoundSerializer, status: 200, locals: { errors: [] }
+        if score_round.call
+          render json: score_round.round, serializer: RoundSerializer, status: 200, locals: { errors: [] }
 
-        start_next_round
+          start_next_round
+        else
+          render json: { errors: score_round.errors }, status: 422
+        end
       else
         render json: play_card.round, serializer: RoundSerializer, status: 200, locals: { errors: [] }
       end
@@ -46,11 +50,12 @@ class RoundsController < ApplicationController
   end
 
   def set_round
+    puts "Entering: set_round"
     @round = Round.find(params[:id])
   end
 
   def set_player
-    @player = @round.game.players.find_by(user: current_user)
+    @player = Player.find_by(user: current_user)
   end
 
   def set_card
