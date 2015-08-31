@@ -149,7 +149,7 @@ round.reload
 bid = Bid.new(round: round, player: p4, pass: true)
 bid.save!
 round.reload
-r
+
 # until round.cards.where(trick: nil).count == 3
 
 #   #playing:
