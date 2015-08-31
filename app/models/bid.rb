@@ -5,8 +5,8 @@ class Bid < ActiveRecord::Base
   MAX_TRICKS = 10
   ALLOWED_TRICKS = (MIN_TRICKS..MAX_TRICKS).to_a
 
-  belongs_to :round, touch: true
-  belongs_to :player
+  belongs_to :round,  inverse_of: :bids, touch: true
+  belongs_to :player, inverse_of: :bids
 
   validates :round, :player,          presence: true
   validates :number_of_tricks, :suit, presence: true, unless: :pass

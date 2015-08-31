@@ -4,8 +4,8 @@ class Game < ActiveRecord::Base
   HAND_SIZE    =  10
   TARGET_SCORE = 500
 
-  has_many :players, dependent: :destroy
-  has_many :rounds,  dependent: :destroy
+  has_many :players, inverse_of: :game, dependent: :destroy
+  has_many :rounds,  inverse_of: :game, dependent: :destroy
 
   def finished?
     odd_players_score.abs >= TARGET_SCORE || even_players_score.abs >= TARGET_SCORE

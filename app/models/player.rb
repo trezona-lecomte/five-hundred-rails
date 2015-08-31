@@ -1,9 +1,9 @@
 class Player < ActiveRecord::Base
-  belongs_to :game, touch: true
-  belongs_to :user
+  belongs_to :game, inverse_of: :players, touch: true
+  belongs_to :user, inverse_of: :players
 
-  has_many :cards, dependent: :destroy
-  has_many :bids,  dependent: :destroy
+  has_many :cards, inverse_of: :player, dependent: :destroy
+  has_many :bids,  inverse_of: :player, dependent: :destroy
 
   validates :game,          presence: true
   validates :user,          presence: true, uniqueness: { scope: :game }

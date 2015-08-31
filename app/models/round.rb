@@ -1,10 +1,10 @@
 class Round < ActiveRecord::Base
   NUMBER_OF_TRICKS = 10
 
-  belongs_to :game, touch: true
-  has_many :cards,  dependent: :destroy
-  has_many :tricks, dependent: :destroy
-  has_many :bids,   dependent: :destroy
+  belongs_to :game, inverse_of: :rounds, touch: true
+  has_many :cards,  inverse_of: :round, dependent: :destroy
+  has_many :tricks, inverse_of: :round, dependent: :destroy
+  has_many :bids,   inverse_of: :round, dependent: :destroy
 
   validates :game, presence: true
   validates :order_in_game, presence: true, numericality: { greater_than_or_equal_to: 0 }

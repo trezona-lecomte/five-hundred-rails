@@ -22,9 +22,9 @@ class Card < ActiveRecord::Base
     JOKER    => 18
   }
 
-  belongs_to :player
-  belongs_to :round, touch: true
-  belongs_to :trick, counter_cache: true, touch: true
+  belongs_to :player, inverse_of: :cards
+  belongs_to :round,  inverse_of: :cards, touch: true
+  belongs_to :trick,  inverse_of: :cards, counter_cache: true, touch: true
 
   validates :rank, :suit, presence: true
   validates :round,       presence: true, uniqueness: { scope: [:rank, :suit] }

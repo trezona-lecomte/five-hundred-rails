@@ -1,7 +1,7 @@
 class Trick < ActiveRecord::Base
   MAX_CARDS = 4
-  belongs_to :round
-  has_many   :cards, dependent: :nullify
+  belongs_to :round, inverse_of: :tricks
+  has_many   :cards, inverse_of: :trick, dependent: :nullify
 
   validates :round, presence: true
   validates :order_in_round, numericality: { greater_than_or_equal_to: 0 }
@@ -13,6 +13,7 @@ class Trick < ActiveRecord::Base
   def active?
     cards_count < MAX_CARDS
   end
+
   def inactive?
     cards_count == MAX_CARDS
   end
