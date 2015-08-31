@@ -1,7 +1,6 @@
 class GamesController < ApplicationController
   before_action :set_game, only: [:show, :update]
   skip_before_action :authenticate_user_from_token!, only: [:index]
-  # TODO: handle unauthenticated users viewing games (no current_user)
 
   def index
     @games = Game.all

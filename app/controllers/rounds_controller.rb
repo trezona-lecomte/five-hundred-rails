@@ -17,7 +17,6 @@ class RoundsController < ApplicationController
   end
 
   def set_round
-    puts "Entering: set_round"
     @round = Round.preload(game: [:players]).find(params[:id])
   end
 end

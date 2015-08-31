@@ -39,7 +39,7 @@ class CardsController < ApplicationController
   end
 
   def set_round
-    @round = Round.preload(game: [players: [:cards]]).find(card_params[:round_id])
+    @round = Round.preload(game: [:players]).find(card_params[:round_id])
   end
 
   def set_player

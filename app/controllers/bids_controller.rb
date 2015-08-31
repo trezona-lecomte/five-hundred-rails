@@ -1,8 +1,10 @@
 class BidsController < ApplicationController
-  before_action :set_round,  only: [:index, :create]
+  before_action :set_round,  only: [:create]
   before_action :set_player, only: [:create]
 
   def index
+    @round = Round.preload(:game, bids: [:player]).find(bid_params[:round_id])
+
     render json: @round.bids
   end
 
@@ -25,11 +27,11 @@ class BidsController < ApplicationController
   private
 
   def set_round
-    @round = Round.preload(game: [:players]).find(bid_params[:round_id])
+    @round = Round.preload(:game).find(bid_params[:round_id])
   end
 
   def set_player
-    @player = @round.game.players.detect { |player| player.user == current_user }
+    @player = @round.game.players.detect { |player| player.user_id == current_user.id }
   end
 
   def bid_params

@@ -9,7 +9,6 @@ class RoundSerializer < ActiveModel::Serializer
              :even_players_score
 
   has_one :game,    embed: :id
-  has_many :tricks, embed: :ids
 
   def bids_path
     round_bids_path(object)
