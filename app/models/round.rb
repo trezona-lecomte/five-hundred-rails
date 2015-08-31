@@ -14,7 +14,7 @@ class Round < ActiveRecord::Base
   scope :in_playing_order, -> { order(order_in_game: :asc) }
 
   def in_bidding_stage?
-    bids.passes.count < game.players.count - 1
+    bids.passes.size < game.players.size - 1
   end
 
   def in_playing_stage?
