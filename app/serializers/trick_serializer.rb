@@ -1,13 +1,10 @@
 class TrickSerializer < ActiveModel::Serializer
-  cached
-  delegate :cache_key, to: :object
+  attributes :id, :order_in_round
 
-  attributes :id, :order_in_round, :winning_card
-
-  has_many :cards, serializer: PlayedCardSerializer
+  has_one  :winning_card, embed: :id, serializer: PlayedCardSerializer
+  has_many :cards, each_serializer: PlayedCardSerializer
 
   def winning_card
-    cards = object.cards
     object.cards.highest unless object.cards.none?
   end
 end

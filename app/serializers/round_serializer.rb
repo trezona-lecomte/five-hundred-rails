@@ -22,13 +22,6 @@ class RoundSerializer < ActiveModel::Serializer
     end
   end
 
-  def available_bids
-    puts "Entering: available_bids"
-    finder = GenerateAvailableBids.new(object)
-    finder.call
-    finder.available_bids
-  end
-
   def cards
     puts "Entering: cards"
     player = object.game.players.where(user: current_user)
