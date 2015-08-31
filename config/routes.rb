@@ -6,10 +6,12 @@ Rails.application.routes.draw do
   resource   :login, only: [:create], controller: :sessions
 
   resources :games,      only: [:index, :show, :create], shallow: true do
-    resources :players,  only: [:index, :show, :create]
-    resources :rounds,   only: [:index, :show, :create, :update] do
-      resources :bids,   only: [:create]
-      resources :tricks, only: [:show]
+    resources :players,  only: [:show, :create]
+    resources :rounds,   only: [:index, :show] do
+      resources :bids,           only: [:index, :create]
+      resources :available_bids, only: [:index]
+      resources :tricks,         only: [:index, :show]
+      resources :cards,          only: [:index, :update]
     end
   end
 
