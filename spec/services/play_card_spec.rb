@@ -37,7 +37,7 @@ describe PlayCard, type: :service do
   describe "#validations" do
     context "when the player doesn't own the card" do
       before do
-        allow(card).to receive(:player).and_return(nil)
+        allow(card).to receive(:player_id).and_return(1)
         service.valid?
       end
 
@@ -61,9 +61,9 @@ describe PlayCard, type: :service do
       end
     end
 
-    context "when the round isn't in the playing stage" do
+    context "when the trick can't be played on" do
       before do
-        allow(round).to receive(:in_playing_stage?).and_return(false)
+        allow(service).to receive(:trick).and_return(double(cards_count: 4, order_in_round: 0))
         service.valid?
       end
 

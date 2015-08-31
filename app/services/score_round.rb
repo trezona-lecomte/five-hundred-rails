@@ -63,7 +63,7 @@ class ScoreRound
   def attacking_players
     if bid_winning_player.order_in_game.even?
       players.select { |player| player.order_in_game.even? }
-    else
+    elsif bid_winning_player.order_in_game.odd?
       players.select { |player| player.order_in_game.odd? }
     end
   end

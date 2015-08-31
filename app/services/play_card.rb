@@ -3,9 +3,9 @@ class PlayCard
 
   attr_reader :round, :trick, :player, :card
 
-  # TODO use singular version is apostrophe is required:
+  # TODO use singular version if apostrophe is required:
   validate :card_is_in_players_hand
-  validate :round_is_in_playing_stage
+  validate :trick_can_be_played_on
   validates_with PlayerTurnValidator
 
   def initialize(round:, player:, card:)
@@ -29,14 +29,14 @@ class PlayCard
     end
   end
 
-  def round_is_in_playing_stage
-    unless round.in_playing_stage?
+  def trick_can_be_played_on
+    unless trick.cards_count < Trick::MAX_CARDS
       errors.add(:base, "this round isn't in the playing stage")
     end
   end
 
   def player_owns_card?
-    card.player == player
+    card.player_id == player.id
   end
 
   def play_card!
