@@ -19,7 +19,7 @@ class Bid < ActiveRecord::Base
   validates_with BidderIsNextInOrderValidator, if: [:round, :player]
 
   def self.passes
-     select(&:pass?)
+    select(&:pass?)
   end
 
   def self.non_passes

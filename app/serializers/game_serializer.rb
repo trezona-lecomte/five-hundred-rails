@@ -1,17 +1,10 @@
 class GameSerializer < ActiveModel::Serializer
   attributes :id,
-             :path,
              :stage,
              :odd_players_score,
-             :even_players_score
-
-  has_one  :active_round, serializer: RoundPreviewSerializer
-  has_many :players
-  has_many :rounds, serializer: RoundPreviewSerializer
-
-  def path
-    game_path(object)
-  end
+             :even_players_score,
+             :rounds_path,
+             :players_path
 
   def stage
     if object.finished?
@@ -21,11 +14,11 @@ class GameSerializer < ActiveModel::Serializer
     end
   end
 
-  def active_round
-    if object.finished?
-      nil
-    else
-      object.rounds.max_by { |round| round.order_in_game }
-    end
+  def rounds_path
+    game_rounds_path(object)
+  end
+
+  def players_path
+    game_players_path(object)
   end
 end

@@ -37,7 +37,7 @@ class Card < ActiveRecord::Base
   scope :in_playing_order, -> { played.order(order_in_trick: :asc) }
 
   def played?
-    trick.present?
+    trick_id.present?
   end
 
   def self.highest

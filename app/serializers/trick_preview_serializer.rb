@@ -1,5 +1,9 @@
 class TrickPreviewSerializer < ActiveModel::Serializer
-  attributes :id, :order_in_round, :status, :cards_count
+  attributes :id, :path, :order_in_round, :status
+
+  def path
+    trick_path(object)
+  end
 
   def status
     if object.active?
