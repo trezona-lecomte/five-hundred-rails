@@ -51,7 +51,7 @@ class RoundsController < ApplicationController
 
   def set_round
     puts "Entering: set_round"
-    @round = Round.find(params[:id])
+    @round = Round.preload(:bids, game: [:players]).find(params[:id])
   end
 
   def set_player
