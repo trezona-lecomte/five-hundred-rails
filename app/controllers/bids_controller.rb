@@ -16,7 +16,7 @@ class BidsController < ApplicationController
     )
 
     if bid.save
-      render json: bid.round, serializer: RoundSerializer, status: :created, locals: { errors: [] }
+      render json: bid, serializer: BidSerializer, status: :created, locals: { errors: [] }
     else
       render json: { errors: bid.errors }, status: :unprocessable_entity
     end
@@ -25,7 +25,7 @@ class BidsController < ApplicationController
   private
 
   def set_round
-    @round = Round.preload(:bids).find(bid_params[:round_id])
+    @round = Round.preload(:bids, :game).find(bid_params[:round_id])
   end
 
   def set_player

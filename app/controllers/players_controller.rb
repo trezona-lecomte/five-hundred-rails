@@ -1,11 +1,4 @@
 class PlayersController < ApplicationController
-  def index
-    @game = Game.find(player_params[:game_id])
-    @players = @game.players.all
-
-    render json: @players
-  end
-
   def show
     @player = Player.find(params[:id])
 
