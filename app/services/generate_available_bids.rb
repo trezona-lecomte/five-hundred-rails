@@ -10,21 +10,23 @@ class GenerateAvailableBids
     @available_bids = []
   end
 
+  # This service expects to be called within a lock on round that wraps the
+  # retrieval of all the fields to serialize. This is so that the available bids
+  # are consistent with the other fields of round, such as placed_bids.
   def call
-    round.with_lock do
       valid? && generate_available_bids
-    end
+      # TODO try this with: if valid? @available_bids = generate_available_bids
   end
 
   private
 
   def round_can_be_bid_on
-    errors.add(:base, "this round isn't in the bidding stage") if !round.in_bidding_stage?
+    errors.add(:base, "this round isn't in the bidding stage") unless round.in_bidding_stage?
   end
 
   def generate_available_bids
     if any_non_pass_bids_made_yet?
-      @available_bids = [Bid.passes.new] + bids_above_current_highest_bid
+      @available_bids = [Bid.new(pass: true)] + bids_above_current_highest_bid
     else
       @available_bids = all_possible_bids
     end
@@ -35,7 +37,7 @@ class GenerateAvailableBids
   end
 
   def all_possible_bids
-    [Bid.passes.new] + all_possible_non_pass_bids
+    [Bid.new(pass: true)] + all_possible_non_pass_bids
   end
 
   def all_possible_non_pass_bids

@@ -10,7 +10,9 @@ class RoundsController < ApplicationController
   end
 
   def show
-    render json: @round
+    @round.with_lock do
+      render json: @round
+    end
   end
 
   def update
