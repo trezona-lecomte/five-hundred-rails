@@ -2,6 +2,10 @@ class BidsController < ApplicationController
   before_action :set_round,  only: [:index, :create]
   before_action :set_player, only: [:create]
 
+  def index
+    render json: @round.bids
+  end
+
   def create
     bid = Bid.new(
       round: @round,
@@ -21,7 +25,7 @@ class BidsController < ApplicationController
   private
 
   def set_round
-    @round = Round.find(bid_params[:round_id])
+    @round = Round.preload(:bids).find(bid_params[:round_id])
   end
 
   def set_player
