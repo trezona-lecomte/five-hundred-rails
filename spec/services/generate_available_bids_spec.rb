@@ -51,7 +51,7 @@ describe GenerateAvailableBids, type: :service do
       let(:round) { rounds(:playing_round) }
 
       it "returns false" do
-        expect(call_result).to be false
+        expect(call_result).to be_falsey
       end
     end
 
@@ -59,7 +59,7 @@ describe GenerateAvailableBids, type: :service do
       let(:round) { rounds(:finished_round) }
 
       it "returns false" do
-        expect(call_result).to be false
+        expect(call_result).to be_falsey
       end
     end
   end
