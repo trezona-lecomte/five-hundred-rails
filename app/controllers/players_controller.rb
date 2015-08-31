@@ -1,4 +1,12 @@
 class PlayersController < ApplicationController
+  before_action :set_game, only: [:index]
+
+  def index
+    @players = @game.players
+
+    render json: @players, each_serializer: PlayerPreviewSerializer
+  end
+
   def show
     @player = Player.find(params[:id])
 
@@ -20,7 +28,12 @@ class PlayersController < ApplicationController
       render json: { errors: [join_game.errors] }, status: :unprocessable_entity
     end
   end
+
   private
+
+  def set_game
+    @game = Game.preload(:players).find(params[:game_id])
+  end
 
   def player_params
     params.permit(:game_id, :handle)

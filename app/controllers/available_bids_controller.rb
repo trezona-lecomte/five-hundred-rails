@@ -2,18 +2,18 @@ class AvailableBidsController < ApplicationController
   before_action :set_round,  only: [:index]
 
   def index
-    bid_generator = GenerateAvailableBids.new(@round)
+    generator = GenerateAvailableBids.new(@round)
 
-    if bid_generator.call
-      render json: bid_generator.available_bids, each_serializer: AvailableBidSerializer
+    if generator.call
+      render json: generator.available_bids, each_serializer: AvailableBidSerializer
     else
-      render json: { errors: bid_generator.errors }, status: :unprocessable_entity
+      render json: { errors: generator.errors }, status: :unprocessable_entity
     end
   end
 
   private
 
   def set_round
-    @round = Round.preload(:bids, :game).find(params[:round_id])
+    @round = Round.preload(:game).find(params[:round_id])
   end
 end

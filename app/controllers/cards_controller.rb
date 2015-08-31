@@ -39,15 +39,15 @@ class CardsController < ApplicationController
   end
 
   def set_round
-    @round = Round.preload(:game, :cards).find(card_params[:round_id])
+    @round = Round.preload(game: [players: [:cards]]).find(card_params[:round_id])
   end
 
   def set_player
-    @player = @round.game.players.find_by(user: current_user)
+    @player = @round.game.players.detect { |player| player.user_id == current_user.id }
   end
 
   def set_card
-    @card = @round.cards.detect { |card| card.id == card_params[:id].to_i }
+    @card = @player.cards.detect { |card| card.id == card_params[:id].to_i }
   end
 
   def card_params

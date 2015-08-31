@@ -25,11 +25,11 @@ class BidsController < ApplicationController
   private
 
   def set_round
-    @round = Round.preload(:bids, :game).find(bid_params[:round_id])
+    @round = Round.preload(game: [:players]).find(bid_params[:round_id])
   end
 
   def set_player
-    @player = @round.game.players.find_by(user: current_user)
+    @player = @round.game.players.detect { |player| player.user == current_user }
   end
 
   def bid_params
