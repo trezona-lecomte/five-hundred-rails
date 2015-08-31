@@ -33,7 +33,8 @@ describe BidIsHighEnoughValidator, type: :validator do
       let(:player)              { players(:bidder2) }
 
       before do
-        Bid.non_passes.create!(
+        Bid.create!(
+          pass: false,
           round: round,
           player: players(:bidder1),
           suit: Suits::HEARTS,

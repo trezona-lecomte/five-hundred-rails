@@ -18,9 +18,21 @@ class Bid < ActiveRecord::Base
   validates_with BidIsHighEnoughValidator,     if: :round, unless: :pass
   validates_with BidderIsNextInOrderValidator, if: [:round, :player]
 
-  scope :passes,           -> { where(pass: true) }
-  scope :non_passes,       -> { where(pass: false) }
-  scope :in_ranked_order,  -> { order(number_of_tricks: :desc, suit: :desc) }
+  def self.passes
+     select(&:pass?)
+  end
+
+  def self.non_passes
+    select(&:non_pass?)
+  end
+
+  def non_pass?
+    !pass
+  end
+
+  def self.highest
+    non_passes.sort_by { |bid| [bid.number_of_tricks, bid.suit] }.first
+  end
 
   private
 

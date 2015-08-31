@@ -13,6 +13,14 @@ describe RoundsController, type: :controller do
     allow(controller).to receive(:current_user).and_return(user)
   end
 
+  describe "GET show" do
+    it "responds with http status 200" do
+      get :show, { id: round }
+
+      expect(response).to have_http_status(200)
+    end
+  end
+
   describe "PATCH update" do
     context "when the update is valid" do
       it "responds with http status 200" do
@@ -23,7 +31,13 @@ describe RoundsController, type: :controller do
     end
 
     context "when the update is invalid" do
+      before { patch :update, valid_params }
 
+      it "responds with http status 422" do
+        patch :update, valid_params
+
+        expect(response).to have_http_status(422)
+      end
     end
   end
 end

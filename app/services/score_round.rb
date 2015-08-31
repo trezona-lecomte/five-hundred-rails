@@ -53,7 +53,7 @@ class ScoreRound
   end
 
   def tricks_for(players)
-    tricks.select { |trick| players.include?(trick.cards.highest.player) }
+    tricks.select { |trick| players.include?(trick.winning_player) }
   end
 
   def odd_team_attacked?

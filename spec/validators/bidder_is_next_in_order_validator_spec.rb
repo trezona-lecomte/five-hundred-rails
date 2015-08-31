@@ -45,7 +45,7 @@ RSpec.describe BidderIsNextInOrderValidator, type: :validator do
 
   context "when it is the second bid of the round" do
     context "when the first player passed" do
-      before { round.bids.passes.create!(player: players(:bidder1)) }
+      before { round.bids.create!(pass: true, player: players(:bidder1)) }
 
       context "when the second player tries to bid" do
         let(:player) { players(:bidder2) }
@@ -69,7 +69,7 @@ RSpec.describe BidderIsNextInOrderValidator, type: :validator do
     end
 
     context "when the first player didn't pass" do
-      before { round.bids.non_passes.create!(player: players(:bidder1), number_of_tricks: 6, suit: Suits::HEARTS) }
+      before { round.bids.create!(pass: false, player: players(:bidder1), number_of_tricks: 6, suit: Suits::HEARTS) }
 
       context "when the second player tries to bid" do
         let(:player) { players(:bidder2) }
@@ -99,9 +99,9 @@ RSpec.describe BidderIsNextInOrderValidator, type: :validator do
     context "when the first player didn't pass" do
       context "and the second player passed" do
         before do
-          bid1 = round.bids.non_passes.new(player: players(:bidder1), number_of_tricks: 6, suit: Suits::HEARTS)
+          bid1 = round.bids.new(pass: false, player: players(:bidder1), number_of_tricks: 6, suit: Suits::HEARTS)
           bid1.save!
-          bid2 = round.bids.passes.new(player: players(:bidder2))
+          bid2 = round.bids.new(pass: true, player: players(:bidder2))
           bid2.save!
         end
 
@@ -132,13 +132,13 @@ RSpec.describe BidderIsNextInOrderValidator, type: :validator do
     let(:round) { rounds(:bidding_round) }
 
     context "when the first player passed" do
-      before { round.bids.passes.create!(player: players(:bidder1)) }
+      before { round.bids.create!(pass: true, player: players(:bidder1)) }
 
       context "and the second player passed" do
-        before { round.bids.passes.create!(player: players(:bidder2)) }
+        before { round.bids.create!(pass: true, player: players(:bidder2)) }
 
         context "but the third player didn't pass" do
-          before { round.bids.non_passes.new(player: players(:bidder3), number_of_tricks: 7, suit: Suits::SPADES).save! }
+          before { round.bids.new(pass: false, player: players(:bidder3), number_of_tricks: 7, suit: Suits::SPADES).save! }
 
           context "when the fourth player tries to bid" do
             let(:player)           { players(:bidder4) }
@@ -166,7 +166,7 @@ RSpec.describe BidderIsNextInOrderValidator, type: :validator do
         end
 
         context "and the third player passed" do
-          before { round.bids.passes.create!(player: players(:bidder3)) }
+          before { round.bids.create!(pass: true, player: players(:bidder3)) }
 
           context "when any of the players try to bid" do
             4.times do |n|
@@ -190,16 +190,16 @@ RSpec.describe BidderIsNextInOrderValidator, type: :validator do
     let(:round) { rounds(:bidding_round) }
 
     context "when the first player didn't pass" do
-      before { round.bids.non_passes.new(player: players(:bidder1), number_of_tricks: 6, suit: Suits::HEARTS).save! }
+      before { round.bids.new(pass: false, player: players(:bidder1), number_of_tricks: 6, suit: Suits::HEARTS).save! }
 
       context "and the second player passed" do
-        before { round.bids.passes.new(player: players(:bidder2)).save! }
+        before { round.bids.new(pass: true, player: players(:bidder2)).save! }
 
         context "and the third player didn't pass" do
-          before { round.bids.non_passes.new(player: players(:bidder3), number_of_tricks: 7, suit: Suits::SPADES).save! }
+          before { round.bids.new(pass: false, player: players(:bidder3), number_of_tricks: 7, suit: Suits::SPADES).save! }
 
           context "and the fourth player passed" do
-            before { round.bids.passes.new(player: players(:bidder4)).save! }
+            before { round.bids.new(pass: true, player: players(:bidder4)).save! }
 
             context "when the first player tries to bid" do
               let(:player)           { players(:bidder1) }
@@ -225,7 +225,7 @@ RSpec.describe BidderIsNextInOrderValidator, type: :validator do
           end
 
           context "and the fourth player didn't pass" do
-            before { round.bids.non_passes.create!(player: players(:bidder4), number_of_tricks: 7, suit: Suits::CLUBS) }
+            before { round.bids.create!(pass: false, player: players(:bidder4), number_of_tricks: 7, suit: Suits::CLUBS) }
 
             context "when the first player tries to bid" do
               let(:player)           { players(:bidder1) }

@@ -12,9 +12,7 @@ class Game < ActiveRecord::Base
   end
 
   def active_round
-    unless finished?
-      rounds.in_playing_order.last
-    end
+    rounds.in_playing_order.last unless finished?
   end
 
   def odd_players_score

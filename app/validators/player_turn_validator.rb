@@ -1,16 +1,16 @@
 class PlayerTurnValidator < ActiveModel::Validator
   def validate(play_card)
-    unless this_players_turn?(play_card.round, play_card.player)
+    unless this_players_turn?(play_card.round, play_card.player, play_card.trick)
       play_card.errors.add(:base, "it's not your turn to play")
     end
   end
 
   private
 
-  def this_players_turn?(round, player)
+  def this_players_turn?(round, player, trick)
     if cards_played_in_current_trick?(round)
       players_turn_based_on_cards_played?(round, player)
-    elsif first_trick?(round)
+    elsif first_trick?(trick)
       player_won_bidding_this_round?(round, player)
     else
       player_won_previous_trick?(round, player)
@@ -21,8 +21,8 @@ class PlayerTurnValidator < ActiveModel::Validator
     round.current_trick.cards.present?
   end
 
-  def first_trick?(round)
-    round.current_trick.order_in_round.zero?
+  def first_trick?(trick)
+    trick.order_in_round.zero?
   end
 
   def player_won_bidding_this_round?(round, player)

@@ -26,15 +26,15 @@ class Round < ActiveRecord::Base
   end
 
   def current_trick
-    tricks.active.in_playing_order.first
+    tricks.active.min_by(&:order_in_round)
   end
 
   def previous_trick
-    tricks.inactive.in_playing_order.last
+    tricks.inactive.max_by(&:order_in_round)
   end
 
   def highest_bid
-    bids.non_passes.in_ranked_order.first
+    bids.highest
   end
 
   def has_no_bids_yet?
