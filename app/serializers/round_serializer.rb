@@ -10,7 +10,7 @@ class RoundSerializer < ActiveModel::Serializer
   has_one  :highest_bid
   has_one  :current_trick,  serializer: TrickSerializer
   has_one  :game,           embed: :id
-  has_many :available_bids, serializer: AvailableBidSerializer
+  #has_many :available_bids, serializer: AvailableBidSerializer
   has_many :tricks,         embed: :ids
   has_many :bids,           key: :placed_bids
   has_many :cards,          key: :current_player_cards
@@ -28,6 +28,10 @@ class RoundSerializer < ActiveModel::Serializer
     else
       "playing"
     end
+  end
+
+  def previous_trick_winner
+    object.previous_trick.winning_player if object.previous_trick
   end
 
   def highest_bid
@@ -48,10 +52,6 @@ class RoundSerializer < ActiveModel::Serializer
 
   def current_trick
     object.current_trick
-  end
-
-  def previous_trick_winner
-    object.previous_trick.winning_player if object.previous_trick
   end
 
   def players
