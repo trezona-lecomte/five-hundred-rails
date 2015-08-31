@@ -1,15 +1,20 @@
 class PlayerTurnValidator < ActiveModel::Validator
   def validate(play_card)
-    unless this_players_turn?(play_card.round, play_card.player, play_card.trick)
+    unless this_players_turn?(
+             play_card.players,
+             play_card.round,
+             play_card.player,
+             play_card.trick
+           )
       play_card.errors.add(:base, "it's not your turn to play")
     end
   end
 
   private
 
-  def this_players_turn?(round, player, trick)
-    if cards_played_in_current_trick?(round)
-      players_turn_based_on_cards_played?(round, player)
+  def this_players_turn?(players, round, player, trick)
+    if cards_played_in_current_trick?(trick)
+      players_turn_based_on_cards_played?(players, trick, player)
     elsif first_trick?(trick)
       player_won_bidding_this_round?(round, player)
     else
@@ -17,8 +22,8 @@ class PlayerTurnValidator < ActiveModel::Validator
     end
   end
 
-  def cards_played_in_current_trick?(round)
-    round.current_trick.cards.present?
+  def cards_played_in_current_trick?(trick)
+    trick.cards_count > 0
   end
 
   def first_trick?(trick)
@@ -33,9 +38,9 @@ class PlayerTurnValidator < ActiveModel::Validator
     player == round.previous_trick.winning_player
   end
 
-  def players_turn_based_on_cards_played?(round, player)
-    players = round.game.players
-    previous_player = round.current_trick.cards.last_played.player
+  def players_turn_based_on_cards_played?(players, trick, player)
+    previous_card = trick.cards.max_by(&:order_in_trick)
+    previous_player = previous_card.player
 
     player == next_player_in_order(previous_player, players)
   end

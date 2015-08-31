@@ -1,7 +1,7 @@
 class PlayCard
   include ActiveModel::Validations
 
-  attr_reader :round, :trick, :player, :card
+  attr_reader :players, :round, :trick, :player, :card
 
   # TODO use singular version if apostrophe is required:
   validate :card_is_in_players_hand
@@ -10,6 +10,7 @@ class PlayCard
 
   def initialize(round:, player:, card:)
     @round = round
+    @players = round.game.players
     @trick = round.current_trick
     @player = player
     @card = card
