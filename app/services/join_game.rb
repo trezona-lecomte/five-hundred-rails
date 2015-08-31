@@ -29,7 +29,7 @@ class JoinGame
   end
 
   def join_game!
-    # TODO apply multi-line formatting as below across project:
+    # TODO: use game.players.new followed by game.save:
     begin
       @player = game.players.create!(
         user: user,
@@ -37,6 +37,7 @@ class JoinGame
         order_in_game: game.players.count
       )
 
+      # TODO: if !@player.save  for AR action methods. Only use unless where it would natural in english.
     rescue ActiveRecord::RecordInvalid => e
       e.record.errors.messages.each do |msg|
         errors.add(:base, msg)

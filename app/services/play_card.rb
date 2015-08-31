@@ -3,6 +3,7 @@ class PlayCard
 
   attr_reader :round, :trick, :player, :card
 
+  # TODO use singular version is apostrophe is required:
   validate :card_is_in_players_hand
   validate :round_is_in_playing_stage
   validates_with PlayerTurnValidator

@@ -10,6 +10,7 @@ class BuildDeck
   private
 
   def standard_deck
+    # TODO extract the block to a method - base_deck or something
     standard_ranks.product(STANDARD_SUITS).map do |rank, suit|
       Card.new(rank: rank, suit: suit)
     end + red_fours + [joker]
