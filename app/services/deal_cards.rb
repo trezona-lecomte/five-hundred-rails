@@ -7,7 +7,7 @@ class DealCards
     @deck = deck
   end
 
-  # TODO either comment or wrap in transaction - doesn't hurt to wrap in an additional transaction.
+  # This method expects to be called from within a transaction on round.
   def call
     deal_cards!
   end

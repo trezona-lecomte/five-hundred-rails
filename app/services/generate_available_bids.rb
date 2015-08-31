@@ -10,12 +10,11 @@ class GenerateAvailableBids
     @available_bids = []
   end
 
-  # This service expects to be called within a lock on round that wraps the
-  # retrieval of all the fields to serialize. This is so that the available bids
-  # are consistent with the other fields of round, such as placed_bids.
+  # This service expects to be called within a transaction on round.
   def call
-      valid? && generate_available_bids
-      # TODO try this with: if valid? @available_bids = generate_available_bids
+    if valid?
+      @available_bids = generate_available_bids
+    end
   end
 
   private
@@ -26,9 +25,9 @@ class GenerateAvailableBids
 
   def generate_available_bids
     if any_non_pass_bids_made_yet?
-      @available_bids = [Bid.new(pass: true)] + bids_above_current_highest_bid
+      [Bid.new(pass: true)] + bids_above_current_highest_bid
     else
-      @available_bids = all_possible_bids
+      all_possible_bids
     end
   end
 
