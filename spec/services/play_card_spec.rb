@@ -63,7 +63,16 @@ describe PlayCard, type: :service do
 
     context "when the trick can't be played on" do
       before do
-        allow(service).to receive(:trick).and_return(double(cards_count: 4, order_in_round: 0))
+        allow(service).to receive(:trick).and_return(
+                            double(
+                              cards_count: 4,
+                              order_in_round: 0,
+                              cards: [
+                                double(order_in_trick: 0),
+                                double(order_in_trick: 1, player: double(order_in_game: 0))
+                              ]
+                            )
+                          )
         service.valid?
       end
 
