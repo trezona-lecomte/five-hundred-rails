@@ -1,4 +1,3 @@
-# TODO try SimpleDelegator for service validations
 class JoinGame
   include ActiveModel::Validations
 
@@ -14,7 +13,9 @@ class JoinGame
 
   def call
     game.with_lock do
-      valid? && join_game!
+      if valid?
+        join_game
+      end
     end
   end
 
@@ -28,20 +29,19 @@ class JoinGame
     game.players.count == Game::MAX_PLAYERS
   end
 
-  def join_game!
-    # TODO: use game.players.new followed by game.save:
-    begin
-      @player = game.players.create!(
-        user: user,
-        handle: user.username,
-        order_in_game: game.players.count
-      )
+  def join_game
+    @player = game.players.new(
+      user: user,
+      handle: user.username,
+      order_in_game: game.players.count
+    )
 
-      # TODO: if !@player.save  for AR action methods. Only use unless where it would natural in english.
-    rescue ActiveRecord::RecordInvalid => e
+    if !@player.save
       e.record.errors.messages.each do |msg|
         errors.add(:base, msg)
       end
     end
+
+    errors.none?
   end
 end

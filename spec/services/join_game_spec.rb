@@ -34,7 +34,7 @@ describe JoinGame, type: :service do
       let(:game)         { games(:playing_game) }
 
       it "returns false" do
-        expect(call_result).to be false
+        expect(call_result).to be_falsey
       end
 
       it "doesn't creates a player" do
