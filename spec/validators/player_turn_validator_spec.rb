@@ -10,7 +10,7 @@ describe PlayerTurnValidator, type: :validator do
   let(:player)      { players(:player2) }
   let(:card)        { cards(:jack_of_hearts) }
 
-  subject(:service) { PlayCard.new(trick: trick, player: player, card: card) }
+  subject(:service) { PlayCard.new(round: round, player: player, card: card) }
 
   NOT_YOUR_TURN_TO_PLAY_ERROR     = "it's not your turn to play"
 
@@ -41,9 +41,9 @@ describe PlayerTurnValidator, type: :validator do
 
       context "when cards have been played" do
         before do
-          PlayCard.new(trick: tricks(:trick_1), player: players(:player2), card: cards(:nine_of_clubs)).call
-          PlayCard.new(trick: tricks(:trick_1), player: players(:player3), card: cards(:seven_of_clubs)).call
-          PlayCard.new(trick: tricks(:trick_1), player: players(:player4), card: cards(:six_of_clubs)).call
+          PlayCard.new(round: round, player: players(:player2), card: cards(:nine_of_clubs)).call
+          PlayCard.new(round: round, player: players(:player3), card: cards(:seven_of_clubs)).call
+          PlayCard.new(round: round, player: players(:player4), card: cards(:six_of_clubs)).call
         end
 
         context "when the correct player attempts to play a card" do
@@ -72,16 +72,16 @@ describe PlayerTurnValidator, type: :validator do
 
     context "when it isn't the first trick" do
       before do
-        pc = PlayCard.new(trick: round.current_trick, player: players(:player2), card: cards(:ten_of_hearts))
+        pc = PlayCard.new(round: round, player: players(:player2), card: cards(:ten_of_hearts))
         pc.call
 #        binding.pry
-        pc = PlayCard.new(trick: round.current_trick, player: players(:player3), card: cards(:nine_of_hearts))
+        pc = PlayCard.new(round: round, player: players(:player3), card: cards(:nine_of_hearts))
         pc.call
  #       binding.pry
-        pc = PlayCard.new(trick: round.current_trick, player: players(:player4), card: cards(:six_of_hearts))
+        pc = PlayCard.new(round: round, player: players(:player4), card: cards(:six_of_hearts))
         pc.call
   #      binding.pry
-        pc = PlayCard.new(trick: round.current_trick, player: players(:player1), card: cards(:king_of_hearts))
+        pc = PlayCard.new(round: round, player: players(:player1), card: cards(:king_of_hearts))
         pc.call
    #     binding.pry
       end
@@ -116,7 +116,7 @@ describe PlayerTurnValidator, type: :validator do
 
       context "when cards have been played into this trick" do
         before do
-          PlayCard.new(trick: tricks(:trick_2), player: players(:player1), card: cards(:ace_of_diamonds)).call
+          PlayCard.new(round: round, player: players(:player1), card: cards(:ace_of_diamonds)).call
         end
 
         context "when the correct player attempts to play a card" do

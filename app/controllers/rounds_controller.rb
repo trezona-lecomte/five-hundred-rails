@@ -15,7 +15,7 @@ class RoundsController < ApplicationController
     player = @round.game.players.find_by(user: current_user)
     trick = Trick.find(round_params[:cards][0][:trick_id])
     card  = Card.find(round_params[:cards][0][:id])
-    play_card = PlayCard.new(trick: trick, player: player, card: card)
+    play_card = PlayCard.new(round: @round, player: player, card: card)
 
     if play_card.call
       score_round = ScoreRound.new(@round)
