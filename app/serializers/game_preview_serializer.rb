@@ -1,3 +1,7 @@
 class GamePreviewSerializer < ActiveModel::Serializer
-  attributes :id
+  attributes :id, :path
+
+  def path
+    game_path(object)
+  end
 end
