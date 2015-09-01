@@ -13,40 +13,54 @@ JoinGame.new(game: game1, user: user4).call
 
 start_round = StartRound.new(game: game1)
 start_round.call
-round = start_round.round
 
 # game 2:
 game2 = Game.create!
 
-JoinGame.new(game: game2, user: user1).call
-p1 = game2.players.last
-JoinGame.new(game: game2, user: user2).call
-p2 = game2.players.last
-JoinGame.new(game: game2, user: user3).call
-p3 = game2.players.last
-JoinGame.new(game: game2, user: user4).call
-p4 = game2.players.last
+jg = JoinGame.new(game: game2, user: user1)
+jg.call
+p1 = jg.player
+jg = JoinGame.new(game: game2, user: user2)
+jg.call
+p2 = jg.player
+jg = JoinGame.new(game: game2, user: user3)
+jg.call
+p3 = jg.player
+jg = JoinGame.new(game: game2, user: user4)
+jg.call
+p4 = jg.player
 
 start_round = StartRound.new(game: game2)
 start_round.call
 round = start_round.round
 
 # bidding:
-sb = SubmitBid.new(round: round, player: p1, number_of_tricks: 6, suit: Suits::SPADES)
-sb.call # p1 bids 6 spades
-SubmitBid.new(round: round, player: p2, number_of_tricks: 6, suit: Suits::CLUBS).call # p2 bids 6 clubs
-SubmitBid.new(round: round, player: p3, number_of_tricks: 7, suit: Suits::SPADES).call # p3 bids 7 clubs
-SubmitBid.new(round: round, player: p4, number_of_tricks: 7, suit: Suits::CLUBS).call # p4 bids 7 spades
-SubmitBid.new(round: round, player: p1, pass: true).call # p1 passes
-SubmitBid.new(round: round, player: p2, pass: true).call # p2 passes
-SubmitBid.new(round: round, player: p3, pass: true).call # p3 passes
-SubmitBid.new(round: round, player: p4, pass: true).call # p4 passes & wins the bidding
-trick = round.current_trick
+bid = Bid.new(round: round, player: p1, number_of_tricks: 6, suit: Suits::SPADES)
+bid.save!
+round.reload
+bid = Bid.new(round: round, player: p2, number_of_tricks: 6, suit: Suits::CLUBS)
+bid.save!
+round.reload
+bid = Bid.new(round: round, player: p3, number_of_tricks: 7, suit: Suits::SPADES)
+bid.save!
+round.reload
+bid = Bid.new(round: round, player: p4, number_of_tricks: 7, suit: Suits::CLUBS)
+bid.save!
+round.reload
+bid = Bid.new(round: round, player: p1, pass: true)
+bid.save!
+round.reload
+bid = Bid.new(round: round, player: p2, pass: true)
+bid.save!
+round.reload
+bid = Bid.new(round: round, player: p3, pass: true)
+bid.save!
+round.reload
 
-pc4 = PlayCard.new(trick: trick, player: p4, card: p4.cards.sample)
-pc1 = PlayCard.new(trick: trick, player: p1, card: p1.cards.sample)
-pc2 = PlayCard.new(trick: trick, player: p2, card: p2.cards.sample)
-pc3 = PlayCard.new(trick: trick, player: p3, card: p3.cards.sample)
+pc4 = PlayCard.new(round: round, player: p4, card: p4.cards.sample)
+pc1 = PlayCard.new(round: round, player: p1, card: p1.cards.sample)
+pc2 = PlayCard.new(round: round, player: p2, card: p2.cards.sample)
+pc3 = PlayCard.new(round: round, player: p3, card: p3.cards.sample)
 
 # playing:
 pc4.call
@@ -71,12 +85,18 @@ start_round.call
 round = start_round.round
 
 # bidding:
-SubmitBid.new(round: round, player: p1, number_of_tricks: 6, suit: Suits::CLUBS).call # p1 bids 7 hearts
-SubmitBid.new(round: round, player: p2, pass: true).call # p2 passes
-SubmitBid.new(round: round, player: p3, pass: true).call # p3 passes
-SubmitBid.new(round: round, player: p4, pass: true).call # p4 passes so player 1 wins the bidding
-
-decorated_round = round
+bid = Bid.new(round: round, player: p1, number_of_tricks: 6, suit: Suits::CLUBS)
+bid.save!
+round.reload
+bid = Bid.new(round: round, player: p2, pass: true)
+bid.save!
+round.reload
+bid = Bid.new(round: round, player: p3, pass: true)
+bid.save!
+round.reload
+bid = Bid.new(round: round, player: p4, pass: true)
+bid.save!
+round.reload
 
 # until decorated_round.finished?
 #   trick = decorated_round.current_trick
@@ -117,24 +137,48 @@ start_round.call
 round = start_round.round
 
 # bidding:
-SubmitBid.new(round: round, player: p1, number_of_tricks: 6, suit: Suits::CLUBS).call # p1 bids 7 hearts
-SubmitBid.new(round: round, player: p2, pass: true).call # p2 passes
-SubmitBid.new(round: round, player: p3, pass: true).call # p3 passes
-SubmitBid.new(round: round, player: p4, pass: true).call # p4 passes so player 1 wins the bidding
+bid = Bid.new(round: round, player: p1, number_of_tricks: 6, suit: Suits::CLUBS)
+bid.save!
+round.reload
+bid = Bid.new(round: round, player: p2, pass: true)
+bid.save!
+round.reload
+bid = Bid.new(round: round, player: p3, pass: true)
+bid.save!
+round.reload
+bid = Bid.new(round: round, player: p4, pass: true)
+bid.save!
+round.reload
 
-decorated_round = round
-
-# until decorated_round.cards.where(trick: nil).count == 3
-#   trick = decorated_round.current_trick
+# until round.cards.where(trick: nil).count == 3
 
 #   #playing:
-#   pc1 = PlayCard.new(trick: trick, player: p1, card: p1.cards.where(trick: nil).sample)
-#   pc2 = PlayCard.new(trick: trick, player: p2, card: p2.cards.where(trick: nil).sample)
-#   pc3 = PlayCard.new(trick: trick, player: p3, card: p3.cards.where(trick: nil).sample)
-#   pc4 = PlayCard.new(trick: trick, player: p4, card: p4.cards.where(trick: nil).sample)
+#   pc1 = PlayCard.new(round: round, player: p1, card: p1.cards.where(trick: nil).sample)
+#   pc2 = PlayCard.new(round: round, player: p2, card: p2.cards.where(trick: nil).sample)
+#   pc3 = PlayCard.new(round: round, player: p3, card: p3.cards.where(trick: nil).sample)
+#   pc4 = PlayCard.new(round: round, player: p4, card: p4.cards.where(trick: nil).sample)
 
-#   pc1.call unless trick.order_in_round == 9 && trick.cards.count == 3
-#   pc2.call unless trick.order_in_round == 9 && trick.cards.count == 3
-#   pc3.call unless trick.order_in_round == 9 && trick.cards.count == 3
-#   pc4.call unless trick.order_in_round == 9 && trick.cards.count == 3
+#   if pc1.card
+#     pc1.call unless round.current_trick.order_in_round == 9 && round.current_trick.cards.count == 3
+#   end
+
+#   round.reload
+
+#   if pc2.card
+#     pc2.call unless round.current_trick.order_in_round == 9 && round.current_trick.cards.count == 3
+#   end
+
+#   round.reload
+
+#   if pc3.card
+#     pc3.call unless round.current_trick.order_in_round == 9 && round.current_trick.cards.count == 3
+#   end
+
+#   round.reload
+
+#   if pc4.card
+#     pc4.call unless round.current_trick.order_in_round == 9 && round.current_trick.cards.count == 3
+#   end
+
+#   round.reload
 # end
