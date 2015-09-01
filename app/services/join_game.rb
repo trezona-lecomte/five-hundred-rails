@@ -16,6 +16,8 @@ class JoinGame
       if valid?
         join_game
       end
+
+      errors.none?
     end
   end
 
@@ -37,11 +39,9 @@ class JoinGame
     )
 
     if !@player.save
-      e.record.errors.messages.each do |msg|
+      @player.errors.messages.each do |msg|
         errors.add(:base, msg)
       end
     end
-
-    errors.none?
   end
 end
