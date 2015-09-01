@@ -5,14 +5,12 @@ describe PlayCard, type: :service do
 
   let(:game)         { games(:playing_game) }
   let(:round)        { rounds(:playing_round) }
-  let(:trick)        { round.current_trick }
   let(:player)       { players(:player2) }
   let(:card)         { cards(:jack_of_hearts) }
-  let(:service_args) { { trick: trick, player: player, card: card } }
+  let(:service_args) { { round: round, player: player, card: card } }
 
   subject(:service) { PlayCard.new(**service_args) }
 
-  TRICK_NOT_ACTIVE_ERROR          = "this trick is not active"
   CARD_NOT_IN_HAND_ERROR          = "you don't have this card in your hand"
   ROUND_CANNOT_BE_PLAYED_ON_ERROR = "this round isn't in the playing stage"
 
@@ -23,7 +21,7 @@ describe PlayCard, type: :service do
       let(:validity) { true }
 
       it "plays the card" do
-        expect { service.call }.to change { card.trick }.from(nil).to(trick)
+        expect { service.call }.to change { card.trick }.from(nil).to(round.current_trick)
       end
     end
 
@@ -39,7 +37,7 @@ describe PlayCard, type: :service do
   describe "#validations" do
     context "when the player doesn't own the card" do
       before do
-        allow(card).to receive(:player).and_return(nil)
+        allow(card).to receive(:player_id).and_return(1)
         service.valid?
       end
 
@@ -63,9 +61,18 @@ describe PlayCard, type: :service do
       end
     end
 
-    context "when the round isn't in the playing stage" do
+    context "when the trick can't be played on" do
       before do
-        allow(round).to receive(:in_playing_stage?).and_return(false)
+        allow(service).to receive(:trick).and_return(
+                            double(
+                              cards_count: 4,
+                              order_in_round: 0,
+                              cards: [
+                                double(order_in_trick: 0),
+                                double(order_in_trick: 1, player: double(order_in_game: 0))
+                              ]
+                            )
+                          )
         service.valid?
       end
 
@@ -73,18 +80,6 @@ describe PlayCard, type: :service do
 
       it "has a 'round can't be played on' error" do
         expect(service.errors[:base]).to include(ROUND_CANNOT_BE_PLAYED_ON_ERROR)
-      end
-    end
-
-    context "when the trick isn't active" do
-      let(:trick) { round.tricks.in_playing_order.last }
-
-      before { service.valid? }
-
-      it { is_expected.to be_invalid }
-
-      it "has a 'trick not active' error" do
-        expect(service.errors[:base]).to include(TRICK_NOT_ACTIVE_ERROR)
       end
     end
   end
